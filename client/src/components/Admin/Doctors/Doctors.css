@@ -1,0 +1,12 @@
+
+.doc-search::placeholder {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 12px 0px;
+}
+
+.doctorTemp {
+    transform: scale(1.4);
+    transform: scale(1.4) translateY(17.3%);
+}

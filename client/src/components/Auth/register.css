@@ -1,0 +1,10 @@
+
+
+form input {
+    width: 100%;
+    /* border: 1px solid green; */
+    height: 2.3em;
+    border-radius: 0.3em;
+    outline: none;
+    padding-left: 1em;
+}

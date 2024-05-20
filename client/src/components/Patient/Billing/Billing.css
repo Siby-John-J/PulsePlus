@@ -1,0 +1,8 @@
+
+.billing-data:hover {
+    /* scale: 110%; */
+    transition: 0.9s ease;
+    /* box-shadow: 1px 6px 20px 0px #595959; */
+    border-radius: 10px;
+    padding: 0 10px;
+}

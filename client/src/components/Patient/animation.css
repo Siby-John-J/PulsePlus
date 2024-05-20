@@ -1,0 +1,102 @@
+
+/* PROFILE */
+
+.patient .options:hover {
+    /* box-shadow: 0px -2px 20px 2px white; */
+    animation: shadowAnime 1s forwards infinite;
+}
+
+.patient {
+    overflow: hidden;
+}
+
+.patient .main {
+    animation: loadingAnime 1s;
+    overflow: hidden;
+}
+
+.patient .details {
+    animation: loadingAnime 1.2s;
+    overflow: hidden;
+}
+
+.patient .appointments {
+    animation: loadingAnime 1.4s;
+    overflow: hidden;
+}
+
+.patient .id {
+    animation: loadingAnime 1.2s;
+    overflow: hidden;
+}
+
+.patient .notes {
+    animation: loadingAnime 1.3s;
+    overflow: hidden;
+}
+
+.patient .family {
+    animation: loadingAnime 1.3s;
+    overflow: hidden;
+}
+
+@keyframes loadingAnime {
+    from {
+        transform: translateX(100em);
+        display: none;
+    }
+
+    to {
+        transform: translateX(0em);
+        display: flex;
+    }
+}
+
+@keyframes shadowAnime {
+    from {
+        /* box-shadow: 0px -2px 10px 2px white; */
+    }
+
+    to {
+        transform: scale(1.1);
+        box-shadow: 0px -2px 20px 6px white;
+    }
+}
+
+/* CHAT */
+
+.chat-user-holder {
+    animation: loadingAnimeChat 1s;
+}
+
+.chat-user-body {
+    animation: loadingAnimeChatBody 1s;
+}
+
+.chat-model {
+    animation: loadingAnimeChat 1.2s;
+}
+
+@keyframes loadingAnimeChat {
+    from {
+        transform: translateY(100em);
+        display: none;
+    }
+
+    to {
+        transform: translateY(0em);
+        display: flex;
+    }
+}
+
+@keyframes loadingAnimeChatBody {
+    from {
+        transform: translateX(100em);
+        display: none;
+    }
+    
+    to {
+        transform: translateX(0em);
+        display: block;
+    }
+}

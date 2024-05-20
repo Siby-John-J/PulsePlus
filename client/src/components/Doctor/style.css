@@ -1,0 +1,18 @@
+
+
+.doc-appoint {
+    transform: scale(1.4);
+}
+
+.content-bar {
+    transform: scaleY(3.3);
+}
+
+.list-holder {
+    transform: translateY(-7%)
+}
+
+.toggle-btn {
+    transform: translateX(90%);
+    transition: 300ms ease-in;
+}
