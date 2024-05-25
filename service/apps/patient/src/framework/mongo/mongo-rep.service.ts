@@ -10,29 +10,23 @@ export class MongoRepository extends IPatientRepository {
         super()
     }
 
-    async create() {
-        return await this.patientschema.create({
-            name: 'sus',
-            age: 12,
-            email: 'sus',
-            family: null,
-            password: 'dicksmemes'
-        })
+    async create() : Promise<Patient> {
+        return await this.patientschema.create({})
     }
 
-    delete() {
-        
+    async delete(): Promise<any> {
+        return await this.patientschema.deleteOne({})
     }
 
     async get(): Promise<Patient> {
-        return await this.patientschema.findOne({name: 'sus'})
+        return await this.patientschema.findOne({})
     }
 
     async getAll(): Promise<Patient[]> {
         return await this.patientschema.find({})
     }
 
-    update() {
-        
+    async update(): Promise<Patient> {
+        return await this.patientschema.findOneAndUpdate({})
     }
 }

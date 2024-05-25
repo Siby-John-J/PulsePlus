@@ -5,13 +5,25 @@ import { IPatientRepository } from "../core";
 export class PatientUsecase {
     constructor(private patient: IPatientRepository) {}
 
+    async getAllPatients() {
+        return await this.patient.getAll() 
+    }
+
     async getPatient() {
-        const data = await this.patient.getAll()
+        const data = await this.patient.get()
         console.log(data);
         
     }
 
-    createPatient() {
+    async createPatient() {
         return this.patient.create()
+    }
+
+    async deletePatient() {
+        return await this.patient.delete()
+    }
+
+    async updatePatient() {
+        
     }
 }

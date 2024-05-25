@@ -3,11 +3,11 @@ import { Patient } from "../entity";
 export abstract class IPatientRepository {
     abstract get() : Promise<Patient>
 
-    abstract getAll() : any
+    abstract getAll() : Promise<Patient[]>
 
-    abstract create() : any
+    abstract create() : Promise<Patient>
     
-    abstract delete() : any
+    abstract delete() : Promise<any>
     
-    abstract update() : any
+    abstract update() : Promise<Patient>
 }
