@@ -1,0 +1,23 @@
+
+POST http://localhost:3000/auth/create
+Content-Type: application/json
+
+{
+    "user": "data",
+    "age": 34,
+    "job": "memer"
+}
+
+###
+
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGF0YSIsImFnZSI6MzQsImpvYiI6Im1lbWVyIiwiaWF0IjoxNzE2ODEzODUzLCJleHAiOjE3MTY5MDAyNTN9.hpghl9xWP36Ol_sr9bY16s4wyQ2Nt5OtSM6M29n3-eE"
+}
+
+###
+
+GET http://localhost:2000/protect
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUoxYzJWeUlqb2laR0YwWVNJc0ltRm5aU0k2TXpRc0ltcHZZaUk2SW0xbGJXVnlJaXdpYVdGMElqb3hOekUyT0RFek9EVXpMQ0psZUhBaU9qRTNNVFk1TURBeU5UTjkuaHBnaGw5eFdQMzZPbF9zcjliWTE2czR3eVEyTnQ1T3RTTTZNMjluMy1lRSIsImlhdCI6MTcxNjgxMzkxOSwiZXhwIjoxNzE2ODEzOTc5fQ.fLKXEvOIXSopcatyJE__zmXwCpEbC9eGwd0fzAq9F6mbYLnuDV3oQ0s12SfENQyApAd_1tFm6XNiKe8nmnWEDsEBkUL33-ggYGGI4ksmsHBSazWPtK-7bcSy1euq58xZJ-j-S039CDZ48lbWEi_Ke-lzHl3tFGVv7wXGVaNLf-hf0hwc4ZZ_1I4Zl1AB_CPpVAC30ViNAKLTM1_OXIlbSOpxaSMW_8BM_vzjFcRYmO0QL3oF7ucG-gR99_q5a5kO4_RenNIjVy43uNvOTbXV_KXaFd3a4KiIYd6zDNOn54VgDkkeoUT4bUQ-ymd0hl2iy0C6k8YYzjELOxEjgMqygBWqwnjCCcB3r1nelIDCuxlXR2ilWttZy7jPdn8XJU2seeziADWweZJ8Gjls5qfR2tNdmkppI21B8OlDRDNMyAZ3bqPMop3-WYw_snAa4eE_AkS82MAJIsyzjw0eMAda4pj0_F3fARfvaGirblsoVNMeEppv6LQ3f-BknmNFfLIh

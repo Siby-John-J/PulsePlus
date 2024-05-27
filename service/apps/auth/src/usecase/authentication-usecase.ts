@@ -4,16 +4,14 @@ import { IJwtRepository } from "../core";
 @Injectable()
 export class AuthenticationUsecase {
     tokens = []
-    constructor(private jwt: IJwtRepository) {
-        this.tokens = []
-    }
+    constructor(private jwt: IJwtRepository) {}
 
     create(data: object): object {
         const accessToken = this.jwt.createToken(data)
-        const refreshToken = this.jwt.refreshToken(data)
+        const refreshToken = this.jwt.refreshToken(data, this.tokens)
 
         this.tokens.push(refreshToken)
-
+        
         return { accessToken, refreshToken }
     }
 
@@ -22,7 +20,14 @@ export class AuthenticationUsecase {
     }
 
     refresh(data: object) {
-        return this.jwt.refreshToken(data)
+        let accessToken = null
+        if(this.tokens.includes(data['token'])) {
+            const token = this.verify(data['token'])
+            
+            if(token) accessToken = this.jwt.createToken(data)
+        }
+
+        return accessToken
     }
     
     async generateJwk() {

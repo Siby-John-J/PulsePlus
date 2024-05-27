@@ -4,7 +4,9 @@ export abstract class IJwtRepository {
 
     abstract verifyToken(data: string) : any
 
-    abstract refreshToken(data: object): string
+    abstract invalidateToken(data: object): any
+
+    abstract refreshToken(data: object, tokens?: string[]): string
 
     abstract pemToJwk(): Promise<object>
 }

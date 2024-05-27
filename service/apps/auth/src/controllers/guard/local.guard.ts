@@ -8,7 +8,7 @@ export class LocalGuard implements CanActivate {
         boolean | Promise<boolean> | Observable<boolean> {
         const req = context.switchToHttp().getRequest()
     
-        console.log(req.body);
+        console.log(req.body, ' is dis');
         
         return true
     }

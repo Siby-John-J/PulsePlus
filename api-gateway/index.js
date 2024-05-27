@@ -7,7 +7,7 @@ app.use(express.json())
 app.use(expressJwt.expressjwt(
     {
         secret: jwksClient.expressJwtSecret({
-            jwksUri: 'http://localhost:3001/auth/well-known',
+            jwksUri: 'http://localhost:3000/auth/well-known',
             cache: true,
             rateLimit: true
         }),
@@ -16,9 +16,8 @@ app.use(expressJwt.expressjwt(
 ))
 
 app.get('/protect', (req, res) => {
+    console.log(req.headers)
     res.send('protected')
 })
 
-app.listen(() => {
-    console.log('api-gateway is on')
-}, 2000)
+app.listen(2000)

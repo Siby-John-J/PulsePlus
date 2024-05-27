@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthenticationUsecase } from '../usecase';
 import { SignIn } from '../core';
 import { LocalGuard } from './guard';
@@ -23,8 +23,14 @@ export class AuthenticationController {
   }
 
   @Post('refresh')
-  refresh() {
+  // @UseGuards(LocalGuard)
+  refresh(@Body() token: object) {
+    return this.auth.refresh(token)
+  }
 
+  @Delete('delete')
+  logout() {
+    
   }
 
   @Get('well-known')

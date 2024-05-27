@@ -30,13 +30,31 @@ export class JwtFramework implements IJwtRepository {
 
     verifyToken(data: string) {
         try {
-            const verified = this.jwt.verify(data)
+            const verified = this.jwt.verify(data, {
+                secret: 'xxx'
+            })
             return verified
             
         } catch (error) {
             console.log(error)
         }
 
+    }
+
+    refreshToken(data: object, tokens: string[]): string {
+        // const secret = this.loadSecret(this.privatePath)
+
+        const token = this.jwt.sign(data, {
+            secret: 'xxx',
+            // algorithm: 'RS256',
+            // expiresIn: '1min'
+        })
+        
+        return token
+    }
+
+    invalidateToken(data: object) {
+        
     }
 
     async pemToJwk() : Promise<object>{
@@ -50,14 +68,5 @@ export class JwtFramework implements IJwtRepository {
         })
 
         return key.toJSON(false)
-    }
-
-    refreshToken(data: object): string {
-        const token = this.jwt.sign(data, {
-            secret: 'aaa',
-            expiresIn: '7d'
-        })
-        
-        return token
     }
 }
