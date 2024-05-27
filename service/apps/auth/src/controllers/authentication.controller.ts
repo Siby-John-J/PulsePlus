@@ -14,11 +14,26 @@ export class AuthenticationController {
   signIn(@Body() data: SignIn) {
     return this.auth.create(data)
   }
-
+  
   @Get('status')
   @UseGuards(JwtGuard)
   status(@Req() req: Request) {
     const auth = req.headers['authorization']
     return this.auth.verify(auth)
+  }
+
+  @Post('refresh')
+  refresh() {
+
+  }
+
+  @Get('well-known')
+  async well_known() {
+    const jwk = await this.auth.generateJwk()
+    const jwks = {}
+    jwks['keys'] = []
+    jwks['keys'].push(jwk)
+
+    return jwks
   }
 }
