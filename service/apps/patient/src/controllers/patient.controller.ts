@@ -8,7 +8,8 @@ export class PatientController {
 
     @Get('get')
     getPatient() {
-        return this.patientUsecase.getPatient()
+        console.log('hi')
+        return 'this.patientUsecase.getPatient()'
     }
 
     @Get('getall')
@@ -19,9 +20,7 @@ export class PatientController {
     @Post('create')
     createPatient(@Body(new ValidationPipe()) data: any) {
         console.log(data)
-        
-        return null
-        // return this.patientUsecase.createPatient()
+        return this.patientUsecase.createPatient(data)
     }
 
     @Delete('delete')

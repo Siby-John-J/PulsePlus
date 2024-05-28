@@ -2,8 +2,6 @@ import { ArgumentMetadata, PipeTransform } from "@nestjs/common";
 
 export class ValidationPipe implements PipeTransform {
     transform(value: any, metadata: ArgumentMetadata) {
-        console.log(metadata)
+        return Object.freeze(value)
     }
-
-
 }

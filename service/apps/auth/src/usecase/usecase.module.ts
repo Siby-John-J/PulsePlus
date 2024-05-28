@@ -1,12 +1,10 @@
-import { Module } from "@nestjs/common";
-import { AuthenticationUsecase } from "./authentication-usecase";
-import { JwtServiceModule } from "../services/jwt-service.module";
+import { Module } from '@nestjs/common';
+import { AuthorizationUsecase } from './autherization-usecase';
+import { JwtServiceModule } from '../services/jwt-service.module';
 
 @Module({
-    imports: [
-        JwtServiceModule
-    ],
-    providers: [AuthenticationUsecase],
-    exports: [AuthenticationUsecase]
+  imports: [JwtServiceModule],
+  providers: [AuthorizationUsecase],
+  exports: [AuthorizationUsecase],
 })
 export class UsecaseModule {}

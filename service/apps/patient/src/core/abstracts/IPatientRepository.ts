@@ -5,7 +5,7 @@ export abstract class IPatientRepository {
 
     abstract getAll() : Promise<Patient[]>
 
-    abstract create() : Promise<Patient>
+    abstract create(data: object) : Promise<Patient>
     
     abstract delete() : Promise<any>
     

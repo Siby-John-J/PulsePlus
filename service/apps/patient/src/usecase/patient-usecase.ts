@@ -15,8 +15,8 @@ export class PatientUsecase {
         
     }
 
-    async createPatient() {
-        return this.patient.create()
+    async createPatient(data: object) {
+        return this.patient.create(data)
     }
 
     async deletePatient() {

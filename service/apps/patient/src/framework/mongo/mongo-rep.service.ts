@@ -10,8 +10,8 @@ export class MongoRepository extends IPatientRepository {
         super()
     }
 
-    async create() : Promise<Patient> {
-        return await this.patientschema.create({})
+    async create(data: object) : Promise<Patient> {
+        return await this.patientschema.create(data)
     }
 
     async delete(): Promise<any> {
