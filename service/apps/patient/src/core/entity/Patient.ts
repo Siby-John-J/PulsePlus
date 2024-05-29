@@ -2,6 +2,7 @@
 export class Patient {
     name: string
     age: number
+    id: string
     email: string
     password: string
     family: Family[]
