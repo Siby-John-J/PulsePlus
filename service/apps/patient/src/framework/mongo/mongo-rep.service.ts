@@ -18,8 +18,9 @@ export class MongoRepository extends IPatientRepository {
         return await this.patientschema.deleteOne({})
     }
 
-    async get(): Promise<Patient> {
-        return await this.patientschema.findOne({})
+    async get(payload: any): Promise<Patient> {
+        // console.log(payload)
+        return await this.patientschema.findOne(payload)
     }
 
     async getAll(): Promise<Patient[]> {

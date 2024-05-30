@@ -19,7 +19,8 @@ export class AuthorizationController {
   @UseGuards(JwtGuard)
   status(@Req() req: Request) {
     const auth = req.headers['authorization']
-    return this.auth.verify(auth)
+    const split = auth.split(' ')[1]
+    return this.auth.verify(split)
   }
 
   @Post('refresh_token')

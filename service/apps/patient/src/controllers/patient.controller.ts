@@ -36,9 +36,15 @@ export class PatientController {
         return 'this.patientUsecase.updatePatient()'
     }
 
-    @EventPattern('memes')
-    async Fun(@Payload() data: any) {
-       console.log(data)
-       
+    @EventPattern('ch1')
+    async LoginPatient(@Payload() data: any) {
+    //    console.log(data)
+       this.patientUsecase.getPatient(data)
+    }
+
+    @EventPattern('ch2')
+    async SignUpPatient(@Payload() data: any) {
+    //    console.log(data)
+       this.patientUsecase.createPatient(data)
     }
 }

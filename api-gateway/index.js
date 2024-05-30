@@ -4,6 +4,25 @@ const router = require('./jwtMiddleware')
 const app = express()
 
 app.use(express.json())
+
+const caller = async () => {
+    const data = await fetch('http://localhost:3000/authZ/create_token', {
+        method: 'POST',
+        body: {
+          username: "data",
+            id: 34,
+            password: "memer"
+        }
+    })
+    const json = await data.json()
+
+    console.log(data.status, json);
+}
+
+caller().then(data => {
+    console.log(data)
+})
+
 app.use(router)
 
 const services = [

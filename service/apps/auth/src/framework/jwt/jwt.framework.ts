@@ -29,9 +29,11 @@ export class JwtFramework implements IJwtRepository {
     }
 
     verifyToken(data: string) {
+        const secret = this.loadSecret(this.privatePath)
+
         try {
             const verified = this.jwt.verify(data, {
-                secret: 'xxx'
+                secret: secret
             })
             return verified
             
@@ -57,14 +59,26 @@ export class JwtFramework implements IJwtRepository {
         
     }
 
-    async pemToJwk() : Promise<object>{
+    async pemToJwk() : Promise<object> {
+        console.log('pemJwk')
         const secret = this.loadSecret(this.privatePath)
         const keystore = jose.JWK.createKeyStore()
+
+        // const payload = {
+        //     sub: 'user123',
+        //     name: 'John Doe', 
+        //     roles: ['admin', 'user'], 
+        // };
+    
+        // const jwt = await jose.JWS.createSign({ format: 'compact' }, { key })
+        //   .update(JSON.stringify(payload))
+        //   .final();
 
         const key = await keystore.add(secret, 'pem', {
             kid: 'keyId',
             use: 'sig',
-            alg: 'RS256'
+            alg: 'RS256',
+            // roles: jwt
         })
 
         return key.toJSON(false)

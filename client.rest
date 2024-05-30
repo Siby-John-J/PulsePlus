@@ -1,21 +1,36 @@
 
 ###
-GET http://localhost:2000/patient-service/patient/getall
-Authorization: Bearer 
+GET http://localhost:2000/patient-service/authH/login
+# Authorization: Bearer 
 ###
 
-POST http://localhost:2000/auth-service/auth/create
+POST http://localhost:3000/authH/login
 Content-Type: application/json
 
 {
-    "username": "data",
-    "id": 34,
+    "name": "data",
     "password": "memer"
 }
 
 ###
 
-GET http://localhost:3000/authH/login
+POST http://localhost:3000/authH/signup
+Content-Type: application/json
+
+{
+    "name": "data",
+    "email": "dolla@gmail.com",
+    "password": "memer"
+}
+
+###
+
+GET http://localhost:3001/patient/getall
+
+###
+
+GET http://localhost:3000/authZ/status
+Authorization: Bearer 
 
 ###
 

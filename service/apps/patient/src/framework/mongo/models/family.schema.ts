@@ -7,6 +7,9 @@ export class Family {
 
     @Prop()
     relation: string
+
+    @Prop()
+    image: string
 }
 
 export const FamilySchema = SchemaFactory.createForClass(Family)

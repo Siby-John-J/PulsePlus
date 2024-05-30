@@ -1,7 +1,7 @@
 import { Patient } from "../entity";
 
 export abstract class IPatientRepository {
-    abstract get() : Promise<Patient>
+    abstract get(payload: any) : Promise<Patient>
 
     abstract getAll() : Promise<Patient[]>
 

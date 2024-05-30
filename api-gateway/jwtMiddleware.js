@@ -6,7 +6,7 @@ const jwksClient = require('jwks-rsa')
 router.use(expressjwt(
     {
         secret: jwksClient.expressJwtSecret({
-            jwksUri: 'http://localhost:3000/auth/well-known',
+            jwksUri: 'http://localhost:3000/authZ/well-known',
             cache: true,
             rateLimit: true
         }),

@@ -9,8 +9,8 @@ export class PatientUsecase {
         return await this.patient.getAll() 
     }
 
-    async getPatient() {
-        const data = await this.patient.get()
+    async getPatient(payload: any) {
+        const data = await this.patient.get(payload)
         console.log(data);
         
     }

@@ -6,6 +6,7 @@ import * as joi from 'joi'
 import { RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthenticationController } from './controllers/authentication.controller';
+import { PublisherServiceModule } from './services/publisher-service.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthenticationController } from './controllers/authentication.controlle
     ),
     UsecaseModule, 
     JwtServiceModule,
+    PublisherServiceModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: joi.object({
