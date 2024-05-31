@@ -13,7 +13,7 @@ import { PublisherServiceModule } from './services/publisher-service.module';
     RmqModule.register(
       { name: 'PATIENT' }
     ),
-    UsecaseModule, 
+    UsecaseModule,
     JwtServiceModule,
     PublisherServiceModule,
     ConfigModule.forRoot({

@@ -38,7 +38,7 @@ export class PatientController {
 
     @EventPattern('ch1')
     async LoginPatient(@Payload() data: any) {
-    //    console.log(data)
+       console.log(data)
        this.patientUsecase.getPatient(data)
     }
 
