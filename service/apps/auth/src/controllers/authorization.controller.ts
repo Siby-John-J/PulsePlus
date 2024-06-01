@@ -1,18 +1,40 @@
-import { Body, Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthorizationUsecase } from '../usecase';
-import { SignIn } from '../core';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
+import { AuthenticationUsecase, AuthorizationUsecase, PublisherUseCase } from '../usecase';
+import { SignIn, TokenResponseEntity } from '../core';
 import { LocalGuard } from './guard';
 import { Request } from 'express';
 import { JwtGuard } from './guard/jwt.guard';
 
 @Controller('authZ')
 export class AuthorizationController {
-  constructor(private auth: AuthorizationUsecase) {}
+  constructor(
+    private auth: AuthorizationUsecase,
+    private authH: AuthenticationUsecase,
+    private publish: PublisherUseCase
+  ) {}
 
   @Post('create_token')
   @UseGuards(LocalGuard)
-  signIn(@Body() data: SignIn) {
-    return this.auth.create(data)
+  async signIn(@Body() data: SignIn) {
+    let token: null | object = null
+
+    const res = await this.authH.loginToAccount(data)
+    if(res !== null) {
+      const { accessToken, refreshToken } = this.auth.create(res)
+      const { _id, name, password } = res
+      
+      this.publish.saveRefreshToken({
+        refreshToken,
+        _id,
+        name,
+        password
+      })
+
+      token = { accessToken }
+    } else {
+      throw new HttpException('user not found', HttpStatus.NOT_FOUND)
+    }
+    return token
   }
 
   @Get('status')

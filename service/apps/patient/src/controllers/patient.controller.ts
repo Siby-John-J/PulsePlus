@@ -1,12 +1,18 @@
 import { Body, Controller, Delete, Get, Patch, Post } from "@nestjs/common";
 import { PatientUsecase } from "../usecase/patient-usecase";
 import { ValidationPipe } from "./pipes/validation.pipe";
-import { EventPattern, Payload } from "@nestjs/microservices";
-import { SignInDto } from "../core";
+import { Ctx, EventPattern, Payload, RmqContext } from "@nestjs/microservices";
+import { SignInDto, refreshTokenPayload } from "../core";
+import { RmqService } from "@app/common";
+import { PatientActionsUsecase } from "../usecase";
 
 @Controller('patient')
 export class PatientController {
-    constructor(private patientUsecase: PatientUsecase) {}
+    constructor(
+        private patientUsecase: PatientUsecase,
+        private patientActionsUsecase: PatientActionsUsecase,
+        private rmqService: RmqService
+    ) {}
 
     @Get('get')
     getPatient() {
@@ -22,6 +28,7 @@ export class PatientController {
     @Post('create')
     createPatient(@Body(new ValidationPipe()) data: SignInDto) {
         console.log(data)
+
         return this.patientUsecase.createPatient(data)
     }
 
@@ -36,15 +43,30 @@ export class PatientController {
         return 'this.patientUsecase.updatePatient()'
     }
 
-    @EventPattern('ch1')
-    async LoginPatient(@Payload() data: any) {
-       console.log(data)
-       this.patientUsecase.getPatient(data)
+    @EventPattern('login')
+    async LoginPatient(@Payload() data: any, @Ctx() context: RmqContext) {
+       const res = await this.patientUsecase.getPatient(data)
+       this.rmqService.ack(context)
+       return res
     }
 
-    @EventPattern('ch2')
-    async SignUpPatient(@Payload() data: any) {
-    //    console.log(data)
-       this.patientUsecase.createPatient(data)
+    @EventPattern('signup')
+    async SignUpPatient(@Payload() data: any,@Ctx() context: RmqContext) {
+        this.patientUsecase.createPatient(data)
+        this.rmqService.ack(context)
+    }
+
+    @EventPattern('save_token')
+    saveRefreshToken(@Payload() data: refreshTokenPayload, @Ctx() context: RmqContext) {
+        this.patientActionsUsecase.saveRefreshToken(data)
+        this.rmqService.ack(context)
+    }
+
+    @EventPattern('check_token')
+    async checkRefreshToken(@Payload() data: refreshTokenPayload, @Ctx() context: RmqContext) {
+        const response = await this.patientActionsUsecase.checkRefreshToken(data)
+        this.rmqService.ack(context)
+
+        return response
     }
 }

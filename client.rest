@@ -1,15 +1,17 @@
 
 ###
-GET http://localhost:2000/patient-service/authH/login
-# Authorization: Bearer 
+GET http://localhost:2000/patient-service/patient/getall
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjRmMzMwZGJlZTYwZDNkMWJkZjM1YTIiLCJuYW1lIjoic3VzIiwiYWdlIjoxMiwiZW1haWwiOiJzdXMiLCJwYXNzd29yZCI6ImRpY2tzbWVtZXMiLCJfX3YiOjAsInJlZnJlc2hUb2tlbnMiOltdLCJpYXQiOjE3MTcyNjc1NDcsImV4cCI6MTcxNzI2NzYwN30.VGHQ6uhjaH1CpmTF3q9xfjdDGFfzkflQMCrnSGjqrtqZ5YQKeXVHrVCp2xZf37TUC9i8tQS9eygLHI-JaKl_rwrTaRIlai9HdtTvwuWsSoXE19TI4Fxq4O8Gxy3Pxo6qCsoxn-YK7ASmjdRjqcQnhMwMA0w90XNxmFOXtxyZLWH8g3sLY9ns7-xSefqfzh3_UEIsK3wto93c_unk4xS7h8ghQ-W9wn7XCNx9hc62FBhpwa4DDS3uxqcrMsitLiiSYXF0lf7PXNMkXlZy8G_LjK0ij7W95AywMSJI2ho74uoJzjBrikNaCZI6xJseVnpQVhBqvqqcR_aMKwM5x8bz18NjchgPxAYpeTUWbNebegZ9ktcQZCVHqzEeqjYrqAnZ_h_KrUqDQZXG85QYgtRT3R_NK8H8bbJATXtx2dgI-2YjN-rHVJ8VD3B1cjtllovkcLdjWv9s4RTI8oTeFLq26NDqkK-lmZD1vFOgB-FDOfuh06Llyaoo1JvJ60b-M225
+
 ###
 
-POST http://localhost:3000/authH/login
+POST http://localhost:2000/get_token?q=User
+Authorization: ijcidfj3jfmf09dfu0e9um0fec
 Content-Type: application/json
 
 {
-    "name": "data",
-    "password": "memer"
+    "name": "sus",
+    "password": "dicksmemes"
 }
 
 ###
@@ -18,9 +20,9 @@ POST http://localhost:3000/authH/signup
 Content-Type: application/json
 
 {
-    "name": "data",
-    "email": "dolla@gmail.com",
-    "password": "memer"
+    "name": "user123",
+    "email": "memes@gmail.com",
+    "password": "logins#4321"
 }
 
 ###

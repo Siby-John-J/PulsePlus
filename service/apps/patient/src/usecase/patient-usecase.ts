@@ -6,13 +6,11 @@ export class PatientUsecase {
     constructor(private patient: IPatientRepository) {}
 
     async getAllPatients() {
-        return await this.patient.getAll() 
+        return await this.patient.getAll()
     }
 
     async getPatient(payload: any) {
-        const data = await this.patient.get(payload)
-        console.log(data);
-        
+        return await this.patient.get(payload)
     }
 
     async createPatient(data: object) {

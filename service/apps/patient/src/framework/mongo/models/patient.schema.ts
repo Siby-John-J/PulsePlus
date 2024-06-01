@@ -36,6 +36,9 @@ export class Patient {
     
     @Prop()
     notifications: Notification
+
+    @Prop()
+    refreshTokens: string[]
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient)

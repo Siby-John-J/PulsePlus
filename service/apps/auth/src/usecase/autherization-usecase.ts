@@ -1,16 +1,17 @@
 import { Injectable } from "@nestjs/common";
-import { IJwtRepository } from "../core";
+import { IJwtRepository, TokenResponseEntity } from "../core";
+import { PublisherUseCase } from "./publisher-usecase";
 
 @Injectable()
 export class AuthorizationUsecase {
-    tokens = []
-    constructor(private jwt: IJwtRepository) {}
+    constructor(
+        private jwt: IJwtRepository,
+        private publish: PublisherUseCase
+    ) {}
 
-    create(data: object): object {
+    create(data: object): TokenResponseEntity {
         const accessToken = this.jwt.createToken(data)
-        const refreshToken = this.jwt.refreshToken(data, this.tokens)
-
-        this.tokens.push(refreshToken)
+        const refreshToken = this.jwt.refreshToken(data)
         
         return { accessToken, refreshToken }
     }
@@ -19,15 +20,22 @@ export class AuthorizationUsecase {
         return this.jwt.verifyToken(payload)
     }
 
-    refresh(data: object) {
+    async refresh(data: object) {
         let accessToken = null
-        if(this.tokens.includes(data['token'])) {
-            const token = this.verify(data['token'])
+        
+        const tokens = await this.publish.checkRefreshToken(data)
+        // console.log(tokens)
+        
+        if(tokens) {
+            const token = this.verify(tokens[1])
+            console.log(token);
+            console.log(data);
             
-            if(token) accessToken = this.jwt.createToken(data)
+            
+            // if(token) accessToken = this.jwt.createToken(data)
         }
 
-        return accessToken
+        return {pro:'accessToken'}
     }
     
     async generateJwk() {

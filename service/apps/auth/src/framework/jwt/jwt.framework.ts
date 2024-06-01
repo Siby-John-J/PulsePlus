@@ -6,14 +6,13 @@ import { readFileSync } from "fs";
 
 @Injectable()
 export class JwtFramework implements IJwtRepository {
-    privatePath = 'E:/Hospital-Management/code/service/apps/auth/certs/private.pem'
-    publicPath = 'E:/Hospital-Management/code/service/apps/auth/certs/public.pem'
+    privatePath = process.env.PUBLIC_KEY_PATH
+    publicPath = process.env.PRIVATE_KEY_PATH
 
     constructor(private jwt: JwtService) {}
 
     private loadSecret(path: string) {
-        const secret = readFileSync(path)
-        return secret
+        return readFileSync(path)
     }
 
     createToken(data: object) {
@@ -43,13 +42,13 @@ export class JwtFramework implements IJwtRepository {
 
     }
 
-    refreshToken(data: object, tokens: string[]): string {
-        // const secret = this.loadSecret(this.privatePath)
+    refreshToken(data: object): string {
+        const secret = this.loadSecret(this.privatePath)
 
         const token = this.jwt.sign(data, {
-            secret: 'xxx',
-            // algorithm: 'RS256',
-            // expiresIn: '1min'
+            secret: secret,
+            algorithm: 'RS256',
+            expiresIn: '1d'
         })
         
         return token
@@ -60,7 +59,6 @@ export class JwtFramework implements IJwtRepository {
     }
 
     async pemToJwk() : Promise<object> {
-        console.log('pemJwk')
         const secret = this.loadSecret(this.privatePath)
         const keystore = jose.JWK.createKeyStore()
 

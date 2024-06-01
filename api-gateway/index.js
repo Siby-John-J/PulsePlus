@@ -1,29 +1,11 @@
 const express = require('express')
 const { createProxyMiddleware, fixRequestBody } = require('http-proxy-middleware')
-const router = require('./jwtMiddleware')
+const jwtMiddleware = require('./jwtMiddleware')
+const errorMiddleware = require('./middlewares/err-handlingMiddleware')
 const app = express()
 
 app.use(express.json())
-
-const caller = async () => {
-    const data = await fetch('http://localhost:3000/authZ/create_token', {
-        method: 'POST',
-        body: {
-          username: "data",
-            id: 34,
-            password: "memer"
-        }
-    })
-    const json = await data.json()
-
-    console.log(data.status, json);
-}
-
-caller().then(data => {
-    console.log(data)
-})
-
-app.use(router)
+app.use(jwtMiddleware)
 
 const services = [
     {
@@ -58,9 +40,31 @@ services.forEach(data => {
     }))
 })
 
-app.get('/auth-service', (req, res) => {
-    // console.log(req.headers)
-    res.send('protected')
+app.post('/get_token', async (req, res) => {
+    const payload = {
+        data: req.body,
+        credential: req.headers['authorization'],
+        roles: req.query['q']
+    }
+
+    const response = await fetch('http://localhost:3000/authZ/create_token', {
+        method: 'post',
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            authorization : payload.credential,
+            'Roles': payload.roles
+        },
+        body: JSON.stringify(req.body)
+        // credentials
+    })
+    const json = await response.json()
+    res.send(json)
 })
 
+app.get('/refresh_token', async (req, res) => {
+    res.send('rt')
+})
+
+app.use(errorMiddleware)
 app.listen(2000)

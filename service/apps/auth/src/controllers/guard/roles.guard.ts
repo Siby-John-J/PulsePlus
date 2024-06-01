@@ -1,15 +1,18 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
 import { Observable } from "rxjs";
+import { IRole, Roles } from "../../core";
 
 @Injectable()
 export class LocalGuard implements CanActivate {
+    // constructor(private role: IRole) {}
+
     canActivate(context: ExecutionContext): 
         boolean | Promise<boolean> | Observable<boolean> {
         const req = context.switchToHttp().getRequest()
     
-        console.log(req.body, ' is dis');
-        
+        const extractedRole = req.headers['roles']
+        console.log(extractedRole)
+
         return true
     }
 }

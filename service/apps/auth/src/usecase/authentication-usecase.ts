@@ -1,20 +1,21 @@
 import { Injectable } from "@nestjs/common";
 import { IPublisher, LoginDto } from "../core";
+import { SignUpDto } from "apps/patient/src/core";
 
 @Injectable()
 export class AuthenticationUsecase {
     constructor(private publisher: IPublisher) {}
 
-    loginToAccount(data: LoginDto) {
-        // this.publisher.publish('ch1', data)
-        return 'callMicro'
+    async loginToAccount(data: LoginDto) {
+        return await this.publisher.publish('login', data)
     }
 
     logoutFromAccount() {
         return 'callMicro2'
     }
 
-    createAccount() {
+    createAccount(data: SignUpDto) {
+        this.publisher.publish('signup', data)
         return 'callMicro3'
     }
 }

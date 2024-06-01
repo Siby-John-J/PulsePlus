@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { IPatientRepository } from "../../core";
+import { IPatientActions, IPatientRepository } from "../../core";
 import { MongoRepository } from "./mongo-rep.service";
 import { PatientSchema } from "./models/patient.schema";
 import { NotificationSchema } from "./models/notification.schema";
 import { FamilySchema } from "./models/family.schema";
+import { MongoActionRepository } from "./mongo-rep-actions.service";
 
 @Module({
     imports: [
@@ -21,11 +22,18 @@ import { FamilySchema } from "./models/family.schema";
                 name: 'Family',
                 schema: FamilySchema
             }
-    ])],
-    providers: [{
-        provide: IPatientRepository,
-        useClass: MongoRepository
-    }],
-    exports: [IPatientRepository]
+        ])
+    ],
+    providers: [
+        {
+            provide: IPatientRepository,
+            useClass: MongoRepository
+        }, 
+        {
+            provide: IPatientActions,
+            useClass: MongoActionRepository
+        }
+    ],
+    exports: [IPatientRepository, IPatientActions]
 })
 export class MongoFrameWorkModule {}

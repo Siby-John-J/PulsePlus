@@ -8,7 +8,12 @@ export class PublisherFramework {
         @Inject('PATIENT') private client: ClientProxy
     ) {}
 
-    publish(channel: string, payload: any) {
-        this.client.emit(channel, payload)
+    async publish(channel: string, payload: any) {
+        const res = await this.client.send(channel, payload)
+        return new Promise(resolve => {
+            res.subscribe(e => {
+                resolve(e)
+            })
+        })
     }
 }

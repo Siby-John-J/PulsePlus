@@ -9,6 +9,4 @@ export class SignUpDto {
 
     @IsStrongPassword()
     password: string
-
-
 }

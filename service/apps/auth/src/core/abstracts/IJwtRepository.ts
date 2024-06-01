@@ -6,7 +6,7 @@ export abstract class IJwtRepository {
 
     abstract invalidateToken(data: object): any
 
-    abstract refreshToken(data: object, tokens?: string[]): string
+    abstract refreshToken(data: object): string
 
     abstract pemToJwk(): Promise<object>
 }
