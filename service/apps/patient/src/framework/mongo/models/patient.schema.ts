@@ -17,6 +17,15 @@ export class Patient {
     email: string
 
     @Prop()
+    place: string
+
+    @Prop()
+    address: string
+
+    @Prop()
+    blood_group: string
+
+    @Prop()
     password: string
 
     @Prop()

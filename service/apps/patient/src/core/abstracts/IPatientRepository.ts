@@ -9,5 +9,5 @@ export abstract class IPatientRepository {
     
     abstract delete() : Promise<any>
     
-    abstract update() : Promise<Patient>
+    abstract update(filter: object, payload: object) : Promise<Patient>
 }

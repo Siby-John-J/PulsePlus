@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { IPatientActions, refreshTokenPayload } from "../core";
 
 @Injectable()
-export class PatientActionsUsecase {
+export class PatientAuthsUsecase {
     constructor(private patientActions: IPatientActions) {}
 
     async saveRefreshToken(payload: refreshTokenPayload) {
