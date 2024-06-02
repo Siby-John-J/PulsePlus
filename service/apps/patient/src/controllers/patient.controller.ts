@@ -50,6 +50,13 @@ export class PatientController {
        return res
     }
 
+    @EventPattern('logout')
+    async LogoutPatient(@Payload() data: any, @Ctx() context: RmqContext) {
+       const res = await this.patientActionsUsecase.logoutPatient(data)
+       this.rmqService.ack(context)
+       return res
+    }
+
     @EventPattern('signup')
     async SignUpPatient(@Payload() data: any,@Ctx() context: RmqContext) {
         this.patientUsecase.createPatient(data)

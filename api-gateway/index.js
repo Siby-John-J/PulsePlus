@@ -62,7 +62,7 @@ app.post('/get_token', async (req, res) => {
     res.send(json)
 })
 
-app.get('/refresh_token', async (req, res) => {
+app.get('/log_out', async (req, res) => {
     res.send('rt')
 })
 

@@ -8,7 +8,7 @@ import { AuthorizationUsecase } from './autherization-usecase';
 import { JwtServiceModule } from '../services/jwt-service.module';
 import { AuthenticationUsecase } from './authentication-usecase';
 import { PublisherServiceModule } from '../services/publisher-service.module';
-import { ValidateRequestMiddleware } from '../controllers';
+import { LogoutMiddleware, ValidateRequestMiddleware } from '../controllers';
 import { PublisherUseCase } from './publisher-usecase';
 
 @Module({
@@ -20,6 +20,12 @@ export class UsecaseModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ValidateRequestMiddleware)
-      .forRoutes({ path: '/AuthZ/create_token', method: RequestMethod.POST });
+      .forRoutes(
+        { path: '/AuthZ/create_token', method: RequestMethod.POST },
+      );
+
+    consumer
+      .apply(LogoutMiddleware)
+      .forRoutes({ path: '/AuthH/logout', method: RequestMethod.DELETE })
   }
 }

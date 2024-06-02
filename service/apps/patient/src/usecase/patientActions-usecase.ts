@@ -16,4 +16,8 @@ export class PatientActionsUsecase {
         const { refreshTokens } = await this.patientActions.getToken(data)
         return refreshTokens
     }
+
+    async logoutPatient(payload: string) {
+        return this.patientActions.clearTokens(JSON.parse(payload))
+    }
 }

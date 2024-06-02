@@ -1,12 +1,15 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { AuthenticationUsecase } from "../usecase";
+import { Body, Controller, Delete, Get, Header, Headers, Post, UseGuards } from "@nestjs/common";
+import { AuthenticationUsecase, AuthorizationUsecase } from "../usecase";
 import { LoginDto } from "../core";
 import { LocalGuard } from "./guard";
 import { SignUpDto } from "apps/patient/src/core";
 
 @Controller('AuthH')
 export class AuthenticationController {
-    constructor(private auth: AuthenticationUsecase) {}
+    constructor(
+        private auth: AuthenticationUsecase,
+        private authZ: AuthorizationUsecase
+    ) {}
     
     @Post('login')
     @UseGuards(LocalGuard)
@@ -14,9 +17,14 @@ export class AuthenticationController {
         return this.auth.loginToAccount(body)
     }
 
-    @Get('logout')
-    logOut() {
-        return this.auth.logoutFromAccount()
+    @Delete('logout')
+    logOut(@Headers('Authorization') header: string) {
+        const res = this.authZ.verify(header)
+        
+        if(res) {
+            return this.auth.logoutFromAccount(res)
+        }
+        
     }
 
     @Post('signup')

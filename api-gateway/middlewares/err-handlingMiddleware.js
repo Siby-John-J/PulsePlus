@@ -5,7 +5,6 @@ errorMiddleware = async (err, req, res, next) => {
             credential: 'djifi383u8fjmxxmvkndslfnei',
             roles: 'User'
         }
-        console.log('inside..')
         const response = await fetch('http://localhost:3000/authZ/refresh_token', {
             method: 'post',
             headers: {
@@ -19,9 +18,9 @@ errorMiddleware = async (err, req, res, next) => {
                 password: 'dicksmemes'
             })
         })
-
+        // console.log(req.url) client must send second-request
         const json = await response.json()
-        console.log(json)
+        res.send(json)
 
     }
     console.log(err.message)

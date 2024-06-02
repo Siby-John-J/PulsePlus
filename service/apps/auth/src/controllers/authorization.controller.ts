@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthenticationUsecase, AuthorizationUsecase, PublisherUseCase } from '../usecase';
-import { SignIn, TokenResponseEntity } from '../core';
+import { LoginDto, SignIn, TokenResponseEntity } from '../core';
 import { LocalGuard } from './guard';
 import { Request } from 'express';
 import { JwtGuard } from './guard/jwt.guard';
@@ -15,7 +15,7 @@ export class AuthorizationController {
 
   @Post('create_token')
   @UseGuards(LocalGuard)
-  async signIn(@Body() data: SignIn) {
+  async signIn(@Body() data: LoginDto) {
     let token: null | object = null
 
     const res = await this.authH.loginToAccount(data)

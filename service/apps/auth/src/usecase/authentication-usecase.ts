@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { IPublisher, LoginDto } from "../core";
+import { IPublisher, LoginDto, SignIn } from "../core";
 import { SignUpDto } from "apps/patient/src/core";
 
 @Injectable()
@@ -10,8 +10,12 @@ export class AuthenticationUsecase {
         return await this.publisher.publish('login', data)
     }
 
-    logoutFromAccount() {
-        return 'callMicro2'
+    async logoutFromAccount(payload: SignIn) {
+        const { name, password } = payload
+        
+        return await this.publisher.publish('logout', JSON.stringify({
+            name, password
+        }))
     }
 
     createAccount(data: SignUpDto) {

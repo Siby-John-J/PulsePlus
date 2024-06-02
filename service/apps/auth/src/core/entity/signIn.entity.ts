@@ -1,5 +1,5 @@
 
 export class SignIn {
-    username: string
+    name: string
     password: string
 }
