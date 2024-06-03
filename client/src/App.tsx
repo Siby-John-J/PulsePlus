@@ -10,6 +10,7 @@ import { patientRoute } from "./routes/patient";
 import Doctor from "./components/Doctor/Doctor";
 import Admin from "./components/Admin/Admin";
 import Patient from "./components/Patient/Patient";
+
 import "./App.css";
 
 function App() {

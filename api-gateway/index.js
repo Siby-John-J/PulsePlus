@@ -2,10 +2,14 @@ const express = require('express')
 const { createProxyMiddleware, fixRequestBody } = require('http-proxy-middleware')
 const jwtMiddleware = require('./jwtMiddleware')
 const errorMiddleware = require('./middlewares/err-handlingMiddleware')
+const cors = require('cors')
 const app = express()
 
 app.use(express.json())
-app.use(jwtMiddleware)
+app.use(cors({
+    origin: '*'
+}))
+// app.use(jwtMiddleware)
 
 const services = [
     {
@@ -62,8 +66,17 @@ app.post('/get_token', async (req, res) => {
     res.send(json)
 })
 
-app.get('/log_out', async (req, res) => {
-    res.send('rt')
+app.post('/data', (req, res) => {
+    if(req.body.username) {
+        res.send(JSON.stringify({
+            response: true
+        }))
+    } else {
+        res.send(JSON.stringify({
+            response: false
+        }))
+    }
+
 })
 
 app.use(errorMiddleware)

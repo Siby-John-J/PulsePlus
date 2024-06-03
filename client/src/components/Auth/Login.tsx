@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate} from "react-router-dom";
+import { signInType } from "../../types/authTypes";
+import { useSigin } from "../../hooks/usePosts";
 
-function swtichLogin(e: any) {
-    
-}
+function swtichLogin(e: any) {}
 
 function Login() {
     return (
@@ -22,6 +23,28 @@ function LoginInput() {
 }
 
 function LoginField() {
+    const naivate = useNavigate()
+
+    const [signIndata, setSignInData] = useState<signInType>({
+        username: "",
+        password: "",
+    })
+
+    const changeInput = (event: any, field: string) => {
+        setSignInData((e: any) => {
+            e[field] = event.target.value;
+            return e;
+        });
+    }
+
+    const authValidate = async (event: any): Promise<void> => {
+        const res = await useSigin(signIndata)
+        if(res.response) return naivate('/patient/profile')
+        
+        throw Error('invalid request')
+        event.preventDefault()
+    }
+
     return (
         <div className="bg-white w-[100%] h-[80%] q8 items-center flex flex-col mt-8 rounded-xl shadow-xl">
             <div className="text-left w-full mt-2">
@@ -35,6 +58,7 @@ function LoginField() {
                     <input
                         type="text"
                         className="h-[2.4em] w-[100%] outline-none border-b-2 border-black"
+                        onChange={e => changeInput(e, 'username')}
                     />
                 </div>
                 <div className="mt-4">
@@ -42,12 +66,17 @@ function LoginField() {
                     <input
                         type="password"
                         className="h-[2.4em] w-[100%] outline-none border-b-2 border-black"
+                        onChange={e => changeInput(e, 'password')}
                     />
                 </div>
                 <div className="flex flex-col text-center items-center mt-6">
-                    <button className="h-[2.5em] text-white bg-emerald-600 rounded-2xl w-[60%]">
+                    <button 
+                        className="h-[2.5em] text-white bg-emerald-600 rounded-2xl w-[60%]"
+                        onClick={e => authValidate(e)}
+                    >
+                        Login
                         {/* <Link to={'/patient/profile'}>Login</Link> */}
-                        <Link to={"/admin/dashboard"}>Login</Link>
+                        {/* <Link to={"/admin/dashboard"}>Login</Link> */}
                     </button>
                     <a className="mt-2">Forgot Password?</a>
                 </div>
@@ -72,7 +101,10 @@ function LoginOption() {
                     </Link>
                 </p>
             </div>
-            <div className="bg-black h-[100%] w-[2em] ml-9" onClick={swtichLogin}></div>
+            <div
+                className="bg-black h-[100%] w-[2em] ml-9"
+                onClick={swtichLogin}
+            ></div>
         </div>
     );
 }
@@ -86,4 +118,4 @@ function LoginBG() {
     );
 }
 
-export default Login
+export default Login;
