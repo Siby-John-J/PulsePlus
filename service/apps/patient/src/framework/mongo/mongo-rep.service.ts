@@ -19,7 +19,6 @@ export class MongoRepository extends IPatientRepository {
     }
 
     async get(payload: any): Promise<Patient> {
-        console.log(payload)
         return await this.patientschema.findOne(payload)
     }
 
@@ -28,6 +27,6 @@ export class MongoRepository extends IPatientRepository {
     }
 
     async update(filter: object, payload: object): Promise<Patient> {
-        return await this.patientschema.findOneAndUpdate({})
+        return await this.patientschema.findOneAndUpdate(filter, payload)
     }
 }

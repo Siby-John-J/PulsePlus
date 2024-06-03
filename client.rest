@@ -1,7 +1,7 @@
 
 ###
-GET http://localhost:2000/patient-service/patient/getall
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3VzIiwicGFzc3dvcmQiOiJkaWNrc21lbWVzIiwiaWF0IjoxNzE3MzMyMzExLCJleHAiOjE3MTczMzIzNzF9.k-47Bn5KG8lJn6jmY9vSrcGiXxeleKRqPBeTTVCxqzpjxzJ_FD1WQvEsuW3D-WmPlfhyxu7UcX14kb5G0DeVCyf5iPZrIS31Zm-VGCRMWtT9J0ZbgviurHoDtsZPk1FIXaj6k6LTTZT8lZW7-8Im2jDB7LnXG03xYebUon4RzPaMJd4jeoqUAbTnLJiu4LGIFtoT2Umej1IFGul4PfO41N0hG9f-kRtHxAuNtRQfVZ7djUXIe2lpReheoe0XLrKjH40q3GPsGqOwBdRmt-fXlJxL8VUxuy11-dPeslOlSZa_HUssKMa2ve26thZQv3bPm9qOR8uz6qaDkyqtDa4RZ-MI8-2VivY_mMqSL6wxvexdckPe9T13kcITNQoTIEZDHnsX6Sbj78MDnehdoFKGgX5WIiezzOvVzfQTZ83ZXwIDNyQBDB4QUVihnZViflIDL98G-ZVp0-X1vgBnQI_fCotL4u1NyvWzlmM-_JEjhwtNdHVzMkcJzClsOF6HAfTF
+GET http://localhost:2000/patient-service/actions/getall
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3VzIiwicGFzc3dvcmQiOiJkaWNrc21lbWVzIiwiaWF0IjoxNzE3Mzg5ODg5LCJleHAiOjE3MTczODk5NDl9.H4Sioj-cSB0svZbnyfx721hJrbdR7ROExwoNPryAadGEFeuy7faX1twQVeQsj2O_nerk2wndXBxTOeEA2o5mY0kNooJD0t31N9sglA0d-vmxi-HjZ8xZsiEYylg39MYpalSTW42-kaFXOCk5gpFzzyT6pEDGkmw5FtlcycSyP_Vu4nWzKgihyGgDpQRwxPfjDUm0ODyD3sojcD1xs-gAaFT914WYBP9tjk4PLF_2vkLbQP7l74PWiTUi-REgcBpWyQLcZZdv5TykbcRm2z3no29TOLY8_DmY1kvlCv9-BoWlZyVUiqyIVBNfpwItlyHwFxT6K0h3TndCX6jCVcMKP2ZYQGYHHVkUYIKI45P3z7cF_514nXvieDmQFrnnntL_FNquMYCn7JisiSJf_aHhN2mvLsMOZdK1QQxnlMglLdKUtkPfHgtCRmu1WhDnN0N-ggI4lnze0RFa28mCkZg4bM4XAZojsMo01kRZWS2R8YLwrXbUit5VnfsQqSZAzM47
 
 ###
 
@@ -19,35 +19,17 @@ Content-Type: application/json
 DELETE http://localhost:2000/auth-service/authH/logout
 Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3VzIiwicGFzc3dvcmQiOiJkaWNrc21lbWVzIiwiaWF0IjoxNzE3MzMyMzExLCJleHAiOjE3MTczMzIzNzF9.k-47Bn5KG8lJn6jmY9vSrcGiXxeleKRqPBeTTVCxqzpjxzJ_FD1WQvEsuW3D-WmPlfhyxu7UcX14kb5G0DeVCyf5iPZrIS31Zm-VGCRMWtT9J0ZbgviurHoDtsZPk1FIXaj6k6LTTZT8lZW7-8Im2jDB7LnXG03xYebUon4RzPaMJd4jeoqUAbTnLJiu4LGIFtoT2Umej1IFGul4PfO41N0hG9f-kRtHxAuNtRQfVZ7djUXIe2lpReheoe0XLrKjH40q3GPsGqOwBdRmt-fXlJxL8VUxuy11-dPeslOlSZa_HUssKMa2ve26thZQv3bPm9qOR8uz6qaDkyqtDa4RZ-MI8-2VivY_mMqSL6wxvexdckPe9T13kcITNQoTIEZDHnsX6Sbj78MDnehdoFKGgX5WIiezzOvVzfQTZ83ZXwIDNyQBDB4QUVihnZViflIDL98G-ZVp0-X1vgBnQI_fCotL4u1NyvWzlmM-_JEjhwtNdHVzMkcJzClsOF6HAfTF
 
-###
-POST http://localhost:3000/authH/signup
+### 
+
+POST http://localhost:2000/patient-service/actions/update_details
 Content-Type: application/json
 
 {
-    "name": "user123",
-    "email": "memes@gmail.com",
-    "password": "logins#4321"
+    "name": "sus",
+    "password": "dicksmemes",
+    "email": "update@gmail.com"
 }
 
 ###
 
-GET http://localhost:3001/patient/getall
-
-###
-
-GET http://localhost:3000/authZ/status
-Authorization: Bearer 
-
-###
-
-POST http://localhost:2000/auth-service/auth/refresh
-Content-Type: application/json
-
-{
-    "token": ""
-}
-
-###
-
-DELETE http://localhost:2000/auth-service/auth/delete
-Authorization: Bearer 
+GET http://localhost:3001/actions/getall

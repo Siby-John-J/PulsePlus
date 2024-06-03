@@ -41,6 +41,9 @@ export class Patient {
     status: string
 
     @Prop()
+    gender: string
+
+    @Prop()
     family: Family
     
     @Prop()

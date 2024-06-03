@@ -1,6 +1,5 @@
 import resiterBannerIcon from "../../../public/register-banner.svg";
 import "./register.css";
-// import { ImgHTMLAttributes } from 'react'
 
 function RegisterForm() {
     return (
@@ -15,7 +14,7 @@ function RegisterForm() {
                         <input className="ml-8 w-5 h-5" type="radio" name="" id="" />
                     </div>
                 </div>
-                <form className="w-[100%] h-[80%] flex flex-col justify-evenly" method="post">
+                <form className="w-[100%] h-[80%] flex flex-col justify-evenly" method="post" action="http://localhost:2000/hello">
                     <div>
                       <h1 className="mb-2">Fullname</h1>
                       <input type="text" />

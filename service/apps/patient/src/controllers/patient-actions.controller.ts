@@ -9,10 +9,8 @@ export class PatientActionsController {
 
   @Post('update_details')
   @UsePipes(UpdateValidationPipe)
-  updatePatient(@Body() data: any) {
-    console.log(data)
-
-    return 'hi'
+  async updatePatient(@Body() data: any) {
+    return await this.patientUsecase.updatePatient(data)
   }
 
   @Put('update_password')

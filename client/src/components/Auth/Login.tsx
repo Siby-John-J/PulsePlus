@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 function swtichLogin(e: any) {
     
@@ -22,6 +24,9 @@ function LoginInput() {
 }
 
 function LoginField() {
+    const [username, setUsername] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+
     return (
         <div className="bg-white w-[100%] h-[80%] q8 items-center flex flex-col mt-8 rounded-xl shadow-xl">
             <div className="text-left w-full mt-2">
@@ -35,6 +40,7 @@ function LoginField() {
                     <input
                         type="text"
                         className="h-[2.4em] w-[100%] outline-none border-b-2 border-black"
+                        onChange={e => setUsername(e.target.value)}
                     />
                 </div>
                 <div className="mt-4">
@@ -42,12 +48,16 @@ function LoginField() {
                     <input
                         type="password"
                         className="h-[2.4em] w-[100%] outline-none border-b-2 border-black"
+                        onChange={e => setPassword(e.target.value)}
                     />
                 </div>
                 <div className="flex flex-col text-center items-center mt-6">
-                    <button className="h-[2.5em] text-white bg-emerald-600 rounded-2xl w-[60%]">
+                    <button className="h-[2.5em] text-white bg-emerald-600 rounded-2xl w-[60%]"
+                        onClick={e => {
+                            useLogin(username, password)
+                        }}>
                         {/* <Link to={'/patient/profile'}>Login</Link> */}
-                        <Link to={"/admin/dashboard"}>Login</Link>
+                        <Link to={"/patient/profile"}>Login</Link>
                     </button>
                     <a className="mt-2">Forgot Password?</a>
                 </div>

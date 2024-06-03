@@ -1,5 +1,8 @@
 
 export interface UpdateEntity {
+    email: string
+    password: string
+    name: string
     dob: Date
     address: string
     phone: string
