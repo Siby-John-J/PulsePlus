@@ -2,7 +2,7 @@ import { EventHandler, useState } from "react";
 import resiterBannerIcon from "../../../public/register-banner.svg";
 import "./register.css";
 import { signUpType } from "../../types/authTypes";
-import { useSigup } from "../../hooks/usePosts";
+import { useSignup } from "../../hooks/usePosts";
 // import { ImgHTMLAttributes } from 'react'
 
 function RegisterForm() {
@@ -46,7 +46,7 @@ function RegisterForm() {
                 <form
                     className="w-[100%] h-[80%] flex flex-col justify-evenly"
                     onSubmit={(e) => {
-                        useSigup(loginData);
+                        useSignup(loginData);
                         e.preventDefault();
                     }}
                 >

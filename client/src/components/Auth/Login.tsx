@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate} from "react-router-dom";
 import { signInType } from "../../types/authTypes";
-import { useSigin } from "../../hooks/usePosts";
+import { useSignin } from "../../hooks/usePosts";
+import { useStoreSet } from "../../hooks/useStore";
 
 function swtichLogin(e: any) {}
 
@@ -26,7 +27,7 @@ function LoginField() {
     const naivate = useNavigate()
 
     const [signIndata, setSignInData] = useState<signInType>({
-        username: "",
+        name: "",
         password: "",
     })
 
@@ -38,11 +39,14 @@ function LoginField() {
     }
 
     const authValidate = async (event: any): Promise<void> => {
-        const res = await useSigin(signIndata)
-        if(res.response) return naivate('/patient/profile')
+        const res = await useSignin(signIndata)
+
+        if(res.accessToken) {
+            useStoreSet(res.accessToken)
+            return naivate('/patient/profile')
+        }
         
         throw Error('invalid request')
-        event.preventDefault()
     }
 
     return (
@@ -58,7 +62,7 @@ function LoginField() {
                     <input
                         type="text"
                         className="h-[2.4em] w-[100%] outline-none border-b-2 border-black"
-                        onChange={e => changeInput(e, 'username')}
+                        onChange={e => changeInput(e, 'name')}
                     />
                 </div>
                 <div className="mt-4">

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PatientUsecase } from '../usecase';
 import { SignInDto } from '../core';
 import { UpdateValidationPipe } from './pipes/update-validation.pipe';
@@ -19,9 +19,9 @@ export class PatientActionsController {
   updatePassword(data: any) {}
 
   @Get('get')
-  getPatient() {
-      console.log('hi')
-      return 'this.patientUsecase.getPatient()'
+  getPatient(@Query() payload: object) {
+    console.log(payload);
+      return this.patientUsecase.getPatient(payload)
   }
 
   @Get('getall')

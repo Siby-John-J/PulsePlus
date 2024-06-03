@@ -1,4 +1,4 @@
 
 export interface responseType {
-    response: boolean
+    accessToken: string
 }

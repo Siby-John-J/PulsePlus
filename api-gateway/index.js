@@ -4,10 +4,11 @@ const jwtMiddleware = require('./jwtMiddleware')
 const errorMiddleware = require('./middlewares/err-handlingMiddleware')
 const cors = require('cors')
 const app = express()
+// const dotenv = require('dotenv')
 
 app.use(express.json())
 app.use(cors({
-    origin: '*'
+    origin: '*',
 }))
 // app.use(jwtMiddleware)
 
@@ -51,19 +52,24 @@ app.post('/get_token', async (req, res) => {
         roles: req.query['q']
     }
 
-    const response = await fetch('http://localhost:3000/authZ/create_token', {
-        method: 'post',
-        headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            authorization : payload.credential,
-            'Roles': payload.roles
-        },
-        body: JSON.stringify(req.body)
-        // credentials
-    })
-    const json = await response.json()
-    res.send(json)
+    try {        
+        const response = await fetch('http://localhost:3000/authZ/create_token', {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                authorization : payload.credential,
+                'Roles': payload.roles
+            },
+            body: JSON.stringify(req.body)
+        })
+        const json = await response.json()
+        res.send(json)
+    } catch (error) {
+        console.log(error.statusCode);
+        res.send(error.message)
+    }
+
 })
 
 app.post('/data', (req, res) => {

@@ -4,14 +4,13 @@ import { IRole, Roles } from "../../core";
 
 @Injectable()
 export class LocalGuard implements CanActivate {
-    // constructor(private role: IRole) {}
-
     canActivate(context: ExecutionContext): 
         boolean | Promise<boolean> | Observable<boolean> {
         const req = context.switchToHttp().getRequest()
-    
+        
         const extractedRole = req.headers['roles']
-        console.log(extractedRole)
+
+        if(extractedRole === undefined) return false
 
         return true
     }

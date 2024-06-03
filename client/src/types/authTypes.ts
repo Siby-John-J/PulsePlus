@@ -7,6 +7,6 @@ export interface signUpType {
 }
 
 export interface signInType {
-    username: string
+    name: string
     password: string
 }
