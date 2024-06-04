@@ -1,90 +1,97 @@
-import './animation.css'
+import "./animation.css";
+import { useSelector } from "react-redux";
+import { patientReducerType } from "../../types/patient/patientTypes";
 
 function Profile() {
-  return (
-    <div className='mt-0 ml-8 mr-8 w-[80vw] grid grid-cols-10 grid-rows-9 gap-5'>
-        <div className='flex flex-row justify-between mt-4 text-black text-3xl font-semibold col-span-10 rounded-2xl'>
-            <div>
-                Profile
-            </div>
-            <div className="text-xl flex items-center bg-orange-500 text-white px-4 rounded-md cursor-pointer">
-                Create Treatment
-            </div>
-        </div>
-        <Main />
-        <Details />
-        <Appointments />
-        <Id />
-        <Notes />
-        <Family />
-    </div>
-  )
-}
+    const patientState = useSelector((state: patientReducerType) => state.patientReducer)
+    const { address, name, dob } = patientState
 
-function Main() {
     return (
-        <div className='main bg-slate-300 col-span-2 rounded-3xl row-span-4 text-black flex flex-col justify-center items-center'>
-            <div className='bg-black h-[80px] w-[80px] rounded-full mb-3'></div>
-            <h1 className='text-3xl font-semibold mb-4'>Siby John</h1>
-            <p>Created</p>
-            <p className='font-medium mb-6'>09/11/2000</p>
+        <div className="mt-0 ml-8 mr-8 w-[80vw] grid grid-cols-10 grid-rows-9 gap-5">
+            <div className="flex flex-row justify-between mt-4 text-black text-3xl font-semibold col-span-10 rounded-2xl">
+                <div>Profile</div>
+                <div className="text-xl flex items-center bg-orange-500 text-white px-4 rounded-md cursor-pointer">
+                    Create Treatment
+                </div>
+            </div>
+            <Main data={{name, dob}} />
+            <Details />
+            <Appointments />
+            <Id />
+            <Notes />
+            <Family />
         </div>
     )
+}
+
+function Main(props: any) {
+    console.log(props.data)
+
+    return (
+        <div className="main bg-slate-300 col-span-2 rounded-3xl row-span-4 text-black flex flex-col justify-center items-center">
+            <div className="bg-black h-[80px] w-[80px] rounded-full mb-3"></div>
+            <h1 className="text-3xl font-semibold mb-4">Siby John</h1>
+            <p>Created</p>
+            <p className="font-medium mb-6">09/11/2000</p>
+        </div>
+    );
 }
 
 function Id() {
     return (
-        <div className='id bg-gray-300 col-span-2 row-span-1 rounded-2xl text-black text-2xl font-semibold flex items-center justify-center'>
+        <div className="id bg-gray-300 col-span-2 row-span-1 rounded-2xl text-black text-2xl font-semibold flex items-center justify-center">
             TD-P90K12
         </div>
-    )
+    );
 }
 
 function Family() {
     return (
-        <div className='family bg-slate-300 text-black col-span-2 row-span-3 rounded-2xl flex flex-col items-center'>
-            <div className="font-semibold text-xl mt-1 ">
-                Family
-            </div>
+        <div className="family bg-slate-300 text-black col-span-2 row-span-3 rounded-2xl flex flex-col items-center">
+            <div className="font-semibold text-xl mt-1 ">Family</div>
             <div className="flex flex-col h-[70%] w-[90%] mt-2">
                 <FamilyModel />
                 <FamilyModel />
             </div>
-            <div className="">
-                Add Member
-            </div>
+            <div className="">Add Member</div>
         </div>
-    )
+    );
 }
 
 function Notes() {
     return (
-        <div className='notes bg-slate-300 col-span-4 row-span-4 rounded-3xl flex flex-col items-center'>
+        <div className="notes bg-slate-300 col-span-4 row-span-4 rounded-3xl flex flex-col items-center">
             <div className="flex flex-col w-[80%] h-[80%] mt-5">
                 <NotesModel />
             </div>
             <div className="">
-                <h1 className="py-[8px] px-[19px] rounded-md bg-slate-900 text-white cursor-pointer">create new</h1>
+                <h1 className="py-[8px] px-[19px] rounded-md bg-slate-900 text-white cursor-pointer">
+                    create new
+                </h1>
             </div>
         </div>
-    )
+    );
 }
 
 function Appointments() {
     return (
-        <div className='appointments bg-slate-300 col-span-4 row-span-8 rounded-2xl flex flex-col items-center'>
+        <div className="appointments bg-slate-300 col-span-4 row-span-8 rounded-2xl flex flex-col items-center">
             <div className=" w-[90%] text-2xl font-medium text-black py-2">
                 Appointments
             </div>
             <div className="flex flex-row items-center w-[90%] h-[60px] rounded-md">
-                <div className="bg-white text-black px-14 py-2 rounded-md font-medium h-[2.5em] w-[50%] text-center">Upcoming</div>
-                <div className="text-black px-14 py-2 rounded-md font-medium h-[2.5em] w-[50%] text-center">Past</div>
+                <div className="bg-white text-black px-14 py-2 rounded-md font-medium h-[2.5em] w-[50%] text-center">
+                    Upcoming
+                </div>
+                <div className="text-black px-14 py-2 rounded-md font-medium h-[2.5em] w-[50%] text-center">
+                    Past
+                </div>
             </div>
             <div className="w-[90%] h-[80%]">
                 <AppointmentModel />
             </div>
         </div>
-    )
+    );
 }
 
 function FamilyModel() {
@@ -97,7 +104,7 @@ function FamilyModel() {
             </div>
             <div className="">D</div>
         </div>
-    )
+    );
 }
 
 function NotesModel() {
@@ -105,16 +112,20 @@ function NotesModel() {
         <div className="w-auto h-[60px] rounded-md flex flex-row justify-evenly items-center bg-white text-black drop-shadow-md mb-3">
             <h1 className="font-medium">new-note</h1>
             <h1 className="font-medium">12.3.33 - 9:00pm</h1>
-            <h1 className="text-white bg-orange-500 h-fit px-4 py-[2px] rounded-sm text-center cursor-pointer">view</h1>
+            <h1 className="text-white bg-orange-500 h-fit px-4 py-[2px] rounded-sm text-center cursor-pointer">
+                view
+            </h1>
         </div>
-    )
+    );
 }
 
 function AppointmentModel() {
     return (
         <div className="bg-white flex text-black flex-row mt-3 rounded-lg drop-shadow-md py-2 w-[90%]">
             <div className="pl-4">
-                <h1 className="font-medium text-[15px]">23 Nov, <br/> Tue</h1>
+                <h1 className="font-medium text-[15px]">
+                    23 Nov, <br /> Tue
+                </h1>
                 <p>3am - 4am</p>
             </div>
             <div className="px-6">
@@ -124,17 +135,19 @@ function AppointmentModel() {
             </div>
             <div className="flex ml-[4em]">
                 <div>
-                    <h1 className="bg-blue-700 text-white text-[14px] px-5 rounded-md">New</h1>
+                    <h1 className="bg-blue-700 text-white text-[14px] px-5 rounded-md">
+                        New
+                    </h1>
                     {/* <div></div> */}
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 function Details() {
     return (
-        <div className='details bg-slate-300 col-span-4 row-span-4 rounded-3xl flex flex-col text-center text-black'>            
+        <div className="details bg-slate-300 col-span-4 row-span-4 rounded-3xl flex flex-col text-center text-black">
             <div className="flex flex-row justify-between items-center text-start mx-5 h-[100%]">
                 <div className="flex flex-col justify-evenly h-full">
                     <div>
@@ -173,11 +186,9 @@ function Details() {
                     </div>
                 </div>
             </div>
-            <div className="mb-3 cursor-pointer">
-                edit details
-            </div>
+            <div className="mb-3 cursor-pointer">edit details</div>
         </div>
-    )
+    );
 }
 
-export default Profile
+export default Profile;

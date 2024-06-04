@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router'
+import { Outlet, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import './animation.css'
 import { useFetchRefreshToken } from '../../hooks/useFetch'
+import { useSelector } from 'react-redux'
+import { authReducerType } from '../../types/sliceTypes'
 
 function Patient() {
   const [style, setStyle] = useState<string>('options bg-orange-500 w-[80%] py-[1.3em] text-xl rounded-lg cursor-pointer')
 
-  const res = useFetchRefreshToken()
+  const auth = useSelector((state: authReducerType) => state.authReducer)
+  useFetchRefreshToken(auth)
   
   return (
     <div className='patient w-[100%] h-[100%] text-white flex flex-row bg-slate-100'>

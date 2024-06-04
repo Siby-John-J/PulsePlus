@@ -3,6 +3,8 @@ import { Link, useNavigate} from "react-router-dom";
 import { signInType } from "../../types/authTypes";
 import { useSignin } from "../../hooks/usePosts";
 import { useStoreSet } from "../../hooks/useStore";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 
 function swtichLogin(e: any) {}
 
@@ -25,6 +27,8 @@ function LoginInput() {
 
 function LoginField() {
     const naivate = useNavigate()
+    const state = useSelector((state) => state)
+    const dispatch = useDispatch<any>()
 
     const [signIndata, setSignInData] = useState<signInType>({
         name: "",
@@ -39,6 +43,7 @@ function LoginField() {
     }
 
     const authValidate = async (event: any): Promise<void> => {
+        dispatch(login(signIndata))
         const res = await useSignin(signIndata)
 
         if(res.accessToken) {
