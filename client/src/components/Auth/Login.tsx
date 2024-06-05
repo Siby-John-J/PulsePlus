@@ -5,6 +5,7 @@ import { useSignin } from "../../hooks/usePosts";
 import { useStoreSet } from "../../hooks/useStore";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
+import { useFetchRefreshToken } from "../../hooks/useFetch";
 
 function swtichLogin(e: any) {}
 
@@ -27,12 +28,12 @@ function LoginInput() {
 
 function LoginField() {
     const naivate = useNavigate()
-    const state = useSelector((state) => state)
     const dispatch = useDispatch<any>()
 
     const [signIndata, setSignInData] = useState<signInType>({
         name: "",
         password: "",
+        // auth: false
     })
 
     const changeInput = (event: any, field: string) => {
@@ -43,11 +44,11 @@ function LoginField() {
     }
 
     const authValidate = async (event: any): Promise<void> => {
-        dispatch(login(signIndata))
         const res = await useSignin(signIndata)
-
+        
         if(res.accessToken) {
             useStoreSet(res.accessToken)
+            dispatch(login(signIndata))
             return naivate('/patient/profile')
         }
         

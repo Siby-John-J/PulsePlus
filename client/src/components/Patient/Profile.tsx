@@ -1,10 +1,40 @@
 import "./animation.css";
 import { useSelector } from "react-redux";
-import { patientReducerType } from "../../types/patient/patientTypes";
+import {
+    detailsTypes,
+    patientAuthReducerType,
+    patientDetailsReducerType,
+} from "../../types/patient/patientTypes";
+import { useEffect, useMemo } from "react";
+import { useFetchRefreshToken } from "../../hooks/useFetch";
+import { authReducerType } from "../../types/sliceTypes";
+import { get } from "../../redux/slices/patient/patientDataSlice";
 
 function Profile() {
-    const patientState = useSelector((state: patientReducerType) => state.patientReducer)
-    const { address, name, dob } = patientState
+    const auth = useSelector((state: authReducerType) => state.authReducer);
+    useFetchRefreshToken(auth)
+    // const patientAuthState = useSelector((state: patientAuthReducerType) => state.patientAuthReducer)
+    const patientDetailsState = useSelector(
+        (state: patientDetailsReducerType) => state.patientReducer
+    );
+
+    const {
+        address,
+        name,
+        dob,
+        age, 
+        blood_group,
+        email,
+        gender,
+        phone,
+        place,
+    } = patientDetailsState;
+
+    // console.log(patientDetailsState);
+    
+
+    // const { name } = patientAuthState
+    // const dob = 'Date'
 
     return (
         <div className="mt-0 ml-8 mr-8 w-[80vw] grid grid-cols-10 grid-rows-9 gap-5">
@@ -14,23 +44,34 @@ function Profile() {
                     Create Treatment
                 </div>
             </div>
-            <Main data={{name, dob}} />
-            <Details />
+            {/* <Main data={{name, dob}} /> */}
+            <Details
+                props={{
+                    address,
+                    dob,
+                    age,
+                    blood_group,
+                    email,
+                    gender,
+                    phone,
+                    place,
+                }}
+            />
             <Appointments />
             <Id />
             <Notes />
             <Family />
         </div>
-    )
+    );
 }
 
 function Main(props: any) {
-    console.log(props.data)
+    console.log(props.data);
 
     return (
         <div className="main bg-slate-300 col-span-2 rounded-3xl row-span-4 text-black flex flex-col justify-center items-center">
             <div className="bg-black h-[80px] w-[80px] rounded-full mb-3"></div>
-            <h1 className="text-3xl font-semibold mb-4">Siby John</h1>
+            <h1 className="text-3xl font-semibold mb-4">{props.data.name}</h1>
             <p>Created</p>
             <p className="font-medium mb-6">09/11/2000</p>
         </div>
@@ -145,47 +186,80 @@ function AppointmentModel() {
     );
 }
 
-function Details() {
+function Details(props: { props: detailsTypes }) {
+    function validate(value: any) {
+        if (typeof value === "object" && value.length > 20) {
+            return value.toString().slice(0, 20);
+        }
+
+        if (value !== undefined) {
+            return value;
+        } else {
+            return "null";
+        }
+    }
+
     return (
         <div className="details bg-slate-300 col-span-4 row-span-4 rounded-3xl flex flex-col text-center text-black">
-            <div className="flex flex-row justify-between items-center text-start mx-5 h-[100%]">
-                <div className="flex flex-col justify-evenly h-full">
-                    <div>
-                        <h1 className="font-extralight">Date of Birth</h1>
-                        <p className="font-medium">09/11/2000</p>
+            {
+                props.props.email !== undefined ?
+                    <div className="flex flex-row justify-between items-center text-start mx-5 h-[100%]">
+                        <div className="flex flex-col justify-evenly h-full">
+                            <div>
+                                <h1 className="font-extralight">Date of Birth</h1>
+                                <p className="font-medium">
+                                    {validate('props.props.dob')}
+                                </p>
+                            </div>
+                            <div>
+                                <h1 className="font-extralight">Address</h1>
+                                <p className="font-medium">
+                                    {validate(props.props.address)}
+                                </p>
+                            </div>
+                            <div>
+                                <h1 className="font-extralight">Blood Group</h1>
+                                <p className="font-medium">
+                                    {validate(props.props.blood_group)}
+                                </p>
+                            </div>
+                            <div>
+                                <h1 className="font-extralight">Place</h1>
+                                <p className="font-medium">
+                                    {validate(props.props.place)}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex flex-col justify-evenly pr-0 h-full">
+                            <div>
+                                <h1 className="font-extralight">Phone</h1>
+                                <p className="font-medium">
+                                    {validate(props.props.phone)}
+                                </p>
+                            </div>
+                            <div>
+                                <h1 className="font-extralight">Gender</h1>
+                                <p className="font-medium">
+                                    {validate(props.props.gender)}
+                                </p>
+                            </div>
+                            <div>
+                                <h1 className="font-extralight">Age</h1>
+                                <p className="font-medium">
+                                    {validate(props.props.age)}
+                                </p>
+                            </div>
+                            <div>
+                                <h1 className="font-extralight">Email</h1>
+                                <p className="font-medium">
+                                    {validate(props.props.email)}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="font-extralight">Address</h1>
-                        <p className="font-medium">Sibyhome, nattupara</p>
-                    </div>
-                    <div>
-                        <h1 className="font-extralight">Blood Group</h1>
-                        <p className="font-medium">B+ve</p>
-                    </div>
-                    <div>
-                        <h1 className="font-extralight">Place</h1>
-                        <p className="font-medium">Traivandrum</p>
-                    </div>
-                </div>
-                <div className="flex flex-col justify-evenly pr-0 h-full">
-                    <div>
-                        <h1 className="font-extralight">Phone</h1>
-                        <p className="font-medium">94893894344</p>
-                    </div>
-                    <div>
-                        <h1 className="font-extralight">Gender</h1>
-                        <p className="font-medium">Male</p>
-                    </div>
-                    <div>
-                        <h1 className="font-extralight">Age</h1>
-                        <p className="font-medium">23</p>
-                    </div>
-                    <div>
-                        <h1 className="font-extralight">Email</h1>
-                        <p className="font-medium">romysiby@gmail.com</p>
-                    </div>
-                </div>
-            </div>
+                 : <div></div>
+            }
+
             <div className="mb-3 cursor-pointer">edit details</div>
         </div>
     );

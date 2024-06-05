@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { patientTypes } from "../../../types/patient/patientTypes"
+import { detailsTypes, patientTypes } from "../../../types/patient/patientTypes"
 
-const initialState: patientTypes = {
+const initialState: detailsTypes = {
     name: '',
-    password: '',
+    // password: '',
     email: '',
     address: '',
     age: 0,
@@ -21,10 +21,10 @@ const patient = createSlice({
     name: 'patient',
     initialState,
     reducers: {
-        get(state: any, action: PayloadAction<patientTypes>) {
+        get(state: any, action: PayloadAction<detailsTypes>) {
             return {
                 name: action.payload.name,
-                password: action.payload.password,
+                // password: action.payload.password,
                 address: action.payload.address,
                 age: action.payload.age,
                 blood_group: action.payload.blood_group,

@@ -9,4 +9,6 @@ export interface signUpType {
 export interface signInType {
     name: string
     password: string
+    // auth: boolean
+    // patientId: string
 }

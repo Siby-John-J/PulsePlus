@@ -12,6 +12,14 @@ import Admin from "./components/Admin/Admin";
 import Patient from "./components/Patient/Patient";
 
 import "./App.css";
+import Login from "./components/Auth/Login";
+import LoginBannerIcon from "./Icons/login";
+import RegisterForm, { RegisterBanner } from "./components/Auth/Register";
+
+    {/* {route?.childrenProps && (
+        <route.childrenProps />
+    )} */}
+// </route.component>
 
 function App() {
     const [count, setCount] = useState(0);
@@ -21,15 +29,27 @@ function App() {
             <Suspense>
                 <Routes>
                     {appRoutes.map((route: RouteType) => {
+                        if (route.path === '/') {
+                            return (
+                                <Route
+                                    path={route.path}
+                                    element={
+                                        <route.component>
+                                            <Login/>
+                                            <LoginBannerIcon />
+                                        </route.component> 
+                                    }
+                                />
+                            );
+                        }
                         return (
                             <Route
                                 path={route.path}
                                 element={
                                     <route.component>
-                                        {route?.childrenProps && (
-                                            <route.childrenProps />
-                                        )}
-                                    </route.component>
+                                        <RegisterForm/>
+                                        <RegisterBanner />
+                                    </route.component> 
                                 }
                             />
                         );

@@ -1,9 +1,30 @@
-import { EventHandler, useState } from "react";
+import { useState } from "react";
 import resiterBannerIcon from "../../../public/register-banner.svg";
 import "./register.css";
 import { signUpType } from "../../types/authTypes";
 import { useSignup } from "../../hooks/usePosts";
+import { LoginBanner, LoginText } from "./Auth";
+import STimg from "../../Icons/st";
 // import { ImgHTMLAttributes } from 'react'
+
+export function Register({children}:any) {
+    return(
+        <div className="flex flex-row h-[80vh] rounded-lg shadow-lg bg-emerald-400">
+            <div className="w-[40vw] h-[auto] flex flex-col justify-center items-center">
+                <STimg />
+                <LoginText />
+                {
+                    children[1].type()
+                }
+            </div>
+            <div className="flex flex-row h-[80vh] rounded-lg bg-emerald-400">
+                {
+                    children[0].type()
+                }
+            </div>
+        </div>
+    )
+}
 
 function RegisterForm() {
     const [loginData, setLoginData] = useState<signUpType>({

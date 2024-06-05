@@ -72,17 +72,11 @@ app.post('/get_token', async (req, res) => {
 
 })
 
-app.post('/data', (req, res) => {
-    if(req.body.username) {
-        res.send(JSON.stringify({
-            response: true
-        }))
-    } else {
-        res.send(JSON.stringify({
-            response: false
-        }))
-    }
-
+app.get('/data', (req, res) => {
+    res.send(JSON.stringify({
+        email: 'true',
+        gender: 'niga'
+    }))
 })
 
 app.use(errorMiddleware)
