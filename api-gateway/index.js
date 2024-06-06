@@ -71,7 +71,7 @@ app.post('/get_token', async (req, res) => {
 
 app.post('/sign_up', async(req, res) => {
     const auth = '08ac399a9b2ff2d0027fa53f7eb783a19b52'
-
+    
     const payload = {
         data: req.body,
         credential: req.headers['authorization'],
@@ -79,22 +79,17 @@ app.post('/sign_up', async(req, res) => {
     }
 
     if(auth !== payload.credential) {
-        console.log('error');
         res.send(JSON.stringify({
-            status: 404,
-            message: 'invalid token'
+            status: 400,
+            message: 'invalid crerdential'
         }))
     } else {
         try {
-            const response = await fetchRequest('http://localhost:3000/authH/sign_up', payload)
+            const response = await fetchRequest('http://localhost:3000/authH/signup', payload)
             res.send(response)
         } catch (error) {
             res.send(error.message)
         }
-        res.send(JSON.stringify({
-            email: 'true',
-            gender: 'niga'
-        }))
     }
 })
 

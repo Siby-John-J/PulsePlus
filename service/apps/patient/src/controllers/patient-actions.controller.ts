@@ -21,10 +21,7 @@ export class PatientActionsController {
 
   @Get('get')
   getPatient(@Query() payload: object) {
-    console.log(payload)
-    
       const res = this.patientUsecase.getPatient(payload)
-      console.log('res')
       
       return res
   }

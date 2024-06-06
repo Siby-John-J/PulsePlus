@@ -20,21 +20,17 @@ export class AuthenticationController {
 
     @Post('logout')
     logOut(@Body() body: SignIn) {
-        console.log(body, ' nigas')
-        
-        // return { hi: 'wold' }
         // const res = this.authZ.verify(header)
-        return this.auth.logoutFromAccount(body)
-        
-        // if(res) {
-        // }
-        
+        return this.auth.logoutFromAccount(body) 
     }
 
     @Post('signup')
-    signUp(@Body() body: SignUpDto) {
+    async signUp(@Body() body: SignUpDto) {
         console.log(body);
+
+        // Check for roles
         
-        // return this.auth.createAccount(body)
+        
+        return await this.auth.createAccount(body)
     }
 }

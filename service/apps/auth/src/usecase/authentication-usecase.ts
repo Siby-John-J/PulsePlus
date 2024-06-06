@@ -17,9 +17,8 @@ export class AuthenticationUsecase {
             name, password
         }))
     }
-
-    createAccount(data: SignUpDto) {
-        this.publisher.publish('signup', data)
-        return 'callMicro3'
+    
+    async createAccount(data: SignUpDto) {
+        return await this.publisher.publish('signup', data)
     }
 }

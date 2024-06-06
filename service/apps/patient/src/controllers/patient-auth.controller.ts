@@ -1,6 +1,5 @@
-import { Body, Controller, Delete, Get, Patch, Post } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { PatientUsecase } from "../usecase/patient-usecase";
-import { ValidationPipe } from "./pipes/validation.pipe";
 import { Ctx, EventPattern, Payload, RmqContext } from "@nestjs/microservices";
 import { SignInDto, refreshTokenPayload } from "../core";
 import { RmqService } from "@app/common";
@@ -32,8 +31,9 @@ export class PatientAuthController {
 
     @EventPattern('signup')
     async SignUpPatient(@Payload() data: any,@Ctx() context: RmqContext) {
-        this.patientUsecase.createPatient(data)
+        const res = this.patientUsecase.createPatient(data)
         this.rmqService.ack(context)
+        return res
     }
 
     @EventPattern('save_token')
