@@ -5,7 +5,7 @@ import { signInType } from "../../types/authTypes"
 const initialState: signInType = {
     name: '',
     password: '',
-    // auth: false
+    auth: false
 }
 
 const auth = createSlice({
@@ -16,11 +16,12 @@ const auth = createSlice({
             return {
                 name: action.payload.name,
                 password: action.payload.password,
-                // auth: action.payload.auth
+                auth: action.payload.auth
             }
         },
         logout() {
-            return initialState
+            const { auth, ...rest } = initialState
+            return { ...rest, auth: false }
         }
     }
 })

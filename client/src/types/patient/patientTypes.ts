@@ -4,7 +4,7 @@ import { authType } from "../sliceTypes"
 export interface patientTypes {
     authTypes: signInType
     detailsTypes: detailsTypes
-    created: Date
+    created: string
 }
 
 export interface detailsTypes {
@@ -16,7 +16,7 @@ export interface detailsTypes {
     address: string
     age: number
     blood_group: string
-    dob: Date
+    dob: string
     gender: string
     phone: string
     place: string

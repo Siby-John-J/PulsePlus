@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import STimg from "../../Icons/st";
 import LoginBannerIcon from "../../Icons/login";
 
 function Auth({children}:any) {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     
-
     return (
         <div className="flex flex-row h-[80vh] rounded-lg shadow-lg bg-emerald-400">
             <div className="w-[40vw] h-[auto] flex flex-col justify-center items-center">

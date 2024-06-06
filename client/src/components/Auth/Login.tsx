@@ -5,8 +5,6 @@ import { useGettoken } from "../../hooks/useAuth";
 import { useStoreSet } from "../../hooks/useStore";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
-import { useFetchRefreshToken } from "../../hooks/useFetch";
-import { patientAuthReducerType } from "../../types/patient/patientTypes";
 
 function swtichLogin(e: any) {}
 
@@ -29,14 +27,12 @@ function LoginInput() {
 
 function LoginField() {
     const naivate = useNavigate();
-    const dispatch = useDispatch<any>();
-
-  const authState = useSelector((state: patientAuthReducerType) => state.patientAuthReducer)
+    const dispatch = useDispatch<any>()
 
     const [signIndata, setSignInData] = useState<signInType>({
         name: "",
         password: "",
-        // auth: false
+        auth: false
     });
 
     const changeInput = (event: any, field: string) => {
@@ -46,15 +42,24 @@ function LoginField() {
         });
     };
 
-    const authValidate = async (event: any): Promise<void> => {
+    const authValidate = async (event: any) => {
         const res = await useGettoken(signIndata);
 
         console.log(res)
         
         
         if (res.accessToken) {
+            setSignInData(e => {
+                e.auth = true
+                return e
+            })
+            
+            dispatch(login({
+                name: signIndata.name,
+                password: signIndata.password,
+                auth: true
+            }));
             useStoreSet(res.accessToken);
-            dispatch(login(signIndata));
             return naivate("/patient/profile");
         }
 

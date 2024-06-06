@@ -2,17 +2,24 @@ import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import './animation.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLogout } from '../../hooks/useAuth'
 import { authReducerType } from '../../types/sliceTypes'
+import { logout } from '../../redux/slices/authSlice'
 
 function Patient() {
   const [style, setStyle] = useState<string>('options bg-orange-500 w-[80%] py-[1.3em] text-xl rounded-lg cursor-pointer')
   const navigate = useNavigate()
   const authState = useSelector((state: authReducerType) => state.authReducer);
-  
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(authState.auth === false) navigate('/')
+  }, [])
+
   const handleLogout = () => {
-    useLogout(authState)
+    dispatch(logout())
+    
     navigate('/')
   }
   
