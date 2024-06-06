@@ -13,6 +13,8 @@ export class PatientAuthsUsecase {
     }
 
     async checkRefreshToken(data: any) {
+        // console.log('tokkkkkkkk..');
+        
         const { refreshTokens } = await this.patientActions.getToken(data)
         return refreshTokens
     }

@@ -21,7 +21,7 @@ export class JwtFramework implements IJwtRepository {
         const token = this.jwt.sign(data, {
             secret: secret,
             algorithm: 'RS256',
-            expiresIn: '1min'
+            expiresIn: '10s'
         })
         
         return token
@@ -39,7 +39,6 @@ export class JwtFramework implements IJwtRepository {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     refreshToken(data: object): string {

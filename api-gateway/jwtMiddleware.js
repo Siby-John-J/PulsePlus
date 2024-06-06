@@ -10,7 +10,7 @@ jwtMiddleware.use(expressjwt({
             rateLimit: true
         }),
         algorithms: ['RS256']
-    }).unless({path: ['/get_token', 'refresh_token', '/data']})
+    }).unless({path: ['/get_token']})
 )
 
 module.exports = jwtMiddleware

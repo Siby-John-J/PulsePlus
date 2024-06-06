@@ -8,15 +8,14 @@ import {
 import { useEffect, useMemo } from "react";
 import { useFetchRefreshToken } from "../../hooks/useFetch";
 import { authReducerType } from "../../types/sliceTypes";
-import { get } from "../../redux/slices/patient/patientDataSlice";
 
 function Profile() {
     const auth = useSelector((state: authReducerType) => state.authReducer);
-    useFetchRefreshToken(auth)
-    // const patientAuthState = useSelector((state: patientAuthReducerType) => state.patientAuthReducer)
     const patientDetailsState = useSelector(
         (state: patientDetailsReducerType) => state.patientReducer
     );
+    
+    useFetchRefreshToken(auth)
 
     const {
         address,
@@ -29,8 +28,6 @@ function Profile() {
         phone,
         place,
     } = patientDetailsState;
-
-    // console.log(patientDetailsState);
     
 
     // const { name } = patientAuthState
@@ -44,7 +41,7 @@ function Profile() {
                     Create Treatment
                 </div>
             </div>
-            {/* <Main data={{name, dob}} /> */}
+            <Main data={{name, dob}} />
             <Details
                 props={{
                     address,
@@ -73,7 +70,7 @@ function Main(props: any) {
             <div className="bg-black h-[80px] w-[80px] rounded-full mb-3"></div>
             <h1 className="text-3xl font-semibold mb-4">{props.data.name}</h1>
             <p>Created</p>
-            <p className="font-medium mb-6">09/11/2000</p>
+            <p className="font-medium mb-6">{'date'}</p>
         </div>
     );
 }

@@ -19,7 +19,6 @@ export class MongoRepository extends IPatientRepository {
     }
 
     async get(payload: any): Promise<Patient> {
-        console.log(payload)
         return await this.patientschema.findOne(payload)
     }
 

@@ -15,7 +15,7 @@ errorMiddleware = async (err, req, res, next) => {
             },
             body: JSON.stringify({
                 name: 'sus',
-                password: 'dicksmemes'
+                password: 'sus'
             })
         })
         // console.log(req.url) client must send second-request

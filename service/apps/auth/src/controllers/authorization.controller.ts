@@ -19,13 +19,14 @@ export class AuthorizationController {
     let token: null | object = null
 
     const res = await this.authH.loginToAccount(data)
+
     if(res !== null) {
       const { accessToken, refreshToken } = this.auth.create(res)
-      const { _id, name, password } = res
+      const { name, password } = res
       
       this.publish.saveRefreshToken({
         refreshToken,
-        _id,
+        // _id,
         name,
         password
       })

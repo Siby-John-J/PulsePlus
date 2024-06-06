@@ -8,3 +8,8 @@ export const useStoreGet = (): string | null => {
     const storage = window.sessionStorage
     return storage.getItem('accessToken')
 }
+
+export const useStoreDelete = () => {
+    const storage = window.sessionStorage
+    storage.removeItem('accessToken')
+}

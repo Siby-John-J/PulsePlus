@@ -17,11 +17,16 @@ export class PatientActionsController {
 
   @Put('update_password')
   updatePassword(data: any) {}
+  
 
   @Get('get')
   getPatient(@Query() payload: object) {
-    console.log(payload);
-      return this.patientUsecase.getPatient(payload)
+    console.log(payload)
+    
+      const res = this.patientUsecase.getPatient(payload)
+      console.log('res')
+      
+      return res
   }
 
   @Get('getall')

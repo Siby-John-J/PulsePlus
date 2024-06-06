@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInType } from "../../types/authTypes";
-import { useSignin } from "../../hooks/usePosts";
+import { useGettoken } from "../../hooks/useAuth";
 import { useStoreSet } from "../../hooks/useStore";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
 import { useFetchRefreshToken } from "../../hooks/useFetch";
+import { patientAuthReducerType } from "../../types/patient/patientTypes";
 
 function swtichLogin(e: any) {}
 
@@ -27,33 +28,38 @@ function LoginInput() {
 }
 
 function LoginField() {
-    const naivate = useNavigate()
-    const dispatch = useDispatch<any>()
+    const naivate = useNavigate();
+    const dispatch = useDispatch<any>();
+
+  const authState = useSelector((state: patientAuthReducerType) => state.patientAuthReducer)
 
     const [signIndata, setSignInData] = useState<signInType>({
         name: "",
         password: "",
         // auth: false
-    })
+    });
 
     const changeInput = (event: any, field: string) => {
         setSignInData((e: any) => {
             e[field] = event.target.value;
             return e;
         });
-    }
+    };
 
     const authValidate = async (event: any): Promise<void> => {
-        const res = await useSignin(signIndata)
+        const res = await useGettoken(signIndata);
+
+        console.log(res)
         
-        if(res.accessToken) {
-            useStoreSet(res.accessToken)
-            dispatch(login(signIndata))
-            return naivate('/patient/profile')
+        
+        if (res.accessToken) {
+            useStoreSet(res.accessToken);
+            dispatch(login(signIndata));
+            return naivate("/patient/profile");
         }
-        
-        throw Error('invalid request')
-    }
+
+        throw Error("invalid request");
+    };
 
     return (
         <div className="bg-white w-[100%] h-[80%] q8 items-center flex flex-col mt-8 rounded-xl shadow-xl">
@@ -68,7 +74,7 @@ function LoginField() {
                     <input
                         type="text"
                         className="h-[2.4em] w-[100%] outline-none border-b-2 border-black"
-                        onChange={e => changeInput(e, 'name')}
+                        onChange={(e) => changeInput(e, "name")}
                     />
                 </div>
                 <div className="mt-4">
@@ -76,13 +82,13 @@ function LoginField() {
                     <input
                         type="password"
                         className="h-[2.4em] w-[100%] outline-none border-b-2 border-black"
-                        onChange={e => changeInput(e, 'password')}
+                        onChange={(e) => changeInput(e, "password")}
                     />
                 </div>
                 <div className="flex flex-col text-center items-center mt-6">
-                    <button 
+                    <button
                         className="h-[2.5em] text-white bg-emerald-600 rounded-2xl w-[60%]"
-                        onClick={e => authValidate(e)}
+                        onClick={(e) => authValidate(e)}
                     >
                         Login
                         {/* <Link to={'/patient/profile'}>Login</Link> */}
