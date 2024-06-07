@@ -15,3 +15,7 @@ export enum PatientBillingTableStyle {
     TITLE = 'text-left font-normal text-gray-500 text-sm pb-2',
     DATA = 'text-black font-medium py-3'
 }
+
+export enum ModelInputStyle {
+    STYLE = 'outline-none border-[1px] border-gray-500 h-[2.5em] w-[30em] px-2 rounded-md'
+}

@@ -1,5 +1,5 @@
 import "./animation.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     detailsTypes,
     patientAuthReducerType,
@@ -8,17 +8,17 @@ import {
 import { useEffect, useMemo } from "react";
 import { useFetchRefreshToken } from "../../hooks/useFetch";
 import { authReducerType } from "../../types/sliceTypes";
+import { turnOnDetailsPopup } from "../../redux/slices/patient/patientDetailPopupSlice";
+import { turnOffappoinetmentFillupPopup, turnOnappoinetmentFillupPopup } from "../../redux/slices/patient/appointmentFillup";
 
 function Profile() {
     const auth = useSelector((state: authReducerType) => state.authReducer);
+    const dispatch = useDispatch()
     const patientDetailsState = useSelector(
         (state: patientDetailsReducerType) => state.patientReducer
     );
     
-    useFetchRefreshToken(auth)
-    useEffect(() => {
-    }, [])
-
+    // useFetchRefreshToken(auth)
     const {
         address,
         name,
@@ -30,20 +30,21 @@ function Profile() {
         phone,
         place,
     } = patientDetailsState;
-    
-
-    // const { name } = patientAuthState
-    // const dob = 'Date'
 
     return (
         <div className="mt-0 ml-8 mr-8 w-[80vw] grid grid-cols-10 grid-rows-9 gap-5">
             <div className="flex flex-row justify-between mt-4 text-black text-3xl font-semibold col-span-10 rounded-2xl">
                 <div>Profile</div>
-                <div className="text-xl flex items-center bg-orange-500 text-white px-4 rounded-md cursor-pointer">
+                <div 
+                className="text-xl flex items-center bg-orange-500 text-white px-4 rounded-md cursor-pointer"
+                onClick={e => {
+                    dispatch(turnOnappoinetmentFillupPopup())
+                }}
+                >
                     Create Treatment
                 </div>
             </div>
-            <Main data={{name, dob}} />
+            {/* <Main data={{name, dob}} /> */}
             <Details
                 props={{
                     address,
@@ -65,8 +66,6 @@ function Profile() {
 }
 
 function Main(props: any) {
-    console.log(props.data);
-
     return (
         <div className="main bg-slate-300 col-span-2 rounded-3xl row-span-4 text-black flex flex-col justify-center items-center">
             <div className="bg-black h-[80px] w-[80px] rounded-full mb-3"></div>
@@ -186,6 +185,8 @@ function AppointmentModel() {
 }
 
 function Details(props: { props: detailsTypes }) {
+    const dispatch = useDispatch()
+
     function validate(value: any) {
         if (typeof value === "object" && value.length > 20) {
             return value.toString().slice(0, 20);
@@ -259,7 +260,9 @@ function Details(props: { props: detailsTypes }) {
                  : <div></div>
             }
 
-            <div className="mb-3 cursor-pointer">edit details</div>
+            <div className="mb-3 cursor-pointer" onClick={e => {
+                dispatch(turnOnDetailsPopup())
+            }}>edit details</div>
         </div>
     );
 }

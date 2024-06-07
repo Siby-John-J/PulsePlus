@@ -33,8 +33,6 @@ export class PatientActionsController {
 
   @Post('create')
   createPatient(@Body(new ValidationPipe()) data: SignInDto) {
-      console.log(data)
-
       return this.patientUsecase.createPatient(data)
   }
 

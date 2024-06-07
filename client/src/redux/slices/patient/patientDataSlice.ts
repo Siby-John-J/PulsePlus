@@ -8,7 +8,7 @@ const initialState: detailsTypes = {
     address: '',
     age: 0,
     blood_group: '',
-    dob: new Date(),
+    dob: '',
     gender: '',
     phone: '',
     place: '',
