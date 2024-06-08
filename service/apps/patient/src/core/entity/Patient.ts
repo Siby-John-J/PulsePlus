@@ -6,6 +6,7 @@ export class Patient {
     email: string
     password: string
     family: Family[]
+    refreshTokens: string[]
 }
 
 export class Family {

@@ -5,20 +5,44 @@ import {
     patientAuthReducerType,
     patientDetailsReducerType,
 } from "../../types/patient/patientTypes";
-import { useEffect, useMemo } from "react";
 import { useFetchRefreshToken } from "../../hooks/useFetch";
 import { authReducerType } from "../../types/sliceTypes";
 import { turnOnDetailsPopup } from "../../redux/slices/patient/patientDetailPopupSlice";
-import { turnOffappoinetmentFillupPopup, turnOnappoinetmentFillupPopup } from "../../redux/slices/patient/appointmentFillup";
+import { turnOnappoinetmentFillupPopup } from "../../redux/slices/patient/appointmentFillup";
+import { useNavigate } from "react-router";
+import { useGettoken } from "../../hooks/useAuth";
+import { get } from "../../redux/slices/patient/patientDataSlice";
+import { useEffect } from "react";
+import { useStoreSet } from "../../hooks/useStore";
 
 function Profile() {
+    const navigate = useNavigate()
     const auth = useSelector((state: authReducerType) => state.authReducer);
     const dispatch = useDispatch()
     const patientDetailsState = useSelector(
         (state: patientDetailsReducerType) => state.patientReducer
     );
+
+    const authentication = async() => {
+        const response = await useFetchRefreshToken(auth)
+                
+        if(response.accessToken === 'token not found' && auth.auth) {
+            const res = await useGettoken(auth)
+            useStoreSet(res.accessToken)
+            const response = await useFetchRefreshToken(auth)
+            dispatch(get(response))
+        } else if(auth.auth === false) {
+            navigate('/')
+        } else {
+        }
+        dispatch(get(response))
+    }
+
+    useEffect(() => {
+        authentication()
+    }, [])
     
-    // useFetchRefreshToken(auth)
+
     const {
         address,
         name,
@@ -44,7 +68,7 @@ function Profile() {
                     Create Treatment
                 </div>
             </div>
-            {/* <Main data={{name, dob}} /> */}
+            <Main data={{name, dob}} />
             <Details
                 props={{
                     address,

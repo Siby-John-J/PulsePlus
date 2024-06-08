@@ -1,5 +1,5 @@
 import { InjectModel } from "@nestjs/mongoose";
-import { IPatientRepository } from "../../core";
+import { IPatientRepository, Payload, Query } from "../../core";
 import { Model } from "mongoose";
 import { Patient } from "../../core";
 import { Injectable } from "@nestjs/common";
@@ -26,7 +26,7 @@ export class MongoRepository extends IPatientRepository {
         return await this.patientschema.find({})
     }
 
-    async update(filter: object, payload: object): Promise<Patient> {
-        return await this.patientschema.findOneAndUpdate({})
+    async update(filter: Query, payload: Payload): Promise<Patient> {
+        return await this.patientschema.findOneAndUpdate(filter, payload)
     }
 }

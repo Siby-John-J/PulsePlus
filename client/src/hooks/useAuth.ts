@@ -12,8 +12,7 @@ export const useSignup = async (payload: signUpType) => {
         body: JSON.stringify(payload),
     });
 
-    const json = await response.json();
-    console.log(json);
+    const json = await response.json()
 };
 
 export const useGettoken = async (payload: signInType): Promise<responseType> => {    

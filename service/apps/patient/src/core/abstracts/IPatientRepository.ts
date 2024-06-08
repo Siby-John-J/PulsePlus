@@ -1,4 +1,4 @@
-import { Patient } from "../entity";
+import { Patient, Payload, Query } from "../entity";
 
 export abstract class IPatientRepository {
     abstract get(payload: any) : Promise<Patient>
@@ -9,5 +9,5 @@ export abstract class IPatientRepository {
     
     abstract delete() : Promise<any>
     
-    abstract update(filter: object, payload: object) : Promise<Patient>
+    abstract update(filter: Query, payload: Payload) : Promise<Patient>
 }

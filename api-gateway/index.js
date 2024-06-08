@@ -59,8 +59,6 @@ app.post('/get_token', async (req, res) => {
         const response = await fetchRequest('http://localhost:3000/authZ/create_token', payload)
         const res = await response
         token = res
-
-        // console.log(token)
     } catch (error) {
         console.log(error.statusCode);
         res.send(error.message)

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './animation.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLogout } from '../../hooks/useAuth'
-import { authReducerType, detailsPopupReducerType, popUpReducerType } from '../../types/sliceTypes'
+import { authReducerType } from '../../types/sliceTypes'
 import { logout } from '../../redux/slices/authSlice'
 import PopUp from './PopUp/PopUp'
 import EditDetails from './PopUp/EditDetails'
@@ -22,7 +22,7 @@ function Patient() {
 
   useEffect(() => {
     // if(authState.auth === false) navigate('/')
-      console.log(popupState);
+      // console.log(popupState);
   }, [])
 
   const handleLogout = () => {

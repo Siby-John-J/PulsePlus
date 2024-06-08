@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { turnOffnotSendAppoinetmentPopup } from '../../../redux/slices/patient/notSendAppoinetment'
 import { turnOnDetailsPopup } from '../../../redux/slices/patient/patientDetailPopupSlice'

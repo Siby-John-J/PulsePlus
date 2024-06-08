@@ -1,18 +1,19 @@
 import { Body, Controller, Delete, Get, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PatientUsecase } from '../usecase';
-import { SignInDto } from '../core';
+import { SignInDto, UpdateEntity } from '../core';
 import { UpdateValidationPipe } from './pipes/update-validation.pipe';
 
 @Controller('actions')
 export class PatientActionsController {
   constructor(private patientUsecase: PatientUsecase) {}
 
-  @Post('update_details')
+  @Post('update')
   @UsePipes(UpdateValidationPipe)
-  updatePatient(@Body() data: any) {
-    console.log(data)
-
-    return 'hi'
+  updatePatient(@Body() data: UpdateEntity) {
+    const { auth, ...rest } = data.query
+    console.log(data);
+    
+    return this.patientUsecase.updatePatient(rest, data.payload)
   }
 
   @Put('update_password')

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { IPatientRepository } from "../core";
+import { IPatientRepository, Payload, Query } from "../core";
 
 @Injectable()
 export class PatientUsecase {
@@ -21,7 +21,11 @@ export class PatientUsecase {
         return await this.patient.delete()
     }
 
-    async updatePatient() {
+    async updatePatient(target: Query, payload: Payload) {
+        const res = await this.patient.update(target, payload)
+        const { refreshTokens, ...rest } = res._doc
+        console.log(rest)
         
+        return rest
     }
 }
