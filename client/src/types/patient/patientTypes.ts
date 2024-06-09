@@ -8,6 +8,7 @@ export interface patientTypes {
 }
 
 export interface detailsTypes {
+    notifications?: any
     name: string
     _id?: string
     __v?: string

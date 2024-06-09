@@ -3,13 +3,12 @@ import { ModelInputStyle } from "../../../types/hardcoded/styleEnum";
 import { turnOffDetailsPopup } from "../../../redux/slices/patient/patientDetailPopupSlice";
 import { turnOnNotFilledPopup } from "../../../redux/slices/patient/notFilledSlice";
 import { patientDetailsReducerType } from "../../../types/patient/patientTypes";
-import { get } from "../../../redux/slices/patient/patientDataSlice";
 import { useEffect, useState } from "react";
 import { usePatientUpdate } from "../../../hooks/usePatient";
-import { useFetchRefreshToken } from "../../../hooks/useFetch";
 import { authReducerType } from "../../../types/sliceTypes";
 import { useGettoken } from "../../../hooks/useAuth";
 import { useStoreSet } from "../../../hooks/useStore";
+import { get } from "../../../redux/slices/patient/patientDataSlice";
 
 function EditDetails() {
     const dispatch = useDispatch();
@@ -41,14 +40,12 @@ function EditDetails() {
         const res = await usePatientUpdate(payload, auth)
         if(res.accessToken === 'token not found') {
             const res = await useGettoken(auth)
-            useStoreSet(res.accessToken)
-            
-            const response = await usePatientUpdate(payload, auth)
-            console.log(response)
-                
+            useStoreSet(res.accessToken)  
         }
+        const response = await usePatientUpdate(payload, auth)
+        const { notifications, ...rest } = response
 
-
+        dispatch(get(rest))
         
         dispatch(turnOffDetailsPopup())
         dispatch(turnOnNotFilledPopup())

@@ -30,12 +30,13 @@ function Profile() {
             const res = await useGettoken(auth)
             useStoreSet(res.accessToken)
             const response = await useFetchRefreshToken(auth)
+            
             dispatch(get(response))
         } else if(auth.auth === false) {
             navigate('/')
         } else {
+            dispatch(get(response))
         }
-        dispatch(get(response))
     }
 
     useEffect(() => {

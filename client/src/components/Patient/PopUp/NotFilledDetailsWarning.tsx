@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux"
 import { turnOffNotFilledPopup } from "../../../redux/slices/patient/notFilledSlice"
 import { turnOnDetailsPopup } from "../../../redux/slices/patient/patientDetailPopupSlice"
-// import { turnOff } from "../../../redux/slices/patient/patientDetailPopupSlice"
 
 function NotFilledDetailsWarning() {
   const dispatch = useDispatch()
