@@ -17,7 +17,7 @@ function EditDetails() {
     );
     const auth = useSelector((state: authReducerType) => state.authReducer)
     const { STYLE } = ModelInputStyle;
-    const { address, age, blood_group, gender, phone, place, email, dob, name } = patientDetailsState
+    const { address, age, blood_group, gender, phone, place } = patientDetailsState
     // let _address = /address
 
     const [_address, setAddress] = useState(address)
@@ -38,6 +38,7 @@ function EditDetails() {
         }
 
         const res = await usePatientUpdate(payload, auth)
+        
         if(res.accessToken === 'token not found') {
             const res = await useGettoken(auth)
             useStoreSet(res.accessToken)  

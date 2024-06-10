@@ -1,53 +1,17 @@
+# "service-auth": "nest start --watch auth",
 
-###
-GET http://localhost:2000/patient-service/patient/getall
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3VzIiwicGFzc3dvcmQiOiJkaWNrc21lbWVzIiwiaWF0IjoxNzE3MzMyMzExLCJleHAiOjE3MTczMzIzNzF9.k-47Bn5KG8lJn6jmY9vSrcGiXxeleKRqPBeTTVCxqzpjxzJ_FD1WQvEsuW3D-WmPlfhyxu7UcX14kb5G0DeVCyf5iPZrIS31Zm-VGCRMWtT9J0ZbgviurHoDtsZPk1FIXaj6k6LTTZT8lZW7-8Im2jDB7LnXG03xYebUon4RzPaMJd4jeoqUAbTnLJiu4LGIFtoT2Umej1IFGul4PfO41N0hG9f-kRtHxAuNtRQfVZ7djUXIe2lpReheoe0XLrKjH40q3GPsGqOwBdRmt-fXlJxL8VUxuy11-dPeslOlSZa_HUssKMa2ve26thZQv3bPm9qOR8uz6qaDkyqtDa4RZ-MI8-2VivY_mMqSL6wxvexdckPe9T13kcITNQoTIEZDHnsX6Sbj78MDnehdoFKGgX5WIiezzOvVzfQTZ83ZXwIDNyQBDB4QUVihnZViflIDL98G-ZVp0-X1vgBnQI_fCotL4u1NyvWzlmM-_JEjhwtNdHVzMkcJzClsOF6HAfTF
-
-###
-
-POST http://localhost:2000/get_token?q=User
-Authorization: ijcidfj3jfmf09dfu0e9um0fec
+POST http://localhost:3001/notes/create?id=6654c8cde055e5c8c5b0a122
 Content-Type: application/json
 
 {
-    "name": "sus",
-    "password": "dicksmemes"
+    "title": "22d",
+    "content": "this is war notes"
 }
 
 ###
 
-DELETE http://localhost:2000/auth-service/authH/logout
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3VzIiwicGFzc3dvcmQiOiJkaWNrc21lbWVzIiwiaWF0IjoxNzE3MzMyMzExLCJleHAiOjE3MTczMzIzNzF9.k-47Bn5KG8lJn6jmY9vSrcGiXxeleKRqPBeTTVCxqzpjxzJ_FD1WQvEsuW3D-WmPlfhyxu7UcX14kb5G0DeVCyf5iPZrIS31Zm-VGCRMWtT9J0ZbgviurHoDtsZPk1FIXaj6k6LTTZT8lZW7-8Im2jDB7LnXG03xYebUon4RzPaMJd4jeoqUAbTnLJiu4LGIFtoT2Umej1IFGul4PfO41N0hG9f-kRtHxAuNtRQfVZ7djUXIe2lpReheoe0XLrKjH40q3GPsGqOwBdRmt-fXlJxL8VUxuy11-dPeslOlSZa_HUssKMa2ve26thZQv3bPm9qOR8uz6qaDkyqtDa4RZ-MI8-2VivY_mMqSL6wxvexdckPe9T13kcITNQoTIEZDHnsX6Sbj78MDnehdoFKGgX5WIiezzOvVzfQTZ83ZXwIDNyQBDB4QUVihnZViflIDL98G-ZVp0-X1vgBnQI_fCotL4u1NyvWzlmM-_JEjhwtNdHVzMkcJzClsOF6HAfTF
-
-###
-POST http://localhost:3000/authH/signup
-Content-Type: application/json
-
-{
-    "name": "user123",
-    "email": "memes@gmail.com",
-    "password": "logins#4321"
-}
+GET http://localhost:3001/notes/get?id=6654c8cde055e5c8c5b0a122
 
 ###
 
-GET http://localhost:3001/patient/getall
-
-###
-
-GET http://localhost:3000/authZ/status
-Authorization: Bearer 
-
-###
-
-POST http://localhost:2000/auth-service/auth/refresh
-Content-Type: application/json
-
-{
-    "token": ""
-}
-
-###
-
-DELETE http://localhost:2000/auth-service/auth/delete
-Authorization: Bearer 
+DELETE http://localhost:3001/notes/delete?id=6654c8cde055e5c8c5b0a122

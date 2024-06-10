@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(cors({
     origin: '*',
 }))
-app.use(jwtMiddleware)
+// app.use(jwtMiddleware)
 
 const services = [
     {

@@ -1,7 +1,3 @@
-import AppoinetmentFillup from './AppoinetmentFillup'
-import CannotSendAppointmentWarning from './CannotSendAppointmentWarning'
-import EditDetails from './EditDetails'
-import NotFilledDetailsWarning from './NotFilledDetailsWarning'
 import './PopUp.css'
 
 function PopUp(props: any) {

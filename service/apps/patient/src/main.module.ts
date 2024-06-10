@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { PatientAuthController } from './controllers/patient-auth.controller';
 import { PatientUseCaseModule } from './usecase/patient-usecase.module';
 import { MongoServiceModule } from './services/mongo-service.module';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -7,7 +6,9 @@ import { RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import * as joi from 'joi';
 import { AUTH_SERVICE } from '../constants/services';
-import { PatientActionsController } from './controllers/patient-actions.controller';
+import { PatientAuthController } from './controllers';
+import { PatientActionsController } from './controllers';
+import { PatientNotesController } from './controllers';
 
 @Module({
   imports: [
@@ -24,6 +25,10 @@ import { PatientActionsController } from './controllers/patient-actions.controll
     PatientUseCaseModule,
     MongoServiceModule,
   ],
-  controllers: [PatientAuthController, PatientActionsController],
+  controllers: [
+    PatientAuthController, 
+    PatientActionsController,
+    PatientNotesController
+  ]
 })
 export class PatientModule {}

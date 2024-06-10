@@ -16,3 +16,22 @@ export const usePatientUpdate = async (payload: any, query: object): Promise<res
 
     return await response.json();
 }
+
+export const useFetchPatientTemplate = async(url: string, payload: any) => {
+    const token = useStoreGet()
+
+    try {
+        const response = await fetch(url, {
+            method: 'post',
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload)
+        })
+    
+        return await response.json()
+    } catch (error) {
+        return await error
+    }
+}

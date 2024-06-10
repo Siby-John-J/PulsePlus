@@ -16,11 +16,6 @@ import Login from "./components/Auth/Login";
 import LoginBannerIcon from "./Icons/login";
 import RegisterForm, { RegisterBanner } from "./components/Auth/Register";
 
-    {/* {route?.childrenProps && (
-        <route.childrenProps />
-    )} */}
-// </route.component>
-
 function App() {
     const [count, setCount] = useState(0);
 

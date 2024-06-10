@@ -5,6 +5,8 @@ import patientDetailPopupReducer from "./slices/patient/patientDetailPopupSlice"
 import notSendAppoinetmentReducer from "./slices/patient/notSendAppoinetment"
 import notFilledSliceReducer from "./slices/patient/notFilledSlice"
 import appointmentFillupReducer from "./slices/patient/appointmentFillup"
+import notesPopupReducer from "./slices/patient/notesPopupSlice"
+import notesReducer from "./slices/patient/notesSlice"
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +15,8 @@ export const store = configureStore({
         patientDetailPopupReducer,
         notSendAppoinetmentReducer,
         notFilledSliceReducer,
-        appointmentFillupReducer
+        appointmentFillupReducer,
+        notesPopupReducer,
+        // notesReducer
     }
 })

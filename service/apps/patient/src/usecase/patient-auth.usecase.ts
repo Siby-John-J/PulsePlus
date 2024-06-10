@@ -1,25 +1,25 @@
 import { Injectable } from "@nestjs/common";
-import { IPatientActions, refreshTokenPayload } from "../core";
+import { IPatientTokens, refreshTokenPayload } from "../core";
 
 @Injectable()
 export class PatientAuthsUsecase {
-    constructor(private patientActions: IPatientActions) {}
+    constructor(private patientToken: IPatientTokens) {}
 
     async saveRefreshToken(payload: refreshTokenPayload) {
         const { refreshToken, ...query } = payload
         
-        await this.patientActions.saveToken(query, refreshToken)
+        await this.patientToken.saveToken(query, refreshToken)
         return 'any'
     }
 
     async checkRefreshToken(data: any) {
         // console.log('tokkkkkkkk..');
         
-        const { refreshTokens } = await this.patientActions.getToken(data)
+        const { refreshTokens } = await this.patientToken.getToken(data)
         return refreshTokens
     }
 
     async logoutPatient(payload: string) {
-        return this.patientActions.clearTokens(JSON.parse(payload))
+        return this.patientToken.clearTokens(JSON.parse(payload))
     }
 }

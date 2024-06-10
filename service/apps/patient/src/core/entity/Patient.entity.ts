@@ -13,3 +13,10 @@ export class Family {
     name: string
     relation: string
 }
+
+export class Note {
+    title: string
+    content: string
+    patientId: string
+    created?: Date
+}

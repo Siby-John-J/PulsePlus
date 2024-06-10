@@ -1,3 +1,4 @@
 
 export * from './IPatientRepository'
-export * from './IPatientActions'
+export * from './IPatientTokens'
+export * from './IPatientNotes'
