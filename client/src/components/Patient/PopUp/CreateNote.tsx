@@ -7,6 +7,7 @@ import { notesTypes } from "../../../types/patient/notesTypes"
 
 function CreateNote() {
     const dispatch = useDispatch()
+    const state = useSelector((state) => state)
     const [data, setData] = useState<notesTypes>({
         content: '',
         title: ''
@@ -14,8 +15,9 @@ function CreateNote() {
 
     const saveNotes = async() => {
         dispatch(turnOffnotesFillupPopup())
-
-        const url  = 'http://localhost:2000/notes'
+        const id = state.patientReducer.id
+        
+        const url  = `http://localhost:2000/notes/create?id=${id}`
         const response = await useFetchPatientTemplate(url, data)
         console.log(response)
         

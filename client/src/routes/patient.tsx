@@ -1,5 +1,5 @@
 import Billing from "../components/Patient/Billing/Billing";
-import Profile from "../components/Patient/Profile";
+import Profile from "../components/Patient/Profile/Profile";
 import Surgery from "../components/Patient/Surgery/Surgery";
 import PatientChats from "../components/Patient/chats/PatientChats";
 import Medics from "../components/Patient/medics/Medics";
