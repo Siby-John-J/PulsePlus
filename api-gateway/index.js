@@ -31,6 +31,15 @@ const services = [
         },
         changeOrigin: true,
         secure: false,
+    },
+    {
+        path: '/admin-service',
+        target: "http://localhost:3002",
+        pathRewrite: {
+            "^/admin-service": ""
+        },
+        changeOrigin: true,
+        secure: false,
     }
 ]
 

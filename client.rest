@@ -10,7 +10,10 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/notes/get?id=6654c8cde055e5c8c5b0a122
+    # "service-auth": "nest start --watch auth",
+    # "service-patient": "nest start --watch patient",
+
+GET http://localhost:2000/admin-service/
 
 ###
 
