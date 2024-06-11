@@ -1,4 +1,4 @@
-# "service-auth": "nest start --watch auth",
+# 
 
 POST http://localhost:3001/notes/create?id=6654c8cde055e5c8c5b0a122
 Content-Type: application/json

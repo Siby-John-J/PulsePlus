@@ -5,22 +5,22 @@ import { useState } from "react"
 import { addNotes } from "../../../redux/slices/patient/notesSlice"
 import { notesTypes } from "../../../types/patient/notesTypes"
 
+
 function CreateNote() {
+    const state = useSelector((state: any) => state)
     const dispatch = useDispatch()
-    const state = useSelector((state) => state)
     const [data, setData] = useState<notesTypes>({
         content: '',
         title: ''
     })
-
+     
     const saveNotes = async() => {
-        dispatch(turnOffnotesFillupPopup())
-        const id = state.patientReducer.id
+        const id = state.patientReducer._id        
         
-        const url  = `http://localhost:2000/notes/create?id=${id}`
+        const url  = `http://localhost:2000/patient-service/notes/create?id=${id}`
         const response = await useFetchPatientTemplate(url, data)
         console.log(response)
-        
+        dispatch(turnOffnotesFillupPopup())
     }
 
     return (
@@ -56,7 +56,8 @@ function CreateNote() {
                         dispatch(turnOffnotesFillupPopup())
                     }}
                 >Cancel</button>
-                <button className="px-4 mx-4 py-1 rounded-md text-white bg-green-500" onClick={saveNotes}>Send</button>
+                <button className="px-4 mx-4 py-1 rounded-md text-white bg-green-500" 
+                    onClick={saveNotes}>Send</button>
             </div>
         </div>
   )

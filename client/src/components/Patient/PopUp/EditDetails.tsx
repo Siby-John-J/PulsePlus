@@ -41,15 +41,15 @@ function EditDetails() {
         
         if(res.accessToken === 'token not found') {
             const res = await useGettoken(auth)
-            useStoreSet(res.accessToken)  
+            useStoreSet(res.accessToken)
         }
         const response = await usePatientUpdate(payload, auth)
-        const { notifications, ...rest } = response
+        const { notifications, ...rest } = response._doc
 
         dispatch(get(rest))
         
         dispatch(turnOffDetailsPopup())
-        dispatch(turnOnNotFilledPopup())
+        // dispatch(turnOnNotFilledPopup())
         
     }
 

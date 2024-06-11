@@ -10,7 +10,7 @@
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "concurrently -c \"yellow.bold,#ffa500.bold\"  \"npm:service-*\"",
-    
+    "service-auth": "nest start --watch auth",
     "service-patient": "nest start --watch patient",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/services/main",

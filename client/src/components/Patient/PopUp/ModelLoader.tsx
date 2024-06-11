@@ -8,10 +8,7 @@ import CreateNote from './CreateNote'
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state)
-
-    console.log(popupState.notesPopupReducer)
     
-
     return (
         <>
         {

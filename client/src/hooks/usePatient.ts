@@ -30,6 +30,25 @@ export const useFetchPatientTemplate = async(url: string, payload: any) => {
             body: JSON.stringify(payload)
         })
     
+        console.log(await response.json());
+        
+        return await response.json()
+    } catch (error) {
+        return await error
+    }
+}
+
+export const useFetchPatientGetTemplate = async(url: string) => {
+    const token = useStoreGet()
+
+    try {
+        const response = await fetch(url, {
+            method: 'get',
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+        })
+        
         return await response.json()
     } catch (error) {
         return await error

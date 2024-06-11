@@ -6,11 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLogout } from '../../hooks/useAuth'
 import { authReducerType } from '../../types/sliceTypes'
 import { logout } from '../../redux/slices/authSlice'
-import PopUp from './PopUp/PopUp'
-import EditDetails from './PopUp/EditDetails'
-import NotFilledDetailsWarning from './PopUp/NotFilledDetailsWarning'
-import AppoinetmentFillup from './PopUp/AppoinetmentFillup'
-import CannotSendAppointmentWarning from './PopUp/CannotSendAppointmentWarning'
 import PatientModelLoader from './PopUp/ModelLoader'
 
 function Patient() {

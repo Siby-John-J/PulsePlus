@@ -44,7 +44,6 @@ function LoginField() {
 
     const authValidate = async (event: any) => {
         const res = await useGettoken(signIndata);
-        console.log(res)
         
         
         if (res.accessToken) {
