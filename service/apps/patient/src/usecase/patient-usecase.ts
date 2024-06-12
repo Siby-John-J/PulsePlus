@@ -1,9 +1,12 @@
 import { Injectable } from "@nestjs/common";
-import { IPatientRepository, Payload, Query } from "../core";
+import { IPatientRepository, IPublisher, Payload, Query } from "../core";
 
 @Injectable()
 export class PatientUsecase {
-    constructor(private patient: IPatientRepository) {}
+    constructor(
+        private patient: IPatientRepository,
+        private publisher: IPublisher
+    ) {}
 
     async getAllPatients() {
         return await this.patient.getAll()
@@ -26,5 +29,9 @@ export class PatientUsecase {
         const { refreshTokens, ...rest } = res // res._doc
         
         return rest
+    }
+    
+    async createAppoinetment(payload: any) {
+        this.publisher.publish('appoinetment', payload)
     }
 }

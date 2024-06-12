@@ -19,3 +19,8 @@ export enum PatientBillingTableStyle {
 export enum ModelInputStyle {
     STYLE = 'outline-none border-[1px] border-gray-500 h-[2.5em] w-[30em] px-2 rounded-md'
 }
+
+export enum AppointmentAddStyle {
+    ADDED = "px-4 bg-blue-500 text-white rounded-md h-[2em]",
+    NOT_ADDED = "px-4 bg-gray-300 rounded-md h-[2em]"
+}

@@ -41,4 +41,9 @@ export class PatientActionsController {
   deletePatient() {
       return this.patientUsecase.deletePatient()
   }
+
+  @Post('create_appoinetment')
+  createAppoinetment(@Body() data: any) {
+    this.patientUsecase.createAppoinetment(data)
+  }
 }

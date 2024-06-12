@@ -1,7 +1,10 @@
 import { Link, Outlet } from "react-router-dom"
+import { AdminModelLoader } from "../ModelLoader"
 
 function Admin() {
   return (
+    <>
+    <AdminModelLoader />
     <div className=" w-[100%] h-[100%]">
       <AdminHeader />
       <div className="flex flex-row w-[100%] h-[90%]">
@@ -9,6 +12,7 @@ function Admin() {
         <Outlet />
       </div>
     </div>
+    </>
   )
 }
 

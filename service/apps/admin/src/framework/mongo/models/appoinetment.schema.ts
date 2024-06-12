@@ -13,6 +13,9 @@ export class Appoinetment {
 
     @Prop()
     status: string
+
+    @Prop()
+    senderId: string
 }
 
 export const AppoinetmentSchema = SchemaFactory.createForClass(Appoinetment)

@@ -1,8 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { IAppointment, AppoinetmentEnitity } from '../core';
 
 @Injectable()
 export class AppoinetmentUsecase {
-  getHello(): string {
-    return 'Hello World!';
+  constructor(private app: IAppointment) {}
+
+  async create(appoinetment: AppoinetmentEnitity): Promise<AppoinetmentEnitity> {
+    return await this.app.createAppoinetment(appoinetment)
+  }
+
+  async get(): Promise<AppoinetmentEnitity[]> {
+    return await this.app.getAppoinetment()
   }
 }

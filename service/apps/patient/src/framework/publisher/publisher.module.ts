@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
-import { IPublisher } from "./IPublisher";
+import { IPublisher } from "../../core";
 import { PublisherFramework } from "./publisher.framework";
 import { RmqModule } from "@app/common";
 
 @Module({
     imports: [
         RmqModule.register(
-          { name: 'PATIENT' }
+          { name: 'ADMIN' }
         ),
     ],
     providers: [

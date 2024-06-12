@@ -1,11 +1,12 @@
 # 
 
-POST http://localhost:3001/notes/create?id=6654c8cde055e5c8c5b0a122
+POST http://localhost:2000/admin-service/appointment/create
 Content-Type: application/json
 
 {
-    "title": "22d",
-    "content": "this is war notes"
+    "title": "new",
+    "content": "iam on my dieria",
+    "status": "pending"
 }
 
 ###
@@ -13,7 +14,7 @@ Content-Type: application/json
     # "service-auth": "nest start --watch auth",
     # "service-patient": "nest start --watch patient",
 
-GET http://localhost:2000/admin-service/
+GET http://localhost:2000/admin-service/appointment/get
 
 ###
 

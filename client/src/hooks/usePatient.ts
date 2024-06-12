@@ -29,8 +29,6 @@ export const useFetchPatientTemplate = async(url: string, payload: any) => {
             },
             body: JSON.stringify(payload)
         })
-    
-        console.log(await response.json());
         
         return await response.json()
     } catch (error) {
