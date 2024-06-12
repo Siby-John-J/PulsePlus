@@ -10,8 +10,8 @@
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "concurrently -c \"yellow.bold,#ffa500.bold,blue.bold\"  \"npm:service-*\"",
+    "service-patient": "nest start --watch patient",
     
-    "service-admin": "nest start --watch admin",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/services/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

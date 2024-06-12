@@ -36,7 +36,7 @@ export const useFetchPatientTemplate = async(url: string, payload: any) => {
     }
 }
 
-export const useFetchPatientGetTemplate = async(url: string) => {
+export const useFetchGetTemplate = async(url: string) => {
     const token = useStoreGet()
 
     try {

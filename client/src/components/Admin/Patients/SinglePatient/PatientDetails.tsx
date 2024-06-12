@@ -2,13 +2,13 @@
 import { UserTemplate } from '../../Dashboard/DoctorMiniList'
 import { UserTemplateStyle } from '../../../../types/hardcoded/styleEnum'
 
-function PatientDetails() {
+function PatientDetails(props: { id: string | undefined }) {
     const { ROW } = UserTemplateStyle
     
     return (
         <>
             <div className='scale-[200%] mt-[4.4em] ml-[4em]'>
-                <UserTemplate details={{name: 'Siby John', details: '34', style: 'text-[12px]', mainStyle: ROW}} />
+                <UserTemplate details={{name: props.id, details: '34', style: 'text-[12px]', mainStyle: ROW}} />
             </div>
             <MoreDetails />
             <PatientActions />

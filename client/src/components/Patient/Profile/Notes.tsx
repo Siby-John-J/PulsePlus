@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { turnOnnotesFillupPopup } from "../../../redux/slices/patient/notesPopupSlice";
 import { useEffect, useState } from "react";
-import { useFetchPatientGetTemplate } from "../../../hooks/usePatient";
+import { useFetchGetTemplate } from "../../../hooks/usePatient";
 import { notesTypes } from "../../../types/patient/notesTypes";
 
 function Notes() {
@@ -18,7 +18,7 @@ function Notes() {
 
     const renderData = async () => {
         const url = 'http://localhost:2000/patient-service/notes/get?id=6654c8cde055e5c8c5b0a122'
-        const response = await useFetchPatientGetTemplate(url)
+        const response = await useFetchGetTemplate(url)
         setNotes(response)
     }
 

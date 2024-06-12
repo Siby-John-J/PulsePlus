@@ -36,7 +36,7 @@ function AdminModelLoader() {
     return (
         <>
             {
-                <PopUp component={<AcceptAppointment />} />
+                // <PopUp component={<AcceptAppointment />} />
             }
         </>
     )

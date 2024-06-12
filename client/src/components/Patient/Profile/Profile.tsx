@@ -24,10 +24,7 @@ function Profile() {
     );
 
     const authentication = async() => {
-        const response = await useFetchRefreshToken(auth)
-
-        
-        
+        const response = await useFetchRefreshToken(auth)        
                 
         if(response.accessToken === 'token not found' && auth.auth) {
             const res = await useGettoken(auth)
