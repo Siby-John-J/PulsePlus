@@ -62,7 +62,7 @@ function RegisterForm() {
                 <form
                     className="w-[100%] h-[80%] flex flex-col justify-evenly"
                     onSubmit={(e) => {
-                        useSignup(loginData);
+                        useSignup(loginData, 'patient');
                         e.preventDefault();
                     }}
                 >

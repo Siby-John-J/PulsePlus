@@ -1,9 +1,8 @@
 import { Body, Controller, Delete, Get, Header, Headers, Post, UseGuards } from "@nestjs/common";
 import { AuthenticationUsecase, AuthorizationUsecase } from "../usecase";
 import { LoginDto, SignIn } from "../core";
-import { LocalGuard } from "./guard";
+import { RolesGuard } from "./guard";
 import { SignUpDto } from "apps/patient/src/core";
-import { body } from "express-validator";
 
 @Controller('AuthH')
 export class AuthenticationController {
@@ -13,7 +12,7 @@ export class AuthenticationController {
     ) {}
     
     @Post('login')
-    @UseGuards(LocalGuard)
+    @UseGuards(RolesGuard)
     async login(@Body() body: LoginDto) {
         return this.auth.loginToAccount(body)
     }

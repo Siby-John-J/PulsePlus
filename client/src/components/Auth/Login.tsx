@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInType } from "../../types/authTypes";
 import { useGettoken } from "../../hooks/useAuth";
 import { useStoreSet } from "../../hooks/useStore";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
 
 function swtichLogin(e: any) {}
@@ -43,10 +43,9 @@ function LoginField() {
     };
 
     const authValidate = async (event: any) => {
-        const res = await useGettoken(signIndata);
+        const res = await useGettoken(signIndata, 'patient')
         
-        
-        if (res.accessToken) {
+        if(res.accessToken) {
             setSignInData(e => {
                 e.auth = true
                 return e
@@ -60,8 +59,6 @@ function LoginField() {
             useStoreSet(res.accessToken);
             return naivate("/patient/profile");
         }
-
-        throw Error("invalid request");
     };
 
     return (

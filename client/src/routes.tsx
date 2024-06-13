@@ -14,6 +14,7 @@ import LoginBannerIcon from "./Icons/login";
 import { Register, RegisterBanner } from "./components/Auth/Register";
 import RegisterForm from "./components/Auth/Register";
 import { doctorRoutes } from "./routes/doctor";
+import AdminLogin from "./components/Auth/AdminLogin";
 
 export const routeSwitch = {};
 
@@ -38,10 +39,10 @@ export const appRoutes: RouteType[] = [
     //     component: Doctor,
     //     childrenRoutes: doctorRoutes
     // },
-    // {
-    //     path: '/admin/dashboard',
-    //     component: Admin
-    // },
+    {
+        path: '/admin',
+        component: AdminLogin
+    },
     {
         path: "*",
         component: NotFound,

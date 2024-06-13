@@ -40,7 +40,7 @@ function EditDetails() {
         const res = await usePatientUpdate(payload, auth)
         
         if(res.accessToken === 'token not found') {
-            const res = await useGettoken(auth)
+            const res = await useGettoken(auth, 'patient')
             useStoreSet(res.accessToken)
         }
         const response = await usePatientUpdate(payload, auth)

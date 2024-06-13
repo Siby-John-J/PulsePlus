@@ -9,8 +9,8 @@
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "concurrently -c \"yellow.bold,#ffa500.bold,blue.bold\"  \"npm:service-*\"",
-    "service-patient": "nest start --watch patient",
+    "start:dev": "concurrently -c \"yellow.bold,blue.bold,#ffa500.bold\"  \"npm:service-*\"",
+    "service-auth": "nest start --watch auth",
     
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/services/main",

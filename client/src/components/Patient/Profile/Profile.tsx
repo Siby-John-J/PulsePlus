@@ -27,7 +27,7 @@ function Profile() {
         const response = await useFetchRefreshToken(auth)        
                 
         if(response.accessToken === 'token not found' && auth.auth) {
-            const res = await useGettoken(auth)
+            const res = await useGettoken(auth, 'patient')
             useStoreSet(res.accessToken)
             const response = await useFetchRefreshToken(auth)
             

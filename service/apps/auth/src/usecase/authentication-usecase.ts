@@ -7,7 +7,7 @@ export class AuthenticationUsecase {
     constructor(private publisher: IPublisher) {}
 
     async loginToAccount(data: LoginDto) {
-        return await this.publisher.publish('login', data)
+        return await this.publisher.publish(data.roles, data)
     }
 
     async logoutFromAccount(payload: SignIn) {

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthenticationUsecase, AuthorizationUsecase, PublisherUseCase } from '../usecase';
 import { LoginDto, SignIn, TokenResponseEntity } from '../core';
-import { LocalGuard } from './guard';
+import { RolesGuard } from './guard';
 import { Request } from 'express';
 import { JwtGuard } from './guard/jwt.guard';
 
@@ -14,15 +14,15 @@ export class AuthorizationController {
   ) {}
 
   @Post('create_token')
-  @UseGuards(LocalGuard)
+  @UseGuards(RolesGuard)
   async signIn(@Body() data: LoginDto) {
     let token: null | object = null
 
-    const res = await this.authH.loginToAccount(data)
+    const response = await this.authH.loginToAccount(data)
 
-    if(res !== null) {
-      const { accessToken, refreshToken } = this.auth.create(res)
-      const { name, password } = res
+    if(response !== null) {
+      const { accessToken, refreshToken } = this.auth.create(response)
+      const { name, password } = response
       
       this.publish.saveRefreshToken({
         refreshToken,

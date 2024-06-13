@@ -2,8 +2,8 @@ import { signInType, signUpType } from "../types/authTypes";
 import { responseType } from "../types/responseType";
 import { useStoreGet } from "./useStore";
 
-export const useSignup = async (payload: signUpType) => {
-    const response = await fetch("http://localhost:2000/sign_up?q=patient", {
+export const useSignup = async (payload: signUpType, role: string) => {
+    const response = await fetch(`http://localhost:2000/sign_up?q=${role}`, {
         method: "post",
         headers: {
             "Authorization": "08ac399a9b2ff2d0027fa53f7eb783a19b52",
@@ -15,8 +15,8 @@ export const useSignup = async (payload: signUpType) => {
     const json = await response.json()
 };
 
-export const useGettoken = async (payload: signInType): Promise<responseType> => {    
-    const response = await fetch("http://localhost:2000/get_token?q=patient", {
+export const useGettoken = async (payload: signInType, role: string): Promise<responseType> => {    
+    const response = await fetch(`http://localhost:2000/get_token?q=${role}`, {
         method: "post",
         headers: {
             "Authorization": "b1fc724a4e201b53669c1cdb727c9a24bc3c",

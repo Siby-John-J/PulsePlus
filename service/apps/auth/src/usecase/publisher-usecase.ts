@@ -6,7 +6,7 @@ export class PublisherUseCase {
     constructor(private publisher: IPublisher) {}
 
     saveRefreshToken(payload: refreshTokenPayload) {
-        this.publisher.publish('save_token', payload)
+        this.publisher.publish('save_token:patient', payload)
     }
 
     async checkRefreshToken(payload: object) {

@@ -6,4 +6,7 @@ export class LoginDto {
 
     @IsString()
     password: string
+
+    @IsString()
+    roles: 'patient:login' | 'admin:login' | 'doctor:login'
 }

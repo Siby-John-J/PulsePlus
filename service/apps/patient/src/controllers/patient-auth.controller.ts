@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
-import { PatientUsecase } from "../usecase/patient-usecase";
+import { PatientUsecase } from "../usecase";
 import { Ctx, EventPattern, Payload, RmqContext } from "@nestjs/microservices";
-import { SignInDto, refreshTokenPayload } from "../core";
+import { refreshTokenPayload } from "../core";
 import { RmqService } from "@app/common";
 import { PatientAuthsUsecase } from "../usecase";
 
@@ -13,7 +13,7 @@ export class PatientAuthController {
         private rmqService: RmqService
     ) {}
 
-    @EventPattern('login')
+    @EventPattern('patient:login')
     async LoginPatient(@Payload() data: any, @Ctx() context: RmqContext) {
         const { auth, ...rest } = data
         
@@ -22,21 +22,21 @@ export class PatientAuthController {
        return res
     }
 
-    @EventPattern('logout')
+    @EventPattern('patient:logout')
     async LogoutPatient(@Payload() data: any, @Ctx() context: RmqContext) {
        const res = await this.patientAuthsUsecase.logoutPatient(data)
        this.rmqService.ack(context)
        return res
     }
 
-    @EventPattern('signup')
+    @EventPattern('patient:signup')
     async SignUpPatient(@Payload() data: any,@Ctx() context: RmqContext) {
         const res = this.patientUsecase.createPatient(data)
         this.rmqService.ack(context)
         return res
     }
 
-    @EventPattern('save_token')
+    @EventPattern('save_token:patient')
     saveRefreshToken(@Payload() data: refreshTokenPayload, @Ctx() context: RmqContext) {
         this.patientAuthsUsecase.saveRefreshToken(data)
         this.rmqService.ack(context)
