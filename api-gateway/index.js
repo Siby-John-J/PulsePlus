@@ -1,6 +1,6 @@
 const express = require('express')
 const { createProxyMiddleware, fixRequestBody } = require('http-proxy-middleware')
-const jwtMiddleware = require('./jwtMiddleware')
+const jwtMiddleware = require('./middlewares/jwtMiddleware')
 const errorMiddleware = require('./middlewares/err-handlingMiddleware')
 const fetchRequest = require('./fetchRequest')
 const cors = require('cors')
@@ -63,7 +63,7 @@ app.post('/get_token', async (req, res) => {
     }
     
     let token = null
-
+    
     try {
         const response = await fetchRequest('http://localhost:3000/authZ/create_token', payload)
         const res = await response

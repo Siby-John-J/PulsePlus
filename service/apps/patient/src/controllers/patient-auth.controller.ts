@@ -15,9 +15,13 @@ export class PatientAuthController {
 
     @EventPattern('patient:login')
     async LoginPatient(@Payload() data: any, @Ctx() context: RmqContext) {
+        console.log('hi patient..');
+        
         const { auth, ...rest } = data
         
        const res = await this.patientUsecase.getPatient(rest)
+       console.log(res)
+       
        this.rmqService.ack(context)
        return res
     }

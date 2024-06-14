@@ -8,9 +8,9 @@ export class RolesGuard implements CanActivate {
         const req = context.switchToHttp().getRequest()
         
         const extractedRole = req.headers['roles']
-
+        
         if(extractedRole === undefined) return false
-        req.body['roles'] = extractedRole + ':login'
+        req.body['roles'] = extractedRole
 
         return true
     }

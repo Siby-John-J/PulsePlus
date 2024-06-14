@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthenticationUsecase, AuthorizationUsecase, PublisherUseCase } from '../usecase';
-import { LoginDto, SignIn, TokenResponseEntity } from '../core';
+import { LoginDto } from '../core';
 import { RolesGuard } from './guard';
 import { Request } from 'express';
-import { JwtGuard } from './guard/jwt.guard';
+import { JwtGuard } from './guard';
+import { RoleToPublishPipe } from './pipes';
 
 @Controller('authZ')
 export class AuthorizationController {
@@ -15,11 +16,11 @@ export class AuthorizationController {
 
   @Post('create_token')
   @UseGuards(RolesGuard)
-  async signIn(@Body() data: LoginDto) {
+  async signIn(@Body(new RoleToPublishPipe()) data: LoginDto) {
     let token: null | object = null
-
+    
     const response = await this.authH.loginToAccount(data)
-
+    
     if(response !== null) {
       const { accessToken, refreshToken } = this.auth.create(response)
       const { name, password } = response

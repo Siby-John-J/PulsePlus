@@ -15,14 +15,18 @@ export const useSignup = async (payload: signUpType, role: string) => {
     const json = await response.json()
 };
 
-export const useGettoken = async (payload: signInType, role: string): Promise<responseType> => {    
+export const useGettoken = async (payload: signInType, role: string): Promise<responseType> => {
+    const { name, ...rest } = payload 
     const response = await fetch(`http://localhost:2000/get_token?q=${role}`, {
         method: "post",
         headers: {
             "Authorization": "b1fc724a4e201b53669c1cdb727c9a24bc3c",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+            username: name,
+            ...rest
+        }),
     });
 
     return await response.json();

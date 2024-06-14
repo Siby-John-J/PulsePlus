@@ -13,6 +13,9 @@ import { PublisherServiceModule } from './services/publisher-service.module';
     RmqModule.register(
       { name: 'PATIENT' }
     ),
+    RmqModule.register(
+      { name: 'ADMIN' }
+    ),
     UsecaseModule,
     JwtServiceModule,
     PublisherServiceModule,
