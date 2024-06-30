@@ -1,20 +1,27 @@
 import { Module } from "@nestjs/common";
-import { IPublisher } from "../../core";
-import { PublisherFramework } from "./publisher.framework";
+import { IAdminPublisher, IPatientPublisher } from "../../core";
+import { AdminPublisherFramework, PatientPublisherFramework } from "./publisher.framework";
 import { RmqModule } from "@app/common";
 
 @Module({
     imports: [
+        RmqModule.register(
+            { name: 'ADMIN' }
+        ),
         RmqModule.register(
           { name: 'PATIENT' }
         ),
     ],
     providers: [
         {
-            useClass: PublisherFramework,
-            provide: IPublisher,
+            useClass: PatientPublisherFramework,
+            provide: IPatientPublisher,
+        },
+        {
+            useClass: AdminPublisherFramework,
+            provide: IAdminPublisher,
         },
     ],
-    exports: [IPublisher]
+    exports: [IPatientPublisher, IAdminPublisher]
 })
 export class PublisherModule {}

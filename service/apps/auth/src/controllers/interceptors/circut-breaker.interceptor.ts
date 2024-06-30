@@ -4,6 +4,6 @@ import { Observable } from "rxjs";
 @Injectable()
 export class CircutBreaker implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
-        return Promise.resolve()
+        return Promise.resolve(true)
     }
 }

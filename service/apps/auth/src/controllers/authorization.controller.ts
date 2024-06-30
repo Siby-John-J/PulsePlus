@@ -16,7 +16,7 @@ export class AuthorizationController {
 
   @Post('create_token')
   @UseGuards(RolesGuard)
-  async signIn(@Body(new RoleToPublishPipe()) data: LoginDto) {
+  async signIn(@Body() data: LoginDto) {
     let token: null | object = null
     
     const response = await this.authH.loginToAccount(data)
@@ -27,16 +27,15 @@ export class AuthorizationController {
       
       this.publish.saveRefreshToken({
         refreshToken,
-        // _id,
         name,
         password
       })
 
       token = { accessToken }
+      return token
     } else {
       throw new HttpException('user not found', HttpStatus.NOT_FOUND)
     }
-    return token
   }
 
   @Get('status')

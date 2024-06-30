@@ -8,5 +8,5 @@ export class LoginDto {
     password: string
 
     @IsString()
-    roles: 'patient' | 'admin' | 'doctor'
+    role: 'patient' | 'admin' | 'doctor'
 }

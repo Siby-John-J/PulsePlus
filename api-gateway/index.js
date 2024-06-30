@@ -66,14 +66,16 @@ app.post('/get_token', async (req, res) => {
     
     try {
         const response = await fetchRequest('http://localhost:3000/authZ/create_token', payload)
-        const res = await response
-        token = res
-    } catch (error) {
-        console.log(error.statusCode);
-        res.send(error.message)
+        const resp = await response
+        token = resp
+        res.send(token)
+    } catch (error) { 
+        console.log(error);
+        res.send({
+            error: 'occured'
+        })
     }
     
-    res.send(JSON.stringify(token))
 })
 
 app.post('/sign_up', async(req, res) => {

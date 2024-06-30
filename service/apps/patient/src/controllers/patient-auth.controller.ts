@@ -12,21 +12,21 @@ export class PatientAuthController {
         private patientAuthsUsecase: PatientAuthsUsecase,
         private rmqService: RmqService
     ) {}
-
-    @EventPattern('patient:login')
+    
+    @EventPattern('login')
     async LoginPatient(@Payload() data: any, @Ctx() context: RmqContext) {
-        console.log('hi patient..');
+        const { auth, ...rest } = JSON.parse(data)
         
-        const { auth, ...rest } = data
-        
-       const res = await this.patientUsecase.getPatient(rest)
-       console.log(res)
+       const res = await this.patientUsecase.getPatient({
+        name: rest.username,
+        password: rest.password
+       })
        
        this.rmqService.ack(context)
        return res
     }
 
-    @EventPattern('patient:logout')
+    @EventPattern('logout')
     async LogoutPatient(@Payload() data: any, @Ctx() context: RmqContext) {
        const res = await this.patientAuthsUsecase.logoutPatient(data)
        this.rmqService.ack(context)

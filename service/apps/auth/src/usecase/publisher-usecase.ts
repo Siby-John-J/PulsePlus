@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { IPublisher, refreshTokenPayload } from "../core";
+import { IPatientPublisher, refreshTokenPayload } from "../core";
 
 @Injectable()
 export class PublisherUseCase {
-    constructor(private publisher: IPublisher) {}
+    constructor(private publisher: IPatientPublisher) {}
 
     saveRefreshToken(payload: refreshTokenPayload) {
         this.publisher.publish('save_token:patient', payload)

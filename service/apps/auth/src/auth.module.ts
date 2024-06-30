@@ -7,7 +7,7 @@ import { RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthenticationController } from './controllers/authentication.controller';
 import { PublisherServiceModule } from './services/publisher-service.module';
-
+ 
 @Module({
   imports: [
     RmqModule.register(

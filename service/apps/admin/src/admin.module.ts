@@ -16,8 +16,8 @@ import { AuthenticationController } from './controllers/authentications.controll
       isGlobal: true,
       validationSchema: joi.object({
         RABBIT_MQ_URI: joi.string().required(),
-        RABBIT_MQ_AUTH_QUEUE: joi.string().required(),
-        SERVICE_NAME: joi.string().required()
+        RABBIT_MQ_ADMIN_QUEUE: joi.string().required(),
+        // SERVICE_NAME: joi.string().required()
       }),
       envFilePath: './apps/admin/.env',
     }),

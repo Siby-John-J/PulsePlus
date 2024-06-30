@@ -17,8 +17,9 @@ import { PatientNotesController } from './controllers';
       isGlobal: true,
       validationSchema: joi.object({
         RABBIT_MQ_URI: joi.string().required(),
-        RABBIT_MQ_AUTH_QUEUE: joi.string().required(),
-        SERVICE_NAME: joi.string().required()
+        RABBIT_MQ_PATIENT_QUEUE: joi.string().required(),
+        // RABBIT_MQ_AUTH_QUEUE: joi.string().required()
+        // SERVICE_NAME: joi.string().required()
       }),
       envFilePath: './apps/patient/.env',
     }),
