@@ -25,9 +25,7 @@ export class AdminPublisherFramework {
     ) {}
 
     async publish(channel: string, payload: any) {
-        
-        const res = await this.client.send(channel, JSON.parse(payload))
-        // console.log(res.source.subscribe(e => console.log(e)))
+        const res = await this.client.send(channel, payload)
         
         return new Promise(resolve => {
             res.subscribe(e => {

@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Post, Put, Query, UsePipes, ValidationPi
 import { PatientUsecase } from '../usecase';
 import { SignInDto, UpdateEntity } from '../core';
 import { UpdateValidationPipe } from './pipes/update-validation.pipe';
+import { IAdminPublisher } from 'apps/auth/src/core';
 
 @Controller('actions')
 export class PatientActionsController {
@@ -22,9 +23,10 @@ export class PatientActionsController {
 
   @Get('get')
   getPatient(@Query() payload: object) {
-      const res = this.patientUsecase.getPatient(payload)
-      
-      return res
+      // const res = this.patientUsecase.getPatient(payload)
+      this.patientUsecase.createAppoinetment('s')
+
+      return 'res'
   }
 
   @Get('getall')

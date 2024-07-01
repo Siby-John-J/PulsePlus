@@ -32,6 +32,6 @@ export class PatientUsecase {
     }
     
     async createAppoinetment(payload: any) {
-        this.publisher.publish('appoinetment', payload)
+        this.publisher.publish('admin', 'payload')
     }
 }
