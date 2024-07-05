@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UsecaseModule } from './usecase/usecase.module';
 import { JwtServiceModule } from './services/jwt-service.module';
-import { AuthorizationController, TestController } from './controllers';
+import { AuthorizationController } from './controllers';
 import * as joi from 'joi'
 import { RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
@@ -50,7 +50,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   controllers: [
     AuthorizationController,
     AuthenticationController,
-    TestController
   ],
   providers: [],
 })

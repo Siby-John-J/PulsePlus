@@ -25,6 +25,8 @@ function AdminLogin() {
             })
 
             useStoreSet(response.accessToken)
+            console.log(response.accessToken);
+            
             dispatch(login(signIndata))
 
             return navigate('/admin/dashboard')

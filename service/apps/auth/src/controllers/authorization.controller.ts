@@ -25,7 +25,9 @@ export class AuthorizationController {
       const { accessToken, refreshToken } = this.auth.create(response)
       const { name, password } = response
       
-      this.publish.saveRefreshToken({
+      console.log(data.role);
+      
+      this.publish.saveRefreshToken(data.role, {
         refreshToken,
         name,
         password

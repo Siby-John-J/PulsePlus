@@ -1,4 +1,4 @@
 
-export abstract class IPublisher {
+export abstract class IAdminPublisher {
     abstract publish(channel: string, payload: any): any
 }

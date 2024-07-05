@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { IPublisher } from "../../core";
+import { IAdminPublisher } from "../../core";
 import { PublisherFramework } from "./publisher.framework";
 import { RmqModule } from "@app/common";
 import { ClientsModule, Transport } from "@nestjs/microservices";
@@ -26,9 +26,9 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
     providers: [
         {
             useClass: PublisherFramework,
-            provide: IPublisher,
+            provide: IAdminPublisher,
         },
     ],
-    exports: [IPublisher]
+    exports: [IAdminPublisher]
 })
 export class PublisherModule {}

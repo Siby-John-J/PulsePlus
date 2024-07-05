@@ -4,4 +4,6 @@ export abstract class IAppointment {
     abstract createAppoinetment(payload: any): Promise<AppoinetmentEnitity>
 
     abstract getAppoinetment(): Promise<AppoinetmentEnitity[]>
+
+    abstract changeStatus(status: string): Promise<AppoinetmentEnitity>
 }

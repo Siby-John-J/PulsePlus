@@ -1,8 +1,13 @@
 import { UserTemplate } from "../Dashboard/DoctorMiniList"
 import { UserTemplateStyle } from "../../../types/hardcoded/styleEnum"
+import { AppointType } from "../../../types/appoientTypes"
 
-function AppoientmentModel() {
+function AppoientmentModel(props: {
+    data: AppointType
+}) {
     const { ROW } = UserTemplateStyle
+    // console.log(props.data);
+    
 
     return (
         <>
@@ -12,7 +17,7 @@ function AppoientmentModel() {
             </div>
             <div className=" h-[70%] w-[90%] px-2 py-3">
                 <p className="text-[14px]">
-                Dear boi iam strugging with crippling depression and it was sis
+                    {props.data.content}
                 </p>
             </div>
         </>

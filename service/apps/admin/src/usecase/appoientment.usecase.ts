@@ -12,4 +12,8 @@ export class AppoinetmentUsecase {
   async get(): Promise<AppoinetmentEnitity[]> {
     return await this.app.getAppoinetment()
   }
+
+  async statusChange(status: string): Promise<any> {
+    return await this.app.changeStatus(status)
+  }
 }

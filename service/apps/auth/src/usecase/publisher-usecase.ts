@@ -4,20 +4,19 @@ import { IAdminPublisher, IPatientPublisher, refreshTokenPayload } from "../core
 @Injectable()
 export class PublisherUseCase {
     constructor(
-        private publisher: IPatientPublisher,
-        private publisher2: IAdminPublisher
+        private patientPublisher: IPatientPublisher,
+        private adminPublisher: IAdminPublisher
     ) {}
 
-    saveRefreshToken(payload: refreshTokenPayload) {
-        this.publisher.publish('save_token:patient', payload)
+    saveRefreshToken(role: string, payload: refreshTokenPayload) {
+        if(role === 'admin') {
+            this.adminPublisher.publish('save_token:admin', payload)
+        } else if(role === 'patient') {
+            this.patientPublisher.publish('save_token:patient', payload)
+        }
     }
 
     async checkRefreshToken(payload: object) {
-        return await this.publisher.publish('check_token', payload)
-    }
-
-    testUsecase() {
-        this.publisher.publish('patient', {msg: 'from auth'})
-        this.publisher2.publish('admin', {msg: 'from auth'})
+        return await this.patientPublisher.publish('check_token', payload)
     }
 }

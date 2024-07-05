@@ -6,7 +6,7 @@ import { Ctx, EventPattern, Payload, RmqContext } from "@nestjs/microservices";
 export class AuthenticationController {
     // constructor(private rmqService: RmqService) {}
 
-    @EventPattern('admin')
+    @EventPattern('admin:signin')
     testP(@Payload() data: any, @Ctx() context: RmqContext) {
         console.log(data);
         
@@ -14,12 +14,12 @@ export class AuthenticationController {
         return { msg: 'from admin' }
     }
 
-    @EventPattern('login')
+    @EventPattern('save_token:admin')
     login(@Payload() data: any, @Ctx() context: RmqContext) {
         console.log('admins');
         console.log(data);
         
-        // this.rmqService.ack(context)
+        
         return { hi: 'admin' }
     }
 }

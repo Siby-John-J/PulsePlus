@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { AppoinetmentUsecase } from '../usecase';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AppoinetmentEnitity } from '../core';
@@ -7,18 +7,23 @@ import { AppoinetmentEnitity } from '../core';
 export class AppoinetmentController {
   constructor(private readonly appoinetment: AppoinetmentUsecase) {}
 
-  @Post('create')
-  createAppoinetment(@Body() body: AppoinetmentEnitity) {
-    return this.appoinetment.create(body);
-  }
+  // @Post('create')
+  // createAppoinetment(@Body() body: AppoinetmentEnitity) {
+  //   return this.appoinetment.create(body);
+  // }
 
   @Get('get')
   getAppoinetment() {
     return this.appoinetment.get()
   }
 
-  @MessagePattern('appoinetment')
-  getAppoinetmentRequest(@Payload() data: any) {
-    console.log(data)
+  @Put('change_status')
+  changeAppoinetment(@Query() data: { status: string }) {
+    return this.appoinetment.statusChange(data.status)
+  }
+
+  @MessagePattern('appoinetment:create')
+  createAppoinetment(@Payload() data: AppoinetmentEnitity) {
+    return this.appoinetment.create(data)
   }
 }

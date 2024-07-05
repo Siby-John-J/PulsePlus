@@ -23,10 +23,10 @@ export class PatientActionsController {
 
   @Get('get')
   getPatient(@Query() payload: object) {
-      // const res = this.patientUsecase.getPatient(payload)
-      this.patientUsecase.createAppoinetment('s')
+      const res = this.patientUsecase.getPatient(payload)
+      // this.patientUsecase.createAppoinetment('s')
 
-      return 'res'
+      return res
   }
 
   @Get('getall')

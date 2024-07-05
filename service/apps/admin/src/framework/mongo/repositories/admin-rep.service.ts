@@ -17,4 +17,8 @@ export class AppoinetmentRepository extends IAppointment {
     async getAppoinetment(): Promise<AppoinetmentEnitity[]> {
         return await this.patientschema.find()
     }
+
+    async changeStatus(status: string): Promise<AppoinetmentEnitity> {
+        return await this.patientschema.findOneAndUpdate()
+    }
 }
