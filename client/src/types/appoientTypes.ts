@@ -1,7 +1,6 @@
 
 export interface AppointType  { 
-    content: string, 
-    id: string, 
+    content: string,
     title: string, 
     status: string 
 }

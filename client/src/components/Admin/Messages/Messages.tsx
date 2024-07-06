@@ -2,19 +2,26 @@ import React, { useEffect, useState } from "react"
 import MessageData from "./MessageData"
 import { AppointType } from "../../../types/appoientTypes"
 import { useFetchUpdateStatus } from "../../../hooks/useUpdateMessage"
+import { useDispatch, useSelector } from "react-redux"
+import { addAppoinetments, changeStatusAppoinetments } from "../../../redux/slices/admin/appointmentSlice"
 
 function Messages() {
-    const [data, setData] = useState<AppointType[]>([])
-    const pending = data.filter(item => item.status === 'pending')
-    const approve = data.filter(item => item.status === 'approved')
-    const reject = data.filter(item => item.status === 'rejected')
+    const state: AppointType[] = useSelector((state: any) => state).appointmentReducer.appointments
+    
+    const pending = state.filter(item =>  item.status === 'pending')
+    const approve = state.filter(item => item.status === 'approved')
+    const reject = state.filter(item => item.status === 'rejected')
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         fetch('http://localhost:2000/admin-service/appointment/get').then(e => e.json())
             .then(e => {
-                setData(e)
+                e.map(item => {
+                    const {__v, _id, ...rest} = item
+                    dispatch(addAppoinetments(rest))
+                })
             })
-        
     }, [])
 
   return (
@@ -64,10 +71,17 @@ function MessageHeader(props: any) {
 }
 
 function MessageContent(props: {status: string, data: AppointType[]}) {
+    const dispatch = useDispatch()
+    
+    const dropAndUpdate = async (e) => {
+        const res = await dropCapture(e, props.status)
+        dispatch(changeStatusAppoinetments(res))
+    }
+
     return (
         <div 
             onDragOver={dropOver}
-            onDrop={e => dropCapture(e, props.status)}
+            onDrop={e => dropAndUpdate(e)}
             className="droppable w-full h-[82%] bg-slate-100 flex flex-col">
             {
                 props.data.map((item: any) => {
@@ -84,9 +98,15 @@ const dropOver = (e: React.DragEvent<HTMLDivElement>) => {
 
 const dropCapture = async (e: React.DragEvent<HTMLDivElement>, status: string) => {
     const data = e.dataTransfer.getData('text')
-    const res = await useFetchUpdateStatus(JSON.parse(data), status)
-    const {__v, _id, ...rest} = res
-    console.log(rest)
+
+    try {
+        const res = await useFetchUpdateStatus(JSON.parse(data), status)
+        const {__v, _id, ...rest} = res
+        
+        return rest
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export default Messages
