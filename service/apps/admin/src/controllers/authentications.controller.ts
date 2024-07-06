@@ -6,7 +6,7 @@ import { Ctx, EventPattern, Payload, RmqContext } from "@nestjs/microservices";
 export class AuthenticationController {
     // constructor(private rmqService: RmqService) {}
 
-    @EventPattern('admin:signin')
+    @EventPattern('login')
     testP(@Payload() data: any, @Ctx() context: RmqContext) {
         console.log(data);
         

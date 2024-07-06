@@ -13,7 +13,7 @@ export class AppoinetmentUsecase {
     return await this.app.getAppoinetment()
   }
 
-  async statusChange(status: string): Promise<any> {
-    return await this.app.changeStatus(status)
+  async statusChange(status: string, payload: object): Promise<any> {
+    return await this.app.changeStatus(status, payload)
   }
 }

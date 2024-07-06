@@ -18,8 +18,15 @@ export class AppoinetmentController {
   }
 
   @Put('change_status')
-  changeAppoinetment(@Query() data: { status: string }) {
-    return this.appoinetment.statusChange(data.status)
+  async changeAppoinetment(
+    @Query() data: { status: string },
+    @Body() body: any
+  ) {
+    
+    const res = await this.appoinetment.statusChange(data.status, body)
+    console.log(res)
+    
+    return res
   }
 
   @MessagePattern('appoinetment:create')

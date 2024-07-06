@@ -5,5 +5,5 @@ export abstract class IAppointment {
 
     abstract getAppoinetment(): Promise<AppoinetmentEnitity[]>
 
-    abstract changeStatus(status: string): Promise<AppoinetmentEnitity>
+    abstract changeStatus(status: string, payload: object): Promise<AppoinetmentEnitity>
 }

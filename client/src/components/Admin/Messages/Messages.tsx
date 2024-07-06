@@ -4,24 +4,18 @@ import { AppointType } from "../../../types/appoientTypes"
 import { useFetchUpdateStatus } from "../../../hooks/useUpdateMessage"
 
 function Messages() {
-    const [data, setData] = useState<AppointType[]>([
-        { content: 'string', id: 'string', title: 'string', status: 'pending' },
-        { content: 'number', id: 'number', title: 'number', status: 'approved' },
-        { content: 'sus', id: 'number', title: 'number', status: 'pending' },
-        { content: 'lwal', id: 'string', title: 'string', status: 'pending' }
-    ])
+    const [data, setData] = useState<AppointType[]>([])
     const pending = data.filter(item => item.status === 'pending')
     const approve = data.filter(item => item.status === 'approved')
     const reject = data.filter(item => item.status === 'rejected')
 
-    // useEffect(() => {
-    //     fetch('http://localhost:2000/admin-service/appointment/get').then(e => e.json())
-    //         .then(e => {
-    //             setData(e)
-                
-    //         })
+    useEffect(() => {
+        fetch('http://localhost:2000/admin-service/appointment/get').then(e => e.json())
+            .then(e => {
+                setData(e)
+            })
         
-    // }, [])
+    }, [])
 
   return (
     <div className="w-[80%] flex flex-row justify-evenly bg-slate-100">
@@ -88,9 +82,11 @@ const dropOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
 }
 
-const dropCapture = (e: React.DragEvent<HTMLDivElement>, status: string) => {
+const dropCapture = async (e: React.DragEvent<HTMLDivElement>, status: string) => {
     const data = e.dataTransfer.getData('text')
-    useFetchUpdateStatus(JSON.parse(data), status)
+    const res = await useFetchUpdateStatus(JSON.parse(data), status)
+    const {__v, _id, ...rest} = res
+    console.log(rest)
 }
 
 export default Messages
