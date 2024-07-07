@@ -11,7 +11,7 @@ export class RolesGuard implements CanActivate {
         
         if(extractedRole === undefined) return false
         req.body['role'] = extractedRole
-
+        
         return true
     }
 }

@@ -7,6 +7,8 @@ import notFilledSliceReducer from "./slices/patient/notFilledSlice"
 import appointmentFillupReducer from "./slices/patient/appointmentFillup"
 import notesPopupReducer from "./slices/patient/notesPopupSlice"
 import appointmentReducer from "./slices/admin/appointmentSlice"
+import nottifcationReducer from "./slices/patient/notificationSlice"
+import layoutReducer from "./slices/patient/layoutSlice"
 import notesReducer from "./slices/patient/notesSlice"
 
 export const store = configureStore({
@@ -19,6 +21,8 @@ export const store = configureStore({
         appointmentFillupReducer,
         notesPopupReducer,
         // notesReducer,
-        appointmentReducer
+        appointmentReducer,
+        nottifcationReducer,
+        layoutReducer
     }
 })

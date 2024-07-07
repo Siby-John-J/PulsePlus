@@ -7,10 +7,10 @@ import { AppoinetmentEnitity } from '../core';
 export class AppoinetmentController {
   constructor(private readonly appoinetment: AppoinetmentUsecase) {}
 
-  // @Post('create')
-  // createAppoinetment(@Body() body: AppoinetmentEnitity) {
-  //   return this.appoinetment.create(body);
-  // }
+  @Post('create')
+  createAppoinetment(@Body() body: AppoinetmentEnitity) {
+    return this.appoinetment.create(body);
+  }
 
   @Get('get')
   getAppoinetment() {
@@ -29,8 +29,8 @@ export class AppoinetmentController {
     return res
   }
 
-  @MessagePattern('appoinetment:create')
-  createAppoinetment(@Payload() data: AppoinetmentEnitity) {
-    return this.appoinetment.create(data)
-  }
+  // @MessagePattern('appoinetment:create')
+  // createAppoinetment(@Payload() data: AppoinetmentEnitity) {
+  //   return this.appoinetment.create(data)
+  // }
 }

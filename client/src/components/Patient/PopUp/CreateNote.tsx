@@ -19,7 +19,7 @@ function CreateNote() {
         
         const url  = `http://localhost:2000/patient-service/notes/create?id=${id}`
         const response = await useFetchPatientTemplate(url, data)
-        console.log(response)
+        // console.log(response)
         dispatch(turnOffnotesFillupPopup())
     }
 

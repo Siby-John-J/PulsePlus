@@ -10,20 +10,18 @@ const appoinetments = createSlice({
     initialState,
     reducers: {
         addAppoinetments(state: any, action: PayloadAction<AppointType>) {
-            const res = current(state).appointments.find(e => e.title === action.payload.title)
+            const res = current(state).appointments.find((e:any) => e.title === action.payload.title)
             if(!res) state.appointments.push(action.payload)
         },
         changeStatusAppoinetments(state: any, action: PayloadAction<AppointType>) {
-            const res = current(state).appointments.map(e => {
+            const res = current(state).appointments.map((e:any) => {
                 if(e.title === action.payload.title) {
                     return action.payload
                 }
                 return e 
             })
 
-            return {
-                appointments: res
-            }
+            return { appointments: res }
         }
     }
 })

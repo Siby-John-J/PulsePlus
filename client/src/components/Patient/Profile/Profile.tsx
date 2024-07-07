@@ -8,12 +8,14 @@ import { authReducerType } from "../../../types/sliceTypes";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { patientDetailsReducerType } from "../../../types/patient/patientTypes";
+import { turnOnnotificationPopup } from "../../../redux/slices/patient/notificationSlice";
 import Main from "./Main";
 import Details from "./Details";
 import Appointments from "./Appoinetments";
 import Id from "./Id";
 import Notes from "./Notes";
 import Family from "./Family";
+import { on } from "../../../redux/slices/patient/layoutSlice";
 
 function Profile() {
     const navigate = useNavigate()
@@ -40,7 +42,7 @@ function Profile() {
     }
 
     useEffect(() => {
-        authentication()
+        // authentication()
     }, [])
     
 
@@ -60,16 +62,25 @@ function Profile() {
         <div className="mt-0 ml-8 mr-8 w-[80vw] grid grid-cols-10 grid-rows-9 gap-5">
             <div className="flex flex-row justify-between mt-4 text-black text-3xl font-semibold col-span-10 rounded-2xl">
                 <div>Profile</div>
-                <div 
-                className="text-xl flex items-center bg-orange-500 text-white px-4 rounded-md cursor-pointer"
-                onClick={e => {
-                    dispatch(turnOnappoinetmentFillupPopup())
-                }}
-                >
-                    Create Treatment
+                <div className="flex flex-row items-center">
+                    <div
+                        onClick={e => {
+                            dispatch(on())
+                            dispatch(turnOnnotificationPopup())
+                        }} 
+                        className="mr-6 w-[1em] h-[1em] bg-green-400 rounded-full cursor-pointer"
+                        ></div>
+                    <div 
+                    className="text-xl h-fit flex items-center bg-orange-500 text-white px-5 py-2 rounded-md cursor-pointer"
+                    onClick={e => {
+                        dispatch(turnOnappoinetmentFillupPopup())
+                    }}
+                    >
+                        Create Treatment
+                    </div>
                 </div>
             </div>
-            <Main data={{name, dob}} />
+            {/* <Main data={{name, dob}} />
             <Details
                 props={{
                     address,
@@ -85,7 +96,7 @@ function Profile() {
             <Appointments />
             <Id />
             <Notes />
-            <Family />
+            <Family /> */}
         </div>
     );
 }

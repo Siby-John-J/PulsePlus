@@ -4,5 +4,5 @@ export interface AppoinetmentEnitity {
     content: string 
     status: 'pending' | 'rejected' | 'processing'
     created?: Date
-    senderId: string
+    senderId?: string
 }

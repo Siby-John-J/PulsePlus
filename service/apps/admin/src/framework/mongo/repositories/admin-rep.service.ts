@@ -10,8 +10,13 @@ export class AppoinetmentRepository extends IAppointment {
         super();
     }
 
-    async createAppoinetment(payload: AppoinetmentEnitity): Promise<AppoinetmentEnitity> {
-        return await this.patientschema.create(payload)
+    async createAppoinetment(payload: AppoinetmentEnitity): Promise<object> {
+        const res =  await this.patientschema.create(payload)
+        if(res) {
+            return { response: true }
+        } else {
+            return { response: false }
+        }
     }
 
     async getAppoinetment(): Promise<AppoinetmentEnitity[]> {

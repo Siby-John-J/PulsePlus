@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import MessageData from "./MessageData"
 import { AppointType } from "../../../types/appoientTypes"
-import { useFetchUpdateStatus } from "../../../hooks/useUpdateMessage"
+import { useFetchUpdateStatus } from "../../../hooks/useMessage"
 import { useDispatch, useSelector } from "react-redux"
 import { addAppoinetments, changeStatusAppoinetments } from "../../../redux/slices/admin/appointmentSlice"
 

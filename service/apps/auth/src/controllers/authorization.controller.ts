@@ -20,6 +20,8 @@ export class AuthorizationController {
     let token: null | object = null
     
     const response = await this.authH.loginToAccount(data)
+    console.log(response);
+    
     
     if(response !== null) {
       const { accessToken, refreshToken } = this.auth.create(response)

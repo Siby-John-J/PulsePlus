@@ -1,7 +1,7 @@
 import { AppoinetmentEnitity } from "../entity";
 
 export abstract class IAppointment {
-    abstract createAppoinetment(payload: any): Promise<AppoinetmentEnitity>
+    abstract createAppoinetment(payload: AppoinetmentEnitity): Promise<object>
 
     abstract getAppoinetment(): Promise<AppoinetmentEnitity[]>
 

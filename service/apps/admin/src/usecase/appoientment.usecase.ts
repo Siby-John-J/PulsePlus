@@ -5,7 +5,7 @@ import { IAppointment, AppoinetmentEnitity } from '../core';
 export class AppoinetmentUsecase {
   constructor(private app: IAppointment) {}
 
-  async create(appoinetment: AppoinetmentEnitity): Promise<AppoinetmentEnitity> {
+  async create(appoinetment: AppoinetmentEnitity): Promise<object> {
     return await this.app.createAppoinetment(appoinetment)
   }
 

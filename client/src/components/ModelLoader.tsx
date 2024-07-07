@@ -6,6 +6,7 @@ import CannotSendAppointmentWarning from "./Patient/PopUp/CannotSendAppointmentW
 import { useSelector } from "react-redux";
 import CreateNote from "./Patient/PopUp/CreateNote";
 import AcceptAppointment from "./Admin/PopUp/AcceptAppointment";
+import Notification from "./Patient/PopUp/Notification";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -26,6 +27,9 @@ function PatientModelLoader() {
             )}
             {popupState.notesPopupReducer.isLoad && (
                 <PopUp component={<CreateNote />} />
+            )}
+            {popupState.nottifcationReducer.isLoad && (
+                <PopUp component={<Notification />} />
             )}
         </>
     );
