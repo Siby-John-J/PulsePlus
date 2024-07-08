@@ -54,6 +54,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/admin/tsconfig.app.json"
       }
+    },
+    "communication": {
+      "type": "application",
+      "root": "apps/communication",
+      "entryFile": "main",
+      "sourceRoot": "apps/communication/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/communication/tsconfig.app.json"
+      }
     }
   }
 }
