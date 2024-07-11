@@ -13,10 +13,10 @@ export class NotificationController {
   @MessagePattern('notification:create')
   async createAppoinetment(@Payload() data: NotificationEntity) {
     try {
-      await this.notification.createNotification(data)
+      // await this.notification.createNotification(data)
       // const response = await this.notification.getNotification(data.senderId)
       
-      this.socket.emitMessage('response', 'notification:update')
+      this.socket.emitMessage(data.senderId, 'notification:update')
       // socket io 
 
     } catch (error) {

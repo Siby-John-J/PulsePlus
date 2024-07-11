@@ -17,9 +17,8 @@ import Id from "./Id";
 import Notes from "./Notes";
 import Family from "./Family";
 import { on } from "../../../redux/slices/patient/layoutSlice";
-import { addNotifications } from "../../../redux/slices/patient/notificationDataSlice";
 
-const socket = io('http://localhost:3003')
+let id: string | undefined = ''
 
 function Profile() {
     const [isNewMessage, setIsnewMessage] = useState<number>(0)
@@ -29,6 +28,8 @@ function Profile() {
     const patientDetailsState = useSelector(
         (state: patientDetailsReducerType) => state.patientReducer
     );
+
+    const socket = io('http://localhost:3003/' +  patientDetailsState._id)    
     
     socket.on('notification:update', (data: any) => {
         setIsnewMessage(isNewMessage + 1)
@@ -53,7 +54,6 @@ function Profile() {
     useEffect(() => {
         authentication()
     }, [])
-    
 
     const {
         address,

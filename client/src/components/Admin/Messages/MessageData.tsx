@@ -3,10 +3,16 @@ import './Messages.css'
 import { AppoientmentModel, DoctorRegisterModel, SurgeryRegisterModel } from './Models'
 
 function MessageData(props: any) {    
+    const style = "w-full flex flex-col items-center h-[10em] bg-white rounded-md shadow-md mb-3 "
+    const opt =  props.status === 'pending' ? 'cursor-grab' : ' '
+    console.log(opt);
+    
+
     return (
-        <div draggable="true" 
+        <div draggable={props.status === 'pending' ? "true" : "false"} 
             onDragStart={e => setData(e, props.data)}
-            className="w-full flex flex-col items-center h-[10em] bg-white cursor-grab rounded-md shadow-md mb-3">
+            className={style + opt}
+            >
             <AppoientmentModel data={props.data} />
             {/* <DoctorRegisterModel /> */}
             {/* <SurgeryRegisterModel /> */}

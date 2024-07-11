@@ -88,7 +88,7 @@ function MessageContent(props: {status: string, data: AppointType[]}) {
             className="droppable w-full h-[82%]  flex flex-col">
             {
                 props.data.map((item: any) => {
-                    return ( <MessageData data={item} /> )
+                    return ( <MessageData status={props.status} data={item} /> )
                 })
             }
         </div>

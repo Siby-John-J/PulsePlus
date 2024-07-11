@@ -17,18 +17,22 @@ import { ISocket } from '../../core/abstracts/socket.abstract';
   export class MainGateWay implements ISocket, OnModuleInit {
     @WebSocketServer()
     server: Server;
+    _name: undefined | any
   
     onModuleInit() {
-      this.server.on('connection', (socket) => {})
+      // this.server.of('/' + '664f330dbee60d3d1bdf35a2')
+      // this.server.on('connection', (socket) => {})
     }
   
     @SubscribeMessage('msg')
     onnewMessage(@MessageBody() body: any): any {
       console.log(body);
-      
     }
 
     emitMessage(data: any, channel: string) {
-      this.server.emit(channel, data)
+      this.server.of('/' + data)
+      this.server.on('connection', (socket) => {})
+
+      this.server.of('/' + data).emit(channel, data)
     }
 }
