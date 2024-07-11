@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { turnOffappoinetmentFillupPopup } from '../../../redux/slices/patient/appointmentFillup'
 import { turnOnnotSendAppoinetmentPopup } from '../../../redux/slices/patient/notSendAppoinetment'
 import { useAddAppointment } from '../../../hooks/useMessage'
@@ -8,9 +8,11 @@ function AppoinetmentFillup() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const dispatch = useDispatch()
+  const state: any= useSelector((state: any) => state).patientReducer
 
   const saveAppointement = async () => {
-    const payload = {title, content, status: 'pending'}
+    const payload = { title, content, status: 'pending', senderId: state._id}
+    
     const res = await useAddAppointment(payload)
   }
 
@@ -42,8 +44,8 @@ function AppoinetmentFillup() {
           <button 
             className=' px-5 py-1 rounded-md bg-orange-500 text-white'
             onClick={e => {
-              dispatch(turnOffappoinetmentFillupPopup())
               saveAppointement()
+              dispatch(turnOffappoinetmentFillupPopup())
               // dispatch(turnOnnotSendAppoinetmentPopup())
             }}
             >

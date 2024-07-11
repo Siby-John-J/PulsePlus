@@ -1,19 +1,23 @@
 import { UserTemplate } from "../Dashboard/DoctorMiniList"
 import { UserTemplateStyle } from "../../../types/hardcoded/styleEnum"
 import { AppointType } from "../../../types/appoientTypes"
+import { useNavigate } from "react-router"
 
 function AppoientmentModel(props: {
     data: AppointType
 }) {
     const { ROW } = UserTemplateStyle
-    // console.log(props.data);
-    
+    const navigate = useNavigate()
 
     return (
         <>
             <div className="flex flex-row justify-between title">
                 <h1 className="text-lg font-medium px-4 py-2">Appoinement Request</h1>
-                <UserTemplate details={{name: 'siby john', details: '9:00pm', style: '', mainStyle: ROW }} />
+                <div onClick={e => {
+                    navigate(`/admin/patient/${props.data.senderId}`)
+                }}>
+                    <UserTemplate details={{name: 'siby john', details: '9:00pm', style: '', mainStyle: ROW }} />
+                </div>
             </div>
             <div className=" h-[70%] w-[90%] px-2 py-3">
                 <p className="text-[14px]">

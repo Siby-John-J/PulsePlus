@@ -1,15 +1,29 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { turnOffnotificationPopup } from "../../../redux/slices/patient/notificationSlice"
 import { off } from "../../../redux/slices/patient/layoutSlice"
-import { useState } from "react"
+import { io } from "socket.io-client"
+import { useEffect, useId, useState } from "react"
+import { useFetchGetTemplate } from "../../../hooks/usePatient"
+
+const socket = io('http://localhost:3003')
 
 function Notification() {
     const dispatch = useDispatch()
-    const [notification, setNotification] = useState<string[]>([
-        'your appointement rejected',
-        'you are unworthy to study magic',
-        'youre sus niga'
-    ])
+    const userId = useSelector((state: any) => state).patientReducer._id
+
+    const [isNewMessage, setIsnewMessage] = useState<boolean>(false)
+    const [notification, setNotification] = useState<string[]>([])
+
+    socket.on('notification:update', (data: any) => {
+        setIsnewMessage(true)
+    })
+    
+    useEffect(() => {
+        useFetchGetTemplate(`http://localhost:2000/communication-service/notification/get?id=${userId}`)
+            .then(e => {
+                setNotification(e)
+            })
+    }, [])
     
     return (
         <div className="bg-white absolute top-[9%] right-[16%] px-4 py-2 w-[18em] h-fit rounded-md border-[1px] border-black">
@@ -33,10 +47,15 @@ function Notification() {
     )
 }
 
-function NotificationList(props: { data: string }) {
+function NotificationList(props: { data: {
+    _id: string,
+    senderId: string,
+    content: string
+} }) {
+    
     return (
         <div className="my-2 py-1 bg-slate-200 px-3">
-            <h1>{ props.data }</h1>
+            <h1>{ props.data.content }</h1>
             <div className="bg-red-600 text-white w-fit px-2 rounded-md my-2 cursor-pointer">Delete</div>
         </div>
     )

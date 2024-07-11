@@ -1,11 +1,14 @@
 import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { AppoinetmentUsecase } from '../usecase';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { AppoinetmentEnitity } from '../core';
+import { AppoinetmentEnitity, ICommunicationPublisher } from '../core';
 
 @Controller('appointment')
 export class AppoinetmentController {
-  constructor(private readonly appoinetment: AppoinetmentUsecase) {}
+  constructor(
+    private readonly appoinetment: AppoinetmentUsecase,
+    private readonly commPublisher: ICommunicationPublisher
+  ) {}
 
   @Post('create')
   createAppoinetment(@Body() body: AppoinetmentEnitity) {
@@ -22,9 +25,14 @@ export class AppoinetmentController {
     @Query() data: { status: string },
     @Body() body: any
   ) {
-    
     const res = await this.appoinetment.statusChange(data.status, body)
-    console.log(res)
+    
+    if(data.status === 'rejected') {
+      this.commPublisher.publish('notification:create', {
+        senderId: body.senderId,
+        content: 'your appointmentment is rejected by admin'
+      })
+    }
     
     return res
   }

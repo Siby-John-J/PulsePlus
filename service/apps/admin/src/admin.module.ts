@@ -9,23 +9,10 @@ import { MongoServiceModule } from './services/mongo-service.module';
 import { AdminUseCaseModule } from './usecase/usecase.module';
 import { AuthenticationController } from './controllers/authentications.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { PublisherServiceModule } from './services/publisher-service.module';
 
 @Module({
   imports: [
-    // RmqModule.register({ name: 'PATIENT' }),
-    // ClientsModule.register([
-    //   {
-    //     name: 'ADMIN',
-    //     transport: Transport.RMQ,
-    //     options: {
-    //       urls: ['amqp://localhost:5672'],
-    //       queue: 'service_a_queue',
-    //       queueOptions: {
-    //         durable: true
-    //       },
-    //     },
-    //   },
-    // ]),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: joi.object({
@@ -38,6 +25,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     }),
     MongooseModule.forRoot(process.env.MONGO_URI),
     MongoServiceModule,
+    PublisherServiceModule,
     AdminUseCaseModule
   ],
   controllers: [AppoinetmentController, AuthenticationController],

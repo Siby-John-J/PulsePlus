@@ -27,7 +27,7 @@ export class MongoRepository extends IPatientRepository {
   async getAll(): Promise<Patient[]> {
     return await this.patientschema.find({});
   }
-
+  
   async update(filter: Query, payload: Payload): Promise<Patient> {
     return await this.patientschema.findOneAndUpdate(filter, payload, {
       returnDocument: 'after',

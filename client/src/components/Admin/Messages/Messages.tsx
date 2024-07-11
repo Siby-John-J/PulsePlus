@@ -4,6 +4,7 @@ import { AppointType } from "../../../types/appoientTypes"
 import { useFetchUpdateStatus } from "../../../hooks/useMessage"
 import { useDispatch, useSelector } from "react-redux"
 import { addAppoinetments, changeStatusAppoinetments } from "../../../redux/slices/admin/appointmentSlice"
+import { useFetchGetTemplate } from "../../../hooks/usePatient"
 
 function Messages() {
     const state: AppointType[] = useSelector((state: any) => state).appointmentReducer.appointments
@@ -15,10 +16,10 @@ function Messages() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        fetch('http://localhost:2000/admin-service/appointment/get').then(e => e.json())
+        useFetchGetTemplate('http://localhost:2000/admin-service/appointment/get')
             .then(e => {
-                e.map(item => {
-                    const {__v, _id, ...rest} = item
+                e.map((item: any) => {
+                    const {__v, ...rest} = item
                     dispatch(addAppoinetments(rest))
                 })
             })
@@ -73,16 +74,18 @@ function MessageHeader(props: any) {
 function MessageContent(props: {status: string, data: AppointType[]}) {
     const dispatch = useDispatch()
     
-    const dropAndUpdate = async (e) => {
-        const res = await dropCapture(e, props.status)
+    const dropAndUpdate = async (e: any) => {
+        const res: any = await dropCapture(e, props.status)
         dispatch(changeStatusAppoinetments(res))
     }
 
     return (
         <div 
             onDragOver={dropOver}
-            onDrop={e => dropAndUpdate(e)}
-            className="droppable w-full h-[82%] bg-slate-100 flex flex-col">
+            onDrop={e => {
+                dropAndUpdate(e)
+            }}
+            className="droppable w-full h-[82%]  flex flex-col">
             {
                 props.data.map((item: any) => {
                     return ( <MessageData data={item} /> )
@@ -100,7 +103,7 @@ const dropCapture = async (e: React.DragEvent<HTMLDivElement>, status: string) =
     const data = e.dataTransfer.getData('text')
 
     try {
-        const res = await useFetchUpdateStatus(JSON.parse(data), status)
+        const res: any = await useFetchUpdateStatus(JSON.parse(data), status)
         const {__v, _id, ...rest} = res
         
         return rest

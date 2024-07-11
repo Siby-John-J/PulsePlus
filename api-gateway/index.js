@@ -40,6 +40,15 @@ const services = [
         },
         changeOrigin: true,
         secure: false,
+    },
+    {
+        path: '/communication-service',
+        target: "http://localhost:3003",
+        pathRewrite: {
+            "^/communication-service": ""
+        },
+        changeOrigin: true,
+        secure: false,
     }
 ]
 

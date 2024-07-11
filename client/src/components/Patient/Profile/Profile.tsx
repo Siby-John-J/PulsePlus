@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { turnOnappoinetmentFillupPopup } from "../../../redux/slices/patient/appointmentFillup";
 import { get } from "../../../redux/slices/patient/patientDataSlice";
 import { useFetchRefreshToken } from "../../../hooks/useFetch";
@@ -7,6 +7,7 @@ import { useStoreSet } from "../../../hooks/useStore";
 import { authReducerType } from "../../../types/sliceTypes";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+import { io } from "socket.io-client"
 import { patientDetailsReducerType } from "../../../types/patient/patientTypes";
 import { turnOnnotificationPopup } from "../../../redux/slices/patient/notificationSlice";
 import Main from "./Main";
@@ -16,14 +17,22 @@ import Id from "./Id";
 import Notes from "./Notes";
 import Family from "./Family";
 import { on } from "../../../redux/slices/patient/layoutSlice";
+import { addNotifications } from "../../../redux/slices/patient/notificationDataSlice";
+
+const socket = io('http://localhost:3003')
 
 function Profile() {
+    const [isNewMessage, setIsnewMessage] = useState<number>(0)
     const navigate = useNavigate()
     const auth = useSelector((state: authReducerType) => state.authReducer);
     const dispatch = useDispatch()
     const patientDetailsState = useSelector(
         (state: patientDetailsReducerType) => state.patientReducer
     );
+    
+    socket.on('notification:update', (data: any) => {
+        setIsnewMessage(isNewMessage + 1)
+    })
 
     const authentication = async() => {
         const response = await useFetchRefreshToken(auth)        
@@ -42,7 +51,7 @@ function Profile() {
     }
 
     useEffect(() => {
-        // authentication()
+        authentication()
     }, [])
     
 
@@ -65,11 +74,20 @@ function Profile() {
                 <div className="flex flex-row items-center">
                     <div
                         onClick={e => {
+                            setIsnewMessage(0)
                             dispatch(on())
                             dispatch(turnOnnotificationPopup())
                         }} 
                         className="mr-6 w-[1em] h-[1em] bg-green-400 rounded-full cursor-pointer"
-                        ></div>
+                        >
+                            {
+                                isNewMessage ?
+                                <div className="flex justify-center items-center ml-4 w-[18px] h-[18px] bg-red-400 rounded-full text-white text-[12px]">
+                                { isNewMessage }
+                                </div>
+                                : ''
+                            }
+                        </div>
                     <div 
                     className="text-xl h-fit flex items-center bg-orange-500 text-white px-5 py-2 rounded-md cursor-pointer"
                     onClick={e => {
@@ -80,7 +98,7 @@ function Profile() {
                     </div>
                 </div>
             </div>
-            {/* <Main data={{name, dob}} />
+            <Main data={{name, dob}} />
             <Details
                 props={{
                     address,
@@ -96,7 +114,7 @@ function Profile() {
             <Appointments />
             <Id />
             <Notes />
-            <Family /> */}
+            <Family />
         </div>
     );
 }
