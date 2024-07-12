@@ -5,6 +5,8 @@ import { useFetchUpdateStatus } from "../../../hooks/useMessage"
 import { useDispatch, useSelector } from "react-redux"
 import { addAppoinetments, changeStatusAppoinetments } from "../../../redux/slices/admin/appointmentSlice"
 import { useFetchGetTemplate } from "../../../hooks/usePatient"
+import { onAppointModel } from "../../../redux/slices/admin/sendAppoModelSlice"
+import { off, on } from "../../../redux/slices/patient/layoutSlice"
 
 function Messages() {
     const state: AppointType[] = useSelector((state: any) => state).appointmentReducer.appointments
@@ -16,14 +18,42 @@ function Messages() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        useFetchGetTemplate('http://localhost:2000/admin-service/appointment/get')
-            .then(e => {
-                e.map((item: any) => {
-                    const {__v, ...rest} = item
-                    dispatch(addAppoinetments(rest))
-                })
-            })
+        // useFetchGetTemplate('http://localhost:2000/admin-service/appointment/get')
+        //     .then(e => {
+        //         e.map((item: any) => {
+        //             const {__v, ...rest} = item
+        //             dispatch(addAppoinetments(rest))
+        //         })
+        //     })
+
+        // dispatch(addAppoinetments(
+        //     {
+        //         content: 'string',
+        //         title: 'string', 
+        //         status: 'pending',
+        //         senderId: 'string'
+        //     }
+        // ))
+    
+        // dispatch(addAppoinetments(
+        //     {
+        //         content: 'number',
+        //         title: 'number', 
+        //         status: 'pending',
+        //         senderId: 'number'
+        //     }
+        // ))
+    
+        // dispatch(addAppoinetments(
+        //     {
+        //         content: 'boolean',
+        //         title: 'boolean', 
+        //         status: 'pending',
+        //         senderId: 'boolean'
+        //     }
+        // ))
     }, [])
+
 
   return (
     <div className="w-[80%] flex flex-row justify-evenly bg-slate-100">
@@ -44,8 +74,14 @@ function PendingMessageHolder(props: any) {
 }
 
 function ApprovedMessageHolder(props: any) {
+    const dispatch = useDispatch()
     return (
-        <div className="w-[30%] h-[95%] flex flex-col justify-evenly">
+        <div
+            onClick={e => {
+                // dispatch(off())
+                dispatch(onAppointModel())
+            }} 
+            className="w-[30%] h-[95%] flex flex-col justify-evenly">
             <MessageHeader data={props.style} />
             <MessageContent status={'approved'} data={props.data} />
         </div>

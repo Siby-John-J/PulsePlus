@@ -5,7 +5,7 @@ import { io } from "socket.io-client"
 import { useEffect, useId, useState } from "react"
 import { useFetchGetTemplate } from "../../../hooks/usePatient"
 
-const socket = io('http://localhost:3003')
+// const socket = io('http://localhost:3003')
 
 function Notification() {
     const dispatch = useDispatch()
@@ -14,9 +14,9 @@ function Notification() {
     const [isNewMessage, setIsnewMessage] = useState<boolean>(false)
     const [notification, setNotification] = useState<string[]>([])
 
-    socket.on('notification:update', (data: any) => {
-        setIsnewMessage(true)
-    })
+    // socket.on('notification:update', (data: any) => {
+    //     setIsnewMessage(true)
+    // })
     
     useEffect(() => {
         useFetchGetTemplate(`http://localhost:2000/communication-service/notification/get?id=${userId}`)
@@ -28,7 +28,7 @@ function Notification() {
     return (
         <div className="bg-white absolute top-[9%] right-[16%] px-4 py-2 w-[18em] h-fit rounded-md border-[1px] border-black">
             {
-                notification.map((item: string) => {
+                notification.map((item: any) => {
                     return (
                         <NotificationList data={item} />
                     )

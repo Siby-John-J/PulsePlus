@@ -5,8 +5,6 @@ import { AppoientmentModel, DoctorRegisterModel, SurgeryRegisterModel } from './
 function MessageData(props: any) {    
     const style = "w-full flex flex-col items-center h-[10em] bg-white rounded-md shadow-md mb-3 "
     const opt =  props.status === 'pending' ? 'cursor-grab' : ' '
-    console.log(opt);
-    
 
     return (
         <div draggable={props.status === 'pending' ? "true" : "false"} 
