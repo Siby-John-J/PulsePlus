@@ -13,19 +13,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
-    // RmqModule.register({ name: AUTH_SERVICE }),
-    // RmqModule.register({ name: 'ADMIN' }),
-    // RmqModule.register({ name: 'PATIENT' }),
-    // ClientsModule.register([
-    //   {
-    //     name: 'ADMIN',
-    //     transport: Transport.RMQ,
-    //     options: {
-    //       urls: ['amqp://localhost:5672'],
-    //       queue: 'service_a_queue',
-    //     },
-    //   },
-    // ]), 
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: joi.object({

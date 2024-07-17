@@ -6,12 +6,6 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
 
 @Module({
     imports: [
-    //   RmqModule.register(
-    //     { name: 'PATIENT' }
-    //   ),
-    //   RmqModule.register(
-    //       { name: 'ADMIN' }
-    //   ),
         ClientsModule.register([
             {
               name: 'PATIENT',
