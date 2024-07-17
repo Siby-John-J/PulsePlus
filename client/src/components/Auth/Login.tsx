@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInType } from "../../types/authTypes";
 import { useGettoken } from "../../hooks/useAuth";
 import { useStoreSet } from "../../hooks/useStore";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
+import { setRole } from "../../redux/slices/authRoleSlice";
 
 function swtichLogin(e: any) {}
 
@@ -17,6 +18,8 @@ function Login() {
 }
 
 function LoginInput() {
+    const [role, setRole] = useState('Patient')
+
     return (
         <div className="w-[69%] h-[80%] flex flex-col">
             <LoginOption />
@@ -28,6 +31,13 @@ function LoginInput() {
 function LoginField() {
     const naivate = useNavigate();
     const dispatch = useDispatch<any>()
+    const role = useSelector((state: any) => state).authRoleReducer.role
+
+    const sl = " text-emerald-600"
+    const s2 = " text-orange-600"
+
+    const ss1 = " bg-emerald-600"
+    const ss2 = " bg-orange-600"
 
     const [signIndata, setSignInData] = useState<signInType>({
         name: "",
@@ -43,8 +53,7 @@ function LoginField() {
     };
 
     const authValidate = async (event: any) => {
-        const res = await useGettoken(signIndata, 'patient')
-        console.log(res)
+        const res = await useGettoken(signIndata, role.toLowerCase())
         
         if(res.accessToken) {
             setSignInData(e => {
@@ -58,15 +67,15 @@ function LoginField() {
                 auth: true
             }));
             useStoreSet(res.accessToken);
-            return naivate("/patient/profile");
+            return naivate(`/${role.toLowerCase()}/profile`);
         }
     };
 
     return (
         <div className="bg-white w-[100%] h-[80%] q8 items-center flex flex-col mt-8 rounded-xl shadow-xl">
             <div className="text-left w-full mt-2">
-                <h1 className="text-[20px] font-medium pl-9 text-emerald-600">
-                    Login as User
+                <h1 className={role === 'Doctor' ? sl + " text-[20px] font-medium pl-9 ": s2 + " text-[20px] font-medium pl-9 "}>
+                    {'Login as ' + role}
                 </h1>
             </div>
             <div className="flex flex-col w-[90%] mt-5">
@@ -88,7 +97,9 @@ function LoginField() {
                 </div>
                 <div className="flex flex-col text-center items-center mt-6">
                     <button
-                        className="h-[2.5em] text-white bg-emerald-600 rounded-2xl w-[60%]"
+                        className={role === 'Doctor' ? ss1 + " h-[2.5em] text-white rounded-2xl w-[60%]" : 
+                            ss2 + " h-[2.5em] text-white rounded-2xl w-[60%]"
+                        }
                         onClick={(e) => authValidate(e)}
                     >
                         Login
@@ -103,13 +114,17 @@ function LoginField() {
 }
 
 function LoginOption() {
+    const dispatch = useDispatch()
+    const role = useSelector((state: any) => state).authRoleReducer.role
+    
+
     return (
         <div className="bg-white w-[100%] h-28 items-center flex flex-row rounded-xl shadow-xl">
             <div className="px-6">
                 <div className="bg-black w-20 h-20 rounded-full"></div>
             </div>
             <div className="px-0">
-                <h1 className="font-semibold text-xl">Login As Doctor</h1>
+                <h1 className="font-semibold text-xl">{'Login As ' + role }</h1>
                 <p className="font-medium text-[14px] py-1">
                     Not an account please
                     <Link className="text-blue-600" to={"/register"}>
@@ -120,7 +135,13 @@ function LoginOption() {
             </div>
             <div
                 className="bg-black h-[100%] w-[2em] ml-9"
-                onClick={swtichLogin}
+                onClick={e => {
+                    if(role === 'Patient') {
+                        dispatch(setRole({role: 'Doctor'}))
+                    } else {
+                        dispatch(setRole({role: 'Patient'}))
+                    }
+                }}
             ></div>
         </div>
     );

@@ -16,3 +16,7 @@
     transform: translateX(90%);
     transition: 300ms ease-in;
 }
+
+.app-holder::-webkit-scrollbar {
+    display: none;
+}

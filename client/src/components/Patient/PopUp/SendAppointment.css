@@ -1,0 +1,27 @@
+
+.listHolder::-webkit-scrollbar {
+    width: 10px;
+}
+
+.listHolder::-webkit-scrollbar-thumb {
+    background-color: #62a8ff;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.dataHolder {
+    overflow: hidden;
+    animation: accordian 1s ease forwards;
+}
+
+@keyframes accordian {
+    from {
+        transform: translateY(0);
+        /* transform: translateY(3em); */
+    }
+    
+    to {
+        transform: translateY(-100%);
+        display: none;
+    }
+}

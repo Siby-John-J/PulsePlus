@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import resiterBannerIcon from "../../../public/register-banner.svg";
 import "./register.css";
 import { signUpType } from "../../types/authTypes";
 import { useSignup } from "../../hooks/useAuth";
 import { LoginBanner, LoginText } from "./Auth";
 import STimg from "../../Icons/st";
+import { useDispatch, useSelector } from "react-redux";
+import { setRole } from "../../redux/slices/authRoleSlice";
 
 export function Register({ children }: any) {
+    const role = useSelector((state: any) => state).authRoleReducer.role
+
+    const ss1 = " bg-emerald-400"
+    const ss2 = " bg-orange-400"
+
+    const s1 = "flex flex-row h-[80vh] rounded-lg shadow-lg"
+    const s2 = "flex flex-row h-[80vh] rounded-lg"
+    
     return (
-        <div className="flex flex-row h-[80vh] rounded-lg shadow-lg bg-emerald-400">
+        <div className={role === 'Doctor' ? s1 + ss1 : s1 + ss2}>
             <div className="w-[40vw] h-[auto] flex flex-col justify-center items-center">
                 <STimg />
                 <LoginText />
                 {children[1].type()}
             </div>
-            <div className="flex flex-row h-[80vh] rounded-lg bg-emerald-400">
+            <div className={role === 'Doctor' ? s2 + ss1 : s2 + ss2}>
                 {children[0].type()}
             </div>
         </div>
@@ -22,6 +32,9 @@ export function Register({ children }: any) {
 }
 
 function RegisterForm() {
+    const role = useSelector((state: any) => state).authRoleReducer.role
+    const dispatch = useDispatch<any>()
+
     const [loginData, setLoginData] = useState<signUpType>({
         name: "",
         email: "",
@@ -41,17 +54,24 @@ function RegisterForm() {
             <div className="h-[90%] w-[70%]">
                 <div className="">
                     <h1 className="text-2xl font-medium">
-                        Register new Account
+                        {"Register new Account for " + role}
                     </h1>
                     <div className="pt-5">
                         <input
-                            checked
+                            onChange={e => {
+                                dispatch(setRole({role: 'Patient'}))
+                            }}
+                            checked={role === 'Patient' ? true: false}
                             className="w-5 h-5"
                             type="radio"
                             name=""
                             id=""
                         />
                         <input
+                            onChange={e => {
+                                dispatch(setRole({role: 'Doctor'}))
+                            }}
+                            checked={role === 'Doctor' ? true: false}
                             className="ml-8 w-5 h-5"
                             type="radio"
                             name=""
@@ -62,7 +82,7 @@ function RegisterForm() {
                 <form
                     className="w-[100%] h-[80%] flex flex-col justify-evenly"
                     onSubmit={(e) => {
-                        useSignup(loginData, 'patient');
+                        useSignup(loginData, role.toLowerCase());
                         e.preventDefault();
                     }}
                 >

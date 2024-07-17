@@ -15,6 +15,7 @@ import { Register, RegisterBanner } from "./components/Auth/Register";
 import RegisterForm from "./components/Auth/Register";
 import { doctorRoutes } from "./routes/doctor";
 import AdminLogin from "./components/Auth/AdminLogin";
+import Processing from "./components/Auth/Processing";
 
 export const routeSwitch = {};
 
@@ -28,6 +29,10 @@ export const appRoutes: RouteType[] = [
         path: "/register",
         component: Register,
         childrenProps: [RegisterForm, RegisterBanner],
+    },
+    {
+        path: "/processing",
+        component: Processing
     },
     // {
     //     path: '/patient/profile',

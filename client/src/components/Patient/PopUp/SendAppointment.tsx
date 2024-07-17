@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux"
 import { offAppointModel } from "../../../redux/slices/admin/sendAppoModelSlice"
+import "./SendAppointment.css"
 import { useState } from "react"
 
 function SendAppointment() {
@@ -24,9 +25,9 @@ function SendAppointment() {
   }
 
   const getData = (data: any, type: string) => {
-    if(data === 'Doctor') setDoctorData(data)
-    if(data === 'Groups') setGrouprData(data)
-    if(data === 'Departments') setDepartmentData(data)
+    if(type === 'Doctor') setDoctorData(data)
+    if(type === 'Groups') setGrouprData(data)
+    if(type === 'Departments') setDepartmentData(data)
   }
 
   const sendData = () => {
@@ -34,15 +35,15 @@ function SendAppointment() {
   }
 
   return (
-    <div className='bg-white absolute top-[20%] px-4 py-2 w-[30em] h-fit rounded-md'>
+    <div className='bg-white absolute top-[20%] px-4 py-2 w-[30em] overflow-y-auto w-rounded-md'>
         <h1 className='py-1 font-bold text-[1.4em]'>Share Apppointment</h1>
         {
           !isAdd ? <DropDown update={updateSelection} /> : <SelectOptions getData={getData} option={selection} />
         }
         {
           !isAdd &&
-          <div className="flex flex-row w-[100%] justify-between px-2 py-4">
-            <ListData />
+          <div className="listHolder flex flex-col w-[100%] max-h-[20em] overflow-y-scroll justify-between px-2 py-4">
+            <ListData doctors={doctorData} groups={groupData} departments={departmentData} />
           </div>
         }
         <div className='flex flex-row w-[100%] justify-between px-2 py-4'>
@@ -54,9 +55,73 @@ function SendAppointment() {
   )
 }
 
-function ListData() {
+function ListData(props: any) {
+  const [barStyle, setBarStyle] = useState(`
+  bg-blue-300 text-black h-[3em] py-2 mt-2 text-start px-2 rounded flex items-center justify-between
+`)
+
+  const [isShow, setIsShow] = useState(true)
+
+  const clearChange = () => {
+
+  }
+  
+
   return (
-    <h1>lwal</h1>
+    <>
+      {
+        props.doctors.length > 0 &&
+        <div className="flex flex-col mb-3 w-[100%] overflow-hidden">
+          <div className="flex flex-row justify-between w-[100%] overflow-hidden">
+            <h1 className="font-semibold">Doctors</h1>
+            {
+              isShow ?
+              <h1 onClick={e => setIsShow(prev => false)} className="cursor-pointer">{'<'}</h1>
+              : 
+              <h1 onClick={e => setIsShow(prev => true)} className="cursor-pointer">{'>'}</h1>
+            }
+
+          </div>
+          <div className={isShow ? "" : ''}>
+          
+          {
+            isShow &&
+            props.doctors.map((item: string) => {
+              return (
+                <DataBar style={barStyle} remove={clearChange} content={item} />
+              )
+            })
+          }
+          </div>
+        </div>
+      }
+      {
+        props.groups.length > 0 &&
+        <div className="flex flex-col mb-3 w-[100%]">
+          <h1 className="font-semibold">Groups</h1>
+          {
+            props.groups.map((item: string) => {
+              return (
+                <DataBar style={barStyle} remove={clearChange} content={item} />
+              )
+            })
+          }
+        </div>
+      }
+      {
+        props.departments.length > 0 &&
+        <div className="flex flex-col mb-3 w-[100%]">
+          <h1 className="font-semibold">Departments</h1>
+          {
+            props.departments.map((item: string) => {
+              return (
+                <DataBar style={barStyle} remove={clearChange} content={item} />
+              )
+            })
+          }
+        </div>
+      }
+    </>
   )
 }
 
@@ -170,6 +235,9 @@ function SelectOptions(props: any) {
   ])
 
   const [selected, setSelected] = useState<string[]>([])
+  const [barStyle, setBarStyle] = useState(`
+     bg-gray-200 border-black h-[3em] py-2 mt-2 text-start px-2 rounded flex items-center justify-between
+  `)
 
   props.getData(selected, props.option)
 
@@ -224,7 +292,7 @@ function SelectOptions(props: any) {
       {
         selected.map(item => {
           return (
-            <DataBar remove={clearChange} content={item} />
+            <DataBar style={barStyle} remove={clearChange} content={item} />
           )
         })
       }
@@ -234,7 +302,7 @@ function SelectOptions(props: any) {
 
 function DataBar(props: any) {
   return (
-    <div className="border-[1px] border-black h-[3em] py-2 mt-2 text-start px-2 rounded flex items-center justify-between">
+    <div className={props.style}>
       <div>{props.content}</div>
       <div
         onClick={e => {
