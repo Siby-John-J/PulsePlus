@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { IAdminPublisher, IPatientPublisher } from "../../core";
-import { AdminPublisherFramework, PatientPublisherFramework } from "./publisher.framework";
+import { IAdminPublisher, IDoctorPublisher, IPatientPublisher } from "../../core";
+import { AdminPublisherFramework, DoctorPublisherFramework, PatientPublisherFramework } from "./publisher.framework";
 import { RmqModule } from "@app/common";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 
@@ -26,8 +26,15 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
                 options: {
                   urls: ['nats://localhost:4222'],
                 },
+            },
+            {
+              name: 'DOCTOR',
+              transport: Transport.NATS,
+              options: {
+                urls: ['nats://localhost:4222'],
               },
-        ]),      
+            },
+        ]),
     ],
     providers: [
         {
@@ -38,7 +45,11 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
             useClass: AdminPublisherFramework,
             provide: IAdminPublisher,
         },
+        {
+          useClass: DoctorPublisherFramework,
+          provide: IDoctorPublisher,
+      },
     ],
-    exports: [IPatientPublisher, IAdminPublisher]
+    exports: [IPatientPublisher, IAdminPublisher, IDoctorPublisher]
 })
 export class PublisherModule {}

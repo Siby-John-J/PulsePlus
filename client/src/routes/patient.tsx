@@ -1,10 +1,13 @@
-import Billing from "../components/Patient/Billing/Billing";
-import Profile from "../components/Patient/Profile/Profile";
-import Surgery from "../components/Patient/Surgery/Surgery";
-import PatientChats from "../components/Patient/chats/PatientChats";
-import Medics from "../components/Patient/medics/Medics";
-import Settings from "../components/Patient/settings/Settings";
+import { lazy } from "react";
 import { RouteType } from "../types/routerTypes";
+
+const Billing = lazy(() => import("../components/Patient/Billing/Billing"))
+const Profile = lazy(() => import("../components/Patient/Profile/Profile"))
+const Surgery = lazy(() => import("../components/Patient/Surgery/Surgery"))
+const PatientChats = lazy(() => import("../components/Patient/chats/PatientChats"))
+
+// import Medics from "../components/Patient/medics/Medics";
+// import Settings from "../components/Patient/settings/Settings";
 
 export const patientRoute: RouteType[] = [
     {

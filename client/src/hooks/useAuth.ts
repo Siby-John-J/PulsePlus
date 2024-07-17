@@ -1,8 +1,8 @@
-import { signInType, signUpType } from "../types/authTypes";
+import { extraSignUpType, signInType, signUpType } from "../types/authTypes";
 import { responseType } from "../types/responseType";
 import { useStoreGet } from "./useStore";
 
-export const useSignup = async (payload: signUpType, role: string) => {
+export const useSignup = async (payload: signUpType | signUpType & extraSignUpType, role: string) => {
     const response = await fetch(`http://localhost:2000/sign_up?q=${role}`, {
         method: "post",
         headers: {

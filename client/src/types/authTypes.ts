@@ -6,6 +6,11 @@ export interface signUpType {
     phone: number
 }
 
+export interface extraSignUpType {
+    degree: string
+    department: string
+}
+
 export interface signInType {
     name: string
     password: string

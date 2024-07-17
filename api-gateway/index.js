@@ -95,7 +95,7 @@ app.post('/sign_up', async(req, res) => {
         credential: req.headers['authorization'],
         roles: req.query['q']
     }
-
+    
     if(auth !== payload.credential) {
         res.send(JSON.stringify({
             status: 400,

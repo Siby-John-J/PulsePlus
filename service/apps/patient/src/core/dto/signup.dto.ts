@@ -9,4 +9,13 @@ export class SignUpDto {
 
     @IsStrongPassword()
     password: string
+
+    @IsString()
+    degree: string
+
+    @IsString()
+    department: string
+
+    @IsString()
+    role: 'patient' | 'doctor'
 }

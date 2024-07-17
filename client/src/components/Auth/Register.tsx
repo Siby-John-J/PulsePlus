@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import resiterBannerIcon from "../../../public/register-banner.svg";
 import "./register.css";
-import { signUpType } from "../../types/authTypes";
+import { extraSignUpType, signUpType } from "../../types/authTypes";
 import { useSignup } from "../../hooks/useAuth";
 import { LoginBanner, LoginText } from "./Auth";
 import STimg from "../../Icons/st";
@@ -40,13 +40,25 @@ function RegisterForm() {
         email: "",
         password: "",
         phone: 0,
-    });
+    })
+
+    const [extraData, setExtraData] = useState<extraSignUpType>({
+        degree: "",
+        department: ""
+    })
 
     const changeInput = (event: any, field: string) => {
-        setLoginData((e: any) => {
-            e[field] = event.target.value;
-            return e;
-        });
+        if(field === 'degree' || field === 'department') {
+            setExtraData((e: any) => {
+                e[field] = event.target.value;
+                return e;
+            })
+        } else {
+            setLoginData((e: any) => {
+                e[field] = event.target.value;
+                return e;
+            });
+        }
     };
 
     return (
@@ -82,8 +94,13 @@ function RegisterForm() {
                 <form
                     className="w-[100%] h-[80%] flex flex-col justify-evenly"
                     onSubmit={(e) => {
-                        useSignup(loginData, role.toLowerCase());
-                        e.preventDefault();
+                        if(role === 'Doctor') {
+                            const payload = { ...loginData, ...extraData }
+                            useSignup(payload, role.toLowerCase())
+                        } else {
+                            useSignup(loginData, role.toLowerCase())
+                        }
+                        e.preventDefault()
                     }}
                 >
                     <div>
@@ -113,6 +130,27 @@ function RegisterForm() {
                             <input type="password" />
                         </div>
                     </div>
+
+                    {
+                        role === 'Doctor' &&
+                        <div className="flex flex-row justify-between">
+                            <div className="w-[48%]">
+                                <h1 className="mb-2">Degree</h1>
+                                <input
+                                    type="text"
+                                    onChange={(e) => changeInput(e, "degree")}
+                                />
+                            </div>
+                            <div className="w-[48%]">
+                                <h1 className="mb-2">Department</h1>
+                                <input 
+                                    type="text"
+                                    onChange={(e) => changeInput(e, "department")}
+                                />
+                            </div>
+                        </div>
+                    }
+
                     <div>
                         <h1 className="mb-2">Phone</h1>
                         <input

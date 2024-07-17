@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { IAdminPublisher, IPatientPublisher, LoginDto, SignIn } from "../core";
+import { IAdminPublisher, IDoctorPublisher, IPatientPublisher, LoginDto, SignIn } from "../core";
 import { SignUpDto } from "apps/patient/src/core";
 
 @Injectable()
 export class AuthenticationUsecase {
     constructor(
         private patientPublisher: IPatientPublisher,
-        private adminPublisher: IAdminPublisher
+        private adminPublisher: IAdminPublisher,
+        private doctorPublisher: IDoctorPublisher
     ) {}
     
     async loginToAccount(data: LoginDto) {
@@ -32,6 +33,14 @@ export class AuthenticationUsecase {
     }
     
     async createAccount(data: SignUpDto) {
-        return await this.patientPublisher.publish('signup', data)
+        const { role, ...rest } = data
+        let res = null
+
+        if(role === 'patient') {
+            res = await this.patientPublisher.publish('signup', JSON.stringify(rest))
+        } else if(role === 'doctor') {
+            res = await this.doctorPublisher.publish('signup', JSON.stringify(rest))
+        }
+        return res
     }
 }

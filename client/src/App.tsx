@@ -21,7 +21,7 @@ function App() {
 
     return (
         <div className="flex items-center justify-center h-[100vh] w-[100vw]">
-            <Suspense>
+            <Suspense fallback={<div></div>}>
                 <Routes>
                     {appRoutes.map((route: RouteType) => {
                         if (route.path === '/') {
