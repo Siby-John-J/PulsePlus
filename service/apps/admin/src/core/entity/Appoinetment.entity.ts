@@ -1,5 +1,5 @@
 
-export interface AppoinetmentEnitity {
+export class AppoinetmentEnitity {
     title:  string
     content: string 
     status: 'pending' | 'rejected' | 'processing'

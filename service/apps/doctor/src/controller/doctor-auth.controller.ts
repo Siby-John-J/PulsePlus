@@ -10,11 +10,12 @@ export class DoctorAuthController {
   async create(@Payload() data: any): Promise<any> {
     try {
       const exist = await this.doctorService.getDoctor(JSON.parse(data))
-
+      
       if(exist !== null) {
         return { error: 'account already exists' }
       }
-    
+      
+      await this.doctorService.requestDoctor(data)
       return await this.doctorService.createDoctor(JSON.parse(data));
     } catch (error) {
       return { error: 'not created' }
@@ -22,7 +23,12 @@ export class DoctorAuthController {
   }
 
   @MessagePattern('login')
-  login(@Payload() data: any): any {
-    return this.doctorService.loginDoctor(data)
+  async login(@Payload() data: any): Promise<any> {
+    console.log(data);
+    
+    // const res = await this.doctorService.loginDoctor(JSON.parse(data))
+    // console.log(res);
+    
+    return {res: 'hi'}
   }
 }

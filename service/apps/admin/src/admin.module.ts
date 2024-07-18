@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppoinetmentController } from './controllers';
+import { AppoinetmentController, ValidationController } from './controllers';
 import { MongooseModule } from '@nestjs/mongoose';
 // import { RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
@@ -28,7 +28,11 @@ import { PublisherServiceModule } from './services/publisher-service.module';
     PublisherServiceModule,
     AdminUseCaseModule
   ],
-  controllers: [AppoinetmentController, AuthenticationController],
+  controllers: [
+    AppoinetmentController, 
+    AuthenticationController,
+    ValidationController
+  ],
   // providers: [],
 })
 export class AdminModule {}

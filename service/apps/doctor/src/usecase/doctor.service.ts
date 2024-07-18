@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { AuthEntity, DoctorCreateEntity, DoctorEntity, IDoctor } from '../core';
+import { AuthEntity, DoctorCreateEntity, DoctorEntity, IAdminPublisher, IDoctor } from '../core';
 
 @Injectable()
 export class DoctorService {
-  constructor(private doctor: IDoctor) {}
-
-  getHello(): string {
-    return 'Hello World!';
-  }
+  constructor(
+    private doctor: IDoctor,
+    private adminPublisher: IAdminPublisher
+  ) {}
 
   async getDoctor(payload: DoctorCreateEntity): Promise<DoctorCreateEntity> {
     const { email, password } = payload
@@ -17,6 +16,10 @@ export class DoctorService {
 
   async createDoctor(payload: DoctorCreateEntity): Promise<DoctorCreateEntity> {
     return await this.doctor.createDoctor(payload)
+  }
+
+  async requestDoctor(data: any) {
+    return await this.adminPublisher.publish('doctor:request', data)
   }
 
   async loginDoctor(payload: AuthEntity): Promise<DoctorEntity> {

@@ -13,11 +13,16 @@ export class AuthenticationUsecase {
     async loginToAccount(data: LoginDto) {
         const { role, ...rest } = data
         let res = null
+
+        console.log(role);
+        
         
         if(role === 'patient') {
             res = await this.patientPublisher.publish('login', JSON.stringify(rest))
         } else if(role === 'admin') {
             res = await this.adminPublisher.publish('login', JSON.stringify(rest))
+        } else if(role === 'doctor') {
+            res = await this.doctorPublisher.publish('login', JSON.stringify(rest))
         }
         
         return res

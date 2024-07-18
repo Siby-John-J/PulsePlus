@@ -6,6 +6,7 @@ import { DoctorUseCaseModule } from './usecase/doctor-usecase.module';
 import { ConfigModule } from '@nestjs/config';
 import * as joi from 'joi'; 
 import { MongooseModule } from '@nestjs/mongoose';
+import { PublisherServiceModule } from './services/publisher-service.module';
 
 @Module({
   imports: [

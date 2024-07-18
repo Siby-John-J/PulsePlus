@@ -78,8 +78,7 @@ app.post('/get_token', async (req, res) => {
         const resp = await response
         token = resp
         res.send(token)
-    } catch (error) { 
-        console.log(error);
+    } catch (error) {
         res.send({
             error: 'occured'
         })
@@ -95,8 +94,6 @@ app.post('/sign_up', async(req, res) => {
         credential: req.headers['authorization'],
         roles: req.query['q']
     }
-
-    console.log(payload)
     
     if(auth !== payload.credential) {
         res.send(JSON.stringify({

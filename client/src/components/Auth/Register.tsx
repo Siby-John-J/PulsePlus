@@ -70,6 +70,8 @@ function RegisterForm() {
 
     const handleError = (message: string) => {
         if(message === 'account already exists') {
+            console.log(message)
+            
             dispatch(on())
             dispatch(setExModel())
         }
@@ -77,10 +79,12 @@ function RegisterForm() {
 
     const createAccount = async () => {
         if(role === 'Doctor') {
-            refreshData()
             const payload = { ...loginData, ...extraData }
             const res = await useSignup(payload, role.toLowerCase())
+            console.log(res);
+            
             if(res.error) handleError(res.error)
+            refreshData()
         } else {
             useSignup(loginData, role.toLowerCase())
         }
