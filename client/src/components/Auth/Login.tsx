@@ -6,6 +6,8 @@ import { useStoreSet } from "../../hooks/useStore";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
 import { setRole } from "../../redux/slices/authRoleSlice";
+import { setExModel } from "../../redux/slices/accountExistsSlice"
+import { on } from "../../redux/slices/patient/layoutSlice";
 
 function swtichLogin(e: any) {}
 
@@ -100,7 +102,9 @@ function LoginField() {
                         className={role === 'Doctor' ? ss1 + " h-[2.5em] text-white rounded-2xl w-[60%]" : 
                             ss2 + " h-[2.5em] text-white rounded-2xl w-[60%]"
                         }
-                        onClick={(e) => authValidate(e)}
+                        onClick={(e) => {
+                            authValidate(e)
+                        }}
                     >
                         Login
                         {/* <Link to={'/patient/profile'}>Login</Link> */}

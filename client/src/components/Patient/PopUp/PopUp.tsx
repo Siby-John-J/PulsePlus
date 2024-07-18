@@ -6,7 +6,7 @@ function PopUp(props: any) {
   let style = ''
 
   if(popupState.layoutReducer.isLayout) {
-    style = 'layout'
+    style = 'bg-slate-500 opacity-70'
   } else {
     style = ''
   }

@@ -3,11 +3,26 @@ import { DoctorService } from '../usecase';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
-export class DoctorController {
+export class DoctorAuthController {
   constructor(private readonly doctorService: DoctorService) {}
 
   @MessagePattern('signup')
-  getHello(@Payload() data: any): string {
-    return this.doctorService.getHello();
+  async create(@Payload() data: any): Promise<any> {
+    try {
+      const exist = await this.doctorService.getDoctor(JSON.parse(data))
+
+      if(exist !== null) {
+        return { error: 'account already exists' }
+      }
+    
+      return await this.doctorService.createDoctor(JSON.parse(data));
+    } catch (error) {
+      return { error: 'not created' }
+    }
+  }
+
+  @MessagePattern('login')
+  login(@Payload() data: any): any {
+    return this.doctorService.loginDoctor(data)
   }
 }

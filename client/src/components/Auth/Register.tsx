@@ -7,6 +7,8 @@ import { LoginBanner, LoginText } from "./Auth";
 import STimg from "../../Icons/st";
 import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "../../redux/slices/authRoleSlice";
+import { setExModel } from "../../redux/slices/accountExistsSlice";
+import { on } from "../../redux/slices/patient/layoutSlice";
 
 export function Register({ children }: any) {
     const role = useSelector((state: any) => state).authRoleReducer.role
@@ -47,6 +49,11 @@ function RegisterForm() {
         department: ""
     })
 
+    const refreshData = () => {
+        setLoginData({email: "", name: "", password: "", phone: 0})
+        setExtraData({degree: "", department: ""})
+    }
+
     const changeInput = (event: any, field: string) => {
         if(field === 'degree' || field === 'department') {
             setExtraData((e: any) => {
@@ -60,6 +67,24 @@ function RegisterForm() {
             });
         }
     };
+
+    const handleError = (message: string) => {
+        if(message === 'account already exists') {
+            dispatch(on())
+            dispatch(setExModel())
+        }
+    }
+
+    const createAccount = async () => {
+        if(role === 'Doctor') {
+            refreshData()
+            const payload = { ...loginData, ...extraData }
+            const res = await useSignup(payload, role.toLowerCase())
+            if(res.error) handleError(res.error)
+        } else {
+            useSignup(loginData, role.toLowerCase())
+        }
+    }
 
     return (
         <div className="w-[40vw] h-[100%] flex items-center justify-center">
@@ -93,13 +118,8 @@ function RegisterForm() {
                 </div>
                 <form
                     className="w-[100%] h-[80%] flex flex-col justify-evenly"
-                    onSubmit={(e) => {
-                        if(role === 'Doctor') {
-                            const payload = { ...loginData, ...extraData }
-                            useSignup(payload, role.toLowerCase())
-                        } else {
-                            useSignup(loginData, role.toLowerCase())
-                        }
+                    onSubmit={e => {
+                        createAccount()
                         e.preventDefault()
                     }}
                 >

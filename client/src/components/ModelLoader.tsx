@@ -8,6 +8,7 @@ import CreateNote from "./Patient/PopUp/CreateNote";
 import AcceptAppointment from "./Admin/PopUp/AcceptAppointment";
 import SendAppointment from "./Patient/PopUp/SendAppointment";
 import Notification from "./Patient/PopUp/Notification";
+import AccountExists from "./Patient/PopUp/AccountExists";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -38,7 +39,7 @@ function PatientModelLoader() {
 
 function AdminModelLoader() {
     const popupState = useSelector((state: any) => state);
-    
+
     return (
         <>
             {
@@ -50,7 +51,22 @@ function AdminModelLoader() {
     )
 }
 
+function GlobalModelLoader() {
+    const popupState = useSelector((state: any) => state);
+
+    return (
+        <>
+            {
+                popupState.accountExistsReducer.exists && (
+                    <PopUp component={<AccountExists />} />
+                )
+            }
+        </>
+    )
+}
+
 export {
     PatientModelLoader,
-    AdminModelLoader
+    AdminModelLoader,
+    GlobalModelLoader
 }

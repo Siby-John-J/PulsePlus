@@ -15,6 +15,7 @@ import "./App.css";
 import Login from "./components/Auth/Login";
 import LoginBannerIcon from "./Icons/login";
 import RegisterForm, { RegisterBanner } from "./components/Auth/Register";
+import { GlobalModelLoader } from "./components/ModelLoader";
 
 function App() {
     const [count, setCount] = useState(0);
@@ -22,6 +23,7 @@ function App() {
     return (
         <div className="flex items-center justify-center h-[100vh] w-[100vw]">
             <Suspense fallback={<div></div>}>
+                <GlobalModelLoader />
                 <Routes>
                     {appRoutes.map((route: RouteType) => {
                         if (route.path === '/') {
