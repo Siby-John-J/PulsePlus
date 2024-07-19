@@ -13,16 +13,13 @@ export class AuthenticationUsecase {
     async loginToAccount(data: LoginDto) {
         const { role, ...rest } = data
         let res = null
-
-        console.log(role);
-        
         
         if(role === 'patient') {
             res = await this.patientPublisher.publish('login', JSON.stringify(rest))
         } else if(role === 'admin') {
             res = await this.adminPublisher.publish('login', JSON.stringify(rest))
         } else if(role === 'doctor') {
-            res = await this.doctorPublisher.publish('login', JSON.stringify(rest))
+            res = await this.doctorPublisher.publish('login:doctor', JSON.stringify(rest))
         }
         
         return res
@@ -43,6 +40,8 @@ export class AuthenticationUsecase {
         if(role === 'patient') {
             res = await this.patientPublisher.publish('signup', JSON.stringify(rest))
         } else if(role === 'doctor') {
+            console.log('hh');
+            
             res = await this.doctorPublisher.publish('signup', JSON.stringify(rest))
         }
         return res

@@ -56,6 +56,10 @@ function LoginField() {
 
     const authValidate = async (event: any) => {
         const res = await useGettoken(signIndata, role.toLowerCase())
+
+        if(res.error) {
+            return naivate('/processing')
+        }
         
         if(res.accessToken) {
             setSignInData(e => {
@@ -69,7 +73,7 @@ function LoginField() {
                 auth: true
             }));
             useStoreSet(res.accessToken);
-            return naivate(`/${role.toLowerCase()}/profile`);
+            return naivate(`/${role.toLowerCase()}/dashboard`);
         }
     };
 

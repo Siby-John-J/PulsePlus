@@ -26,11 +26,6 @@ export class AuthenticationController {
     @Post('signup')
     @UseGuards(RolesGuard)
     async signUp(@Body() body: SignUpDto) {
-        console.log(body);
-
-        // Check for roles
-        
-        
         return await this.auth.createAccount(body)
     }
 }

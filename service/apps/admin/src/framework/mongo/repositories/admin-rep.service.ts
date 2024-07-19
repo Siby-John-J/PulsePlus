@@ -27,6 +27,5 @@ export class AppoinetmentRepository extends IAppointment {
         return await this.patientschema.findOneAndUpdate(payload, {status: status}, {
             returnDocument: 'after',
         })
-
     }
 }

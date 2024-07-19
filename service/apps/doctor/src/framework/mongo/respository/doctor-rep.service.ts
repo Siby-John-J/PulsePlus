@@ -23,4 +23,12 @@ export class DoctorRepository extends IDoctor {
   async blockDoctor(id: string): Promise<DoctorEntity> {
       return await this.doctorSchema.findOneAndUpdate({id})
   }
+
+  async changeDoctorStatus(_id: string, status: string) {
+    console.log(_id, status);
+    
+    return await this.doctorSchema.findOneAndUpdate({_id: _id}, { status: status }, {
+
+    })
+  }
 }

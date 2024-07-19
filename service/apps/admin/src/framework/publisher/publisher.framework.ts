@@ -17,3 +17,20 @@ export class CommunicationPublisherFramework {
         })
     }
 }
+
+@Injectable()
+export class DoctorPublisherFramework {
+    constructor(
+        @Inject('DOCTOR') private client: ClientProxy
+    ) {}
+
+    async publish(channel: string, payload: any) {
+        const res = await this.client.send(channel, payload)
+        
+        return new Promise(resolve => {
+            res.subscribe(e => {
+                resolve(e)
+            })
+        })
+    }
+}

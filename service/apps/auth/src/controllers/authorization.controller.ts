@@ -20,7 +20,10 @@ export class AuthorizationController {
     let token: null | object = null
     
     const response = await this.authH.loginToAccount(data)
-    console.log(response);
+    
+    if(response.error) {
+      return response
+    }
     
     
     if(response !== null) {

@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { ICommunicationPublisher } from "../../core";
-import { CommunicationPublisherFramework } from "./publisher.framework";
+import { ICommunicationPublisher, IDoctorPublisher } from "../../core";
+import { CommunicationPublisherFramework, DoctorPublisherFramework } from "./publisher.framework";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 
 @Module({
@@ -13,6 +13,13 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
                 urls: ['nats://localhost:4222'],
               },
             },
+            {
+                name: 'DOCTOR',
+                transport: Transport.NATS,
+                options: {
+                  urls: ['nats://localhost:4222'],
+                },
+            },
         ]),      
     ],
     providers: [
@@ -20,7 +27,11 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
             useClass: CommunicationPublisherFramework,
             provide: ICommunicationPublisher,
         },
+        {
+            useClass: DoctorPublisherFramework,
+            provide: IDoctorPublisher,
+        },
     ],
-    exports: [ICommunicationPublisher]
+    exports: [ICommunicationPublisher, IDoctorPublisher]
 })
 export class PublisherModule {}

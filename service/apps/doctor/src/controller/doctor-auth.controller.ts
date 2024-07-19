@@ -15,20 +15,24 @@ export class DoctorAuthController {
         return { error: 'account already exists' }
       }
       
-      await this.doctorService.requestDoctor(data)
-      return await this.doctorService.createDoctor(JSON.parse(data));
+      const res = await this.doctorService.createDoctor(JSON.parse(data))
+      await this.doctorService.requestDoctor(JSON.parse(data), res._id)
+      
+      return res
     } catch (error) {
       return { error: 'not created' }
     }
   }
 
-  @MessagePattern('login')
+  @MessagePattern('login:doctor')
   async login(@Payload() data: any): Promise<any> {
-    console.log(data);
+    return await this.doctorService.loginDoctor(JSON.parse(data))
+  }
+
+  @MessagePattern('doctor:change_status')
+  async changeStatus(@Payload() data: string) {
+    const parsed = JSON.parse(data)
     
-    // const res = await this.doctorService.loginDoctor(JSON.parse(data))
-    // console.log(res);
-    
-    return {res: 'hi'}
+    return await this.doctorService.changeDoctorStatus(parsed._id, parsed.status)
   }
 }

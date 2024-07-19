@@ -6,8 +6,10 @@ import { IValidation } from '../core/abstract/IValidation';
 export class ValidationUsecase {
   constructor(private app: IValidation) {}
 
-  async create(appoinetment: ValidationEntity): Promise<object> {
-    return await this.app.createValidation(appoinetment)
+  async create(payload: ValidationEntity): Promise<object> {
+    const data = {...payload, created: Date(), status: 'pending'}
+    
+    return await this.app.createValidation(data)
   }
 
   async get(): Promise<ValidationEntity[]> {

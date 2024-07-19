@@ -28,17 +28,19 @@ function AppoientmentModel(props: {
     )
 }
 
-function DoctorRegisterModel() {
+function DoctorRegisterModel(dat: any) {
+    const { data } = dat
+    
     return (
         <>
             <div className="flex  w-full items-start title">
                 <h1 className="text-lg font-medium px-4 py-2">Doctor Register</h1>
             </div>
             <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[70%] w-[90%] px-2 py-3">
-                <DoctorInfo data={{title: 'Name', content: 'Dr Siby John'}} />
-                <DoctorInfo data={{title: 'Degree', content: 'MBBS MD'}} />
-                <DoctorInfo data={{title: 'Email', content: 'siby@gmail.com'}} />  
-                <DoctorInfo data={{title: 'Place', content: 'Trivandrum'}} />
+                <DoctorInfo data={{title: 'Name', content: data.name}} />
+                <DoctorInfo data={{title: 'Degree', content: data.degree}} />
+                <DoctorInfo data={{title: 'Department', content: data.department}} />  
+                {/* <DoctorInfo data={{title: 'Place', content: 'Trivandrum'}} /> */}
             </div>
         </>
     )

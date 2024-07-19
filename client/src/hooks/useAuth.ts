@@ -16,7 +16,7 @@ export const useSignup = async (payload: signUpType | signUpType & extraSignUpTy
 };
 
 export const useGettoken = async (payload: signInType, role: string): Promise<responseType> => {
-    const { name, ...rest } = payload 
+    const { name, ...rest } = payload
     const response = await fetch(`http://localhost:2000/get_token?q=${role}`, {
         method: "post",
         headers: {

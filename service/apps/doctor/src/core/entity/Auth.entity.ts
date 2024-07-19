@@ -1,5 +1,7 @@
 
 export class AuthEntity {
-    email: string
+    username?: string
+    email?: string
     password: string
+    auth?: boolean
 }

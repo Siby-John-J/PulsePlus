@@ -84,7 +84,7 @@ function RegisterForm() {
             console.log(res);
             
             if(res.error) handleError(res.error)
-            refreshData()
+            // refreshData()
         } else {
             useSignup(loginData, role.toLowerCase())
         }

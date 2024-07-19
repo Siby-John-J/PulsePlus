@@ -20,4 +20,5 @@ export class DoctorCreateEntity {
     department: string
     password: string
     phone: number
+    status: string
 }

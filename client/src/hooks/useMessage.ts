@@ -1,16 +1,25 @@
 import { AppointType } from "../types/appoientTypes"
 import { useStoreGet } from "./useStore"
 
-export const useFetchUpdateStatus = async (payload: AppointType, status: string): Promise<AppointType> => {
+export const useFetchUpdateStatus = async (payload: any, status: string): Promise<AppointType> => {
     const token = useStoreGet()
+    let url
     
-    const response = await fetch(`http://localhost:2000/admin-service/appointment/change_status?status=${status}`, {
+    if(payload.type === 'appointment') {
+        url = `appointment/change_status?status=${status}`
+    } else if(payload.type === 'register') {
+        url = `validation/change_status?status=${status}`
+    }
+
+    const  { type, ...rest } = payload
+
+    const response = await fetch(`http://localhost:2000/admin-service/${url}`, {
         method: 'put',
         headers: {
             "Authorization": 'Bearer ' + token,
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(rest)
     })
     
     return await response.json()
