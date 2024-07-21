@@ -49,6 +49,15 @@ const services = [
         },
         changeOrigin: true,
         secure: false,
+    },
+    {
+        path: '/doctor-service',
+        target: "http://localhost:3004",
+        pathRewrite: {
+            "^/doctor-service": ""
+        },
+        changeOrigin: true,
+        secure: false,
     }
 ]
 

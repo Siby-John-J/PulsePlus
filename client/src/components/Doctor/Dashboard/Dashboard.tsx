@@ -1,17 +1,72 @@
+import { useEffect, useState } from "react";
 import { AdminProgress } from "../../../types/propTypes";
 import "./animation.css";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { useFetchGetTemplate } from "../../../hooks/usePatient";
+import { doctorDetailsType } from "../../../types/doctor/doctorDetailsType";
+import { useFetchRefreshToken } from "../../../hooks/useFetch";
+import { useGettoken } from "../../../hooks/useAuth";
+import { useStoreSet } from "../../../hooks/useStore";
+import { Appoinements } from "./Appoint";
 
 function Dashboard() {
+    const navigate = useNavigate()
+    const data = useSelector((state: any) => state).authReducer
+    const [details, setDetails] = useState<doctorDetailsType>({
+        name: "",
+        appointmentCount: 0,
+        degree: "",
+        department: ""
+    })
+    const [appoinements, setAppointments] = useState([])
+
+    const { name, password, auth } = data
+
+    const authentication = async() => {
+        const response = await useFetchRefreshToken(auth)        
+                
+        if(response.accessToken === 'token not found' && auth.auth) {
+            const res = await useGettoken(auth, 'patient')
+            useStoreSet(res.accessToken)
+            const response = await useFetchRefreshToken(auth)
+            
+        } else if(auth.auth === false) {
+            navigate('/')
+        } else {
+            // dispatch(get(response))
+        }
+    }
+    
+    useEffect(() => {
+        if(!auth) return navigate('/')
+            getAndSetData()
+    }, [])
+    
+    async function getAndSetData() {
+        const detailsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/auth/get?email=${name}&password=${password}`)
+        const appoinementsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/appointments/get?id=${detailsResponse._id}`)
+        
+        setDetails({
+            appointmentCount: 2,
+            degree: detailsResponse.degree,
+            department: detailsResponse.department,
+            name: detailsResponse.name
+        })
+
+        setAppointments(appoinementsResponse)
+    }
+
     return (
         <div className="w-[80%] h-[100%] flex flex-row bg-slate-200">
             <div className=" w-[60%] h-[100%] flex flex-col items-center">
-                <DetailBanner />
+                <DetailBanner data={details} />
                 <Progress />
                 <Walllet />
                 <Message />
             </div>
             <div className="flex flex-col items-center w-[40%] mr-8">
-                <Appoinements />
+                <Appoinements data={} />
                 <Results>
                     <ResultsModel />
                     <ResultsModel />
@@ -83,41 +138,7 @@ function ResultsModel() {
     );
 }
 
-function AppoinementModel() {
-    return (
-        <div className="app-model bg-white shadow-lg h-[8em] w-[70%] mt-6 rounded-md cursor-grab">
-            <div className="flex flex-row text-[12px] justify-between px-4 py-2 items-center">
-                <div>
-                    <h1 className="font-medium">Siby john j</h1>
-                    <p className="text-[11px]">23 Years Old</p>
-                </div>
-                <div>
-                    <h1>9:00 pm</h1>
-                </div>
-            </div>
-            <div className="px-2 py-1 text-[12px]">
-                niga iam feel like mah d is about drop dead
-            </div>
-        </div>
-    );
-}
 
-function Appoinements() {
-    return (
-        <div className="w-[100%] h-[60%] mb-4 mt-8 flex flex-row items-center  rounded-md">
-            <div className="app-holder overflow-scroll flex-col w-[100%] h-[100%]">
-                <AppoinementModel />
-                <AppoinementModel />
-                <AppoinementModel />
-                <AppoinementModel />
-            </div>
-            <div className=" h-[70%] w-[30%] flex flex-col justify-evenly">
-                <div className="border-red-500 bg-red-500 bg-opacity-25 border-[2px] w-[100%] rounded-md h-[45%]"></div>
-                <div className="border-green-400 bg-green-500 bg-opacity-25 w-[100%] border-[2px] rounded-md h-[45%]"></div>
-            </div>
-        </div>
-    );
-}
 
 function Message() {
     return (
@@ -154,19 +175,21 @@ function MessageModel() {
     );
 }
 
-function DetailBanner() {
+function DetailBanner(props: { data: doctorDetailsType}) {
+    const { appointmentCount, degree, department, name } = props.data
+
     return (
         <div className="bg-emerald-400 w-[90%] rounded-md h-[23%] mt-8 flex flex-col text-white">
             <div className="flex flex-row justify-between px-10 mt-3">
                 <div>
                     <h1 className="text-[12px] mb-2">Welcome Back, </h1>
-                    <h2 className="text-[20px] font-medium">Dr. Siby John</h2>
-                    <p>MBBS, ABCD(Gynocology)</p>
+                    <h2 className="text-[20px] font-medium">{'Dr. ' + name}</h2>
+                    <p>{`${degree} (${department})`}</p>
                 </div>
                 <div className="bg-black rounded-full h-[6em] w-[6em]"></div>
             </div>
             <div className="w-[100%] pl-10 mt-4 text-[1.2em]">
-                <div>You have total 10 Appoinements today!</div>
+                <div>{`You have total ${appointmentCount} Appoinements today!`}</div>
             </div>
         </div>
     );

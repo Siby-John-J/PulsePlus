@@ -21,7 +21,7 @@ function Login() {
 
 function LoginInput() {
     const [role, setRole] = useState('Patient')
-
+    
     return (
         <div className="w-[69%] h-[80%] flex flex-col">
             <LoginOption />

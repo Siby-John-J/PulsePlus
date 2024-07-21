@@ -1,10 +1,17 @@
-import { Controller } from '@nestjs/common';
-import { DoctorService } from '../usecase';
+import { Controller, Get, Query } from '@nestjs/common';
+import { DoctorServiceUsecase } from '../usecase';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-@Controller()
+@Controller('auth')
 export class DoctorAuthController {
-  constructor(private readonly doctorService: DoctorService) {}
+  constructor(private readonly doctorService: DoctorServiceUsecase) {}
+
+  @Get('get')
+  async getDoctor(
+    @Query() data: any
+  ) {
+    return await this.doctorService.getDoctor(data)
+  }
 
   @MessagePattern('signup')
   async create(@Payload() data: any): Promise<any> {
@@ -15,7 +22,7 @@ export class DoctorAuthController {
         return { error: 'account already exists' }
       }
       
-      const res = await this.doctorService.createDoctor(JSON.parse(data))
+      const res: any = await this.doctorService.createDoctor(JSON.parse(data))
       await this.doctorService.requestDoctor(JSON.parse(data), res._id)
       
       return res

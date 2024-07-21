@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DoctorAuthController } from './controller';
-import { DoctorService } from './usecase';
+import { Appoinetment, DoctorAuthController } from './controller';
 import { MongoModuleService } from './services/mongo-service.module';
 import { DoctorUseCaseModule } from './usecase/doctor-usecase.module';
 import { ConfigModule } from '@nestjs/config';
@@ -21,6 +20,9 @@ import { PublisherServiceModule } from './services/publisher-service.module';
     MongoModuleService,
     DoctorUseCaseModule
   ],
-  controllers: [DoctorAuthController]
+  controllers: [
+    DoctorAuthController,
+    Appoinetment
+  ]
 })
 export class DoctorModule {}

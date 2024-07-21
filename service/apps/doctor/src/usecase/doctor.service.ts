@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AuthEntity, DoctorCreateEntity, DoctorEntity, IAdminPublisher, IDoctor } from '../core';
 
 @Injectable()
-export class DoctorService {
+export class DoctorServiceUsecase {
   constructor(
     private doctor: IDoctor,
     private adminPublisher: IAdminPublisher
