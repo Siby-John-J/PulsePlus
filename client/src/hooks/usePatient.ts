@@ -17,7 +17,7 @@ export const usePatientUpdate = async (payload: any, query: object): Promise<res
     return await response.json();
 }
 
-export const useFetchPatientTemplate = async(url: string, payload: any) => {
+export const useFetchPostTemplate = async(url: string, payload: any) => {
     const token = useStoreGet()
 
     try {

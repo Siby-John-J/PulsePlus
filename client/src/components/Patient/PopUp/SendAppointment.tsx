@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux"
 import { offAppointModel } from "../../../redux/slices/admin/sendAppoModelSlice"
 import "./SendAppointment.css"
 import { useState } from "react"
+import { useFetchUpdateStatus } from "../../../hooks/useMessage"
+import { useFetchPostTemplate } from "../../../hooks/usePatient"
 
 function SendAppointment() {
   const [selection, setSeletion] = useState('')
@@ -30,8 +32,17 @@ function SendAppointment() {
     if(type === 'Departments') setDepartmentData(data)
   }
 
-  const sendData = () => {
-    
+  const sendData = async () => {
+    const demoData = {
+      title: "appointment message",
+      content: {
+        name: "romy",
+        age: "sus",
+        deceaseDiscription: "iam sick as fuf"
+      }
+    }
+    const url = 'http://localhost:2000/communication-service/appointment/publish'
+    useFetchPostTemplate(url, demoData)
   }
 
   return (

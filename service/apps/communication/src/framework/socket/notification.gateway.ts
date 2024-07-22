@@ -26,7 +26,6 @@ import { ISocket } from '../../core/abstracts/socket.abstract';
   
     @SubscribeMessage('msg')
     onnewMessage(@MessageBody() body: any): any {
-      console.log(body);
     }
 
     emitMessage(data: any, channel: string) {

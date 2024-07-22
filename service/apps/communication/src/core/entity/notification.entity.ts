@@ -1,5 +1,5 @@
 
-export class NotificationEntity {
+export class NotificationEntity {   
     content: string
     senderId: string
 }
