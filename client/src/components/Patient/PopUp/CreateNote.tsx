@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { turnOffnotesFillupPopup } from "../../../redux/slices/patient/notesPopupSlice"
-import { useFetchPatientTemplate } from "../../../hooks/usePatient"
+import { useFetchPostTemplate } from "../../../hooks/usePatient"
 import { useState } from "react"
 import { addNotes } from "../../../redux/slices/patient/notesSlice"
 import { notesTypes } from "../../../types/patient/notesTypes"
@@ -15,10 +15,10 @@ function CreateNote() {
     })
      
     const saveNotes = async() => {
-        const id = state.patientReducer._id        
+        const id = state.patientReducer._id   
         
         const url  = `http://localhost:2000/patient-service/notes/create?id=${id}`
-        const response = await useFetchPatientTemplate(url, data)
+        const response = await useFetchPostTemplate(url, data)
         // console.log(response)
         dispatch(turnOffnotesFillupPopup())
     }

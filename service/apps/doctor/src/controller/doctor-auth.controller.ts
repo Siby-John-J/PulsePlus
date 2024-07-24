@@ -13,6 +13,11 @@ export class DoctorAuthController {
     return await this.doctorService.getDoctor(data)
   }
 
+  @Get('getAll')
+  async getAllDoctors() {
+    return await this.doctorService.getAllDoctors()
+  }
+
   @MessagePattern('signup')
   async create(@Payload() data: any): Promise<any> {
     try {

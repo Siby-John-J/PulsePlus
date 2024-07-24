@@ -7,6 +7,10 @@ export class DoctorServiceUsecase {
     private doctor: IDoctor,
     private adminPublisher: IAdminPublisher
   ) {}
+
+  async getAllDoctors(): Promise<DoctorEntity[]> {
+    return await this.doctor.getAllDoctor()
+  }
   
   async getDoctor(payload: AuthEntity): Promise<DoctorCreateEntity> {
     const { email, password } = payload

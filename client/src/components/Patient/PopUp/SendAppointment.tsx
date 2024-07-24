@@ -1,11 +1,15 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { offAppointModel } from "../../../redux/slices/admin/sendAppoModelSlice"
 import "./SendAppointment.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useFetchUpdateStatus } from "../../../hooks/useMessage"
-import { useFetchPostTemplate } from "../../../hooks/usePatient"
+import { useFetchGetTemplate, useFetchPostTemplate } from "../../../hooks/usePatient"
+import { changeStatusAppoinetments } from "../../../redux/slices/admin/appointmentSlice"
 
 function SendAppointment() {
+  const state = useSelector((state: any) => state).appointmentAdminReducer
+  const dispatch = useDispatch()
+  
   const [selection, setSeletion] = useState('')
   const [isAdd, setIsAdd] = useState<boolean>(false)
   const [currentTog, setCurrentTog] = useState(false)
@@ -33,16 +37,36 @@ function SendAppointment() {
   }
 
   const sendData = async () => {
+    const url1 = `http://localhost:2000/patient-service/actions/get?_id=${state.data.senderId}`
+    const res = await useFetchGetTemplate(url1)
+
     const demoData = {
-      title: "appointment message",
-      content: {
-        name: "romy",
-        age: "sus",
-        deceaseDiscription: "iam sick as fuf"
+      data: {
+        title: state.data.title,
+        appointmentId: state.data._id,
+        content: {
+          name: res.name,
+          age: 23,
+          deceaseDiscription: state.data.content
+        },
+      },
+      records: {
+        doctorData,
+        groupData,
+        departmentData
       }
     }
+    
     const url = 'http://localhost:2000/communication-service/appointment/publish'
-    useFetchPostTemplate(url, demoData)
+    const url2 = `http://localhost:2000/admin-service/appointment/records?id=${state.data._id}`
+    // const url3 = `http://localhost:2000/admin-service/appointment/change_status?id=${state.data._id}`
+    
+
+    await useFetchPostTemplate(url, demoData.data)
+    await useFetchPostTemplate(url2, demoData.records)
+    const response = await useFetchUpdateStatus({_id: state.data._id, type: 'appointment'}, 'approved')
+    
+    dispatch(changeStatusAppoinetments(response))
   }
 
   return (
@@ -229,11 +253,8 @@ function DropDown(props: any) {
 }
 
 function SelectOptions(props: any) {
-  const [doctors, setDoctors] = useState([
-    'Dr Phil',
-    'Dr siby',
-    'Dr sashi'
-  ])
+  const [doctors, setDoctors] = useState([])
+
   const [groups, setGroups] = useState([
     'Soman group',
     'Al Ottha 99',
@@ -249,6 +270,17 @@ function SelectOptions(props: any) {
   const [barStyle, setBarStyle] = useState(`
      bg-gray-200 border-black h-[3em] py-2 mt-2 text-start px-2 rounded flex items-center justify-between
   `)
+
+  const getData = async () => {
+    const url = 'http://localhost:2000/doctor-service/auth/getAll'
+    const response = await useFetchGetTemplate(url)
+    setDoctors(response)
+    
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   props.getData(selected, props.option)
 
@@ -275,9 +307,9 @@ function SelectOptions(props: any) {
         <select onChange={setChange} className="border-none outline-none">
           {
               props.option === 'Doctor' &&
-              doctors.map(data =>{
+              doctors.map((data: { _id: string, name: string }) =>{
                 return (
-                  <option value={data}>{data}</option>
+                  <option value={data.name}>{data.name}</option>
                 )
               })
           }

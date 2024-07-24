@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { IDoctor } from '../../core';
+import { IAppointment, IDoctor } from '../../core';
 import { Doctor, DoctorSchema } from './models/doctor.schema';
 import { DoctorRepository } from './respository/doctor-rep.service';
 

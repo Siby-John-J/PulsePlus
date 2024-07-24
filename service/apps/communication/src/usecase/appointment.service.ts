@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { INotification, NotificationEntity } from '../core';
+import { AppointmentNotificationEntity, INotification } from '../core';
 
 @Injectable()
 export class AppointmentNotificationService {
   constructor(private notification: INotification) {}
     
-    async save(data: NotificationEntity) {
-        console.log(data);
-        
-        
+    async save(data: AppointmentNotificationEntity) {
         return await this.notification.createNotification(data)
     }
 

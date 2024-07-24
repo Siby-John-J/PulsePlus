@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { MongoServiceModule } from './service/mongo-service.module';
 import { GatewayFrameWorkModule } from './framework/socket/notification.module';
-import { AppointmentNotification } from './controller/appointment.controller';
+import { AppointmentNotificationController } from './controller/appointment.controller';
 import { UseCaseModule } from './usecase/usecase.module';
 
 @Module({
@@ -19,7 +19,7 @@ import { UseCaseModule } from './usecase/usecase.module';
     UseCaseModule,
     GatewayFrameWorkModule
   ],
-  controllers: [NotificationController, AppointmentNotification],
+  controllers: [NotificationController, AppointmentNotificationController],
   providers: [],
 })
 export class CommunicationModule {}

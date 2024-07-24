@@ -10,7 +10,7 @@ export const useFetchUpdateStatus = async (payload: any, status: string): Promis
     } else if(payload.type === 'register') {
         url = `validation/change_status?status=${status}`
     }
-
+    
     const  { type, ...rest } = payload
 
     const response = await fetch(`http://localhost:2000/admin-service/${url}`, {

@@ -19,7 +19,6 @@ export class AppointmentNotificationRepository extends INotification {
     }
 
     async getNotification(id: string): Promise<AppointmentNotificationEntity[]> {
-        console.log(id);
         
         const response =  await this.notification.find({senderId: id})
         console.log(response)

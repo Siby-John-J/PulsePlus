@@ -2,7 +2,7 @@
 export class AppoinetmentEnitity {
     title:  string
     content: string 
-    status: 'pending' | 'rejected' | 'processing'
+    status: string
     created?: Date
     senderId?: string
 }

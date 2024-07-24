@@ -1,4 +1,5 @@
 import { SchemaFactory, Prop, Schema } from "@nestjs/mongoose";
+import { RecordsEntity } from "../../../core";
 
 @Schema()
 export class Appoinetment {
@@ -16,6 +17,18 @@ export class Appoinetment {
 
     @Prop()
     senderId: string
+
+    @Prop()
+    time: Date
+
+    @Prop()
+    span: string
+
+    @Prop()
+    accept: Boolean
+
+    @Prop()
+    records: RecordsEntity
 }
 
 export const AppoinetmentSchema = SchemaFactory.createForClass(Appoinetment)

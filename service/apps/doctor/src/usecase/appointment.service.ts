@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AppoinetmentEnitity, IAppointment } from '../core';
+import { AppoinetmentEnitity, IAdminPublisher, IAppointment } from '../core';
 
 @Injectable()
 export class AppoinetmentServiceUsecase {

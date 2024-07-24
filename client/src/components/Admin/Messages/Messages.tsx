@@ -12,7 +12,7 @@ import { RegisterType } from "../../../types/registerTypes"
 
 function Messages() {
     const state: AppointType[] = useSelector((state: any) => state).appointmentReducer.appointments
-    const state2: AppointType[] = useSelector((state: any) => state).registerAdminReducer.registers
+    const state2: any[] = useSelector((state: any) => state).registerAdminReducer.registers
     
     const pending = state.filter(item =>  item.status === 'pending')
     const approve = state.filter(item => item.status === 'approved')
@@ -63,11 +63,12 @@ function PendingMessageHolder(props: any) {
 
 function ApprovedMessageHolder(props: any) {
     const dispatch = useDispatch()
+
     return (
         <div
             onClick={e => {
                 // dispatch(off())
-                dispatch(onAppointModel())
+                dispatch(onAppointModel({}))
             }} 
             className="w-[30%] h-[95%] flex flex-col justify-evenly">
             <MessageHeader data={props.style} />
@@ -105,6 +106,8 @@ function MessageContent(props: {status: string, data: AppointType[] | RegisterTy
             dispatch(changeStatusAppoinetments(res))
         } else if(res.type === 'register') {
             dispatch(changeStatusRegisters(res))
+        } else if(res.type === 'accept') {
+            dispatch(onAppointModel(res))
         }
         
     }
@@ -132,11 +135,15 @@ const dropOver = (e: React.DragEvent<HTMLDivElement>) => {
 const dropCapture = async (e: React.DragEvent<HTMLDivElement>, status: string) => {
     const data = e.dataTransfer.getData('text')
     const parsed = JSON.parse(data)
+
     try {
+        if(status === 'approved' && parsed.type === 'appointment') {
+            return { type: 'accept', parsed }
+        }
         const res: any = await useFetchUpdateStatus(parsed, status)
         const {__v, _id, ...rest} = res
         
-        return {...rest, type: parsed.type}
+        return { ...rest, type: parsed.type }
     } catch (error) {
         console.log(error)
     }

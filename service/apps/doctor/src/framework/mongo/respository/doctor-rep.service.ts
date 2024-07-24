@@ -20,6 +20,10 @@ export class DoctorRepository extends IDoctor {
       return await this.doctorSchema.findOne(credientals)
   }
 
+  async getAllDoctor(): Promise<DoctorEntity[]> {
+    return await this.doctorSchema.find({}, {name: 1})
+  }
+
   async blockDoctor(id: string): Promise<DoctorEntity> {
       return await this.doctorSchema.findOneAndUpdate({id})
   }

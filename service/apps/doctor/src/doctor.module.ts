@@ -22,7 +22,7 @@ import { PublisherServiceModule } from './services/publisher-service.module';
   ],
   controllers: [
     DoctorAuthController,
-    Appoinetment
+    // Appoinetment
   ]
 })
 export class DoctorModule {}

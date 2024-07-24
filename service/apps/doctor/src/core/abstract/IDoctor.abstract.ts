@@ -7,5 +7,7 @@ export abstract class IDoctor {
 
     abstract getDoctor(credientals: AuthEntity): Promise<DoctorEntity>
 
+    abstract getAllDoctor(): Promise<DoctorEntity[]>
+
     abstract changeDoctorStatus(_id: string, status: string): any
 }

@@ -6,7 +6,7 @@ import { PublisherServiceModule } from '../services/publisher-service.module';
 
 @Module({
   imports: [MongoModuleService, PublisherServiceModule],
-  providers: [DoctorServiceUsecase, AppoinetmentServiceUsecase],
-  exports: [DoctorServiceUsecase, AppoinetmentServiceUsecase],
+  providers: [DoctorServiceUsecase],
+  exports: [DoctorServiceUsecase],
 })
 export class DoctorUseCaseModule {}
