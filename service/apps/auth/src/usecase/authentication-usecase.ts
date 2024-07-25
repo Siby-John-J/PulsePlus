@@ -15,9 +15,9 @@ export class AuthenticationUsecase {
         let res = null
         
         if(role === 'patient') {
-            res = await this.patientPublisher.publish('login', JSON.stringify(rest))
+            res = await this.patientPublisher.publish('login:patient', JSON.stringify(rest))
         } else if(role === 'admin') {
-            res = await this.adminPublisher.publish('login', JSON.stringify(rest))
+            res = await this.adminPublisher.publish('login:admin', JSON.stringify(rest))
         } else if(role === 'doctor') {
             res = await this.doctorPublisher.publish('login:doctor', JSON.stringify(rest))
         }
@@ -38,10 +38,8 @@ export class AuthenticationUsecase {
         let res = null
 
         if(role === 'patient') {
-            res = await this.patientPublisher.publish('signup', JSON.stringify(rest))
+            res = await this.patientPublisher.publish('patient:signup', JSON.stringify(rest))
         } else if(role === 'doctor') {
-            console.log('hh');
-            
             res = await this.doctorPublisher.publish('signup', JSON.stringify(rest))
         }
         return res

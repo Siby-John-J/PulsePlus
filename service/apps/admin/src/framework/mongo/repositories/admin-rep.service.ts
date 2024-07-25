@@ -40,4 +40,8 @@ export class AppoinetmentRepository extends IAppointment {
     async addRecords(id: string, payload: RecordsEntity): Promise<object> {
         return await this.appointschema.findOneAndUpdate({_id: id}, {records: payload})
     }
+
+    async getByRecords(id: string, type: string): Promise<object[]> {
+        return await this.appointschema.find({ 'records.doctorData': { $in: [id] } }, { senderId: 1 })
+    }
 }

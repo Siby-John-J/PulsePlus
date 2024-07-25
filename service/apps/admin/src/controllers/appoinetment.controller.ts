@@ -2,7 +2,6 @@ import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { AppoinetmentUsecase } from '../usecase';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AppoinetmentEnitity, ICommunicationPublisher, RecordsEntity } from '../core';
-import { body } from 'express-validator';
 
 @Controller('appointment')
 export class AppointmentController {
@@ -19,6 +18,20 @@ export class AppointmentController {
   @Get('get')
   getAppointment() {
     return this.appointment.get()
+  }
+
+  @Get('get_by_records')
+  async getByRecords(
+    @Query() data: { id: string, type: string }
+  ) {
+    const { id, type } = data
+    
+    const response = await this.appointment.getRecords(id, type)
+
+    const result = this.commPublisher.publish('notification:records', JSON.stringify(response))
+
+    return result
+    
   }
 
   @Put('change_status')

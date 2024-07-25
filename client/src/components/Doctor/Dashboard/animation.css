@@ -6,6 +6,6 @@
     margin-left: 3em;
 }
 
-.holder::-webkit-scrollbar {
+.app-holder::-webkit-scrollbar {
     display: none;
 }

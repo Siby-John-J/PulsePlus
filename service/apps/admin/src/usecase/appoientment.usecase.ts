@@ -33,4 +33,8 @@ export class AppoinetmentUsecase {
   async addRecords(id: string, payload: RecordsEntity) {
     return await this.app.addRecords(id, payload)
   }
+
+  async getRecords(id: string, type: string) {
+    return await this.app.getByRecords(id, type)
+  }
 }

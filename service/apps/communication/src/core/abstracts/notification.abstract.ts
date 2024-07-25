@@ -9,5 +9,6 @@ export abstract class INotification {
     abstract getNotification(id: string): 
         Promise<NotificationEntity[] | AppointmentNotificationEntity[]>
 
+    abstract getBySenderId(senderId: string): Promise<any> | Promise<any[]>
     // abstract addNotification(id: string): Promise<NotificationEntity>
 }

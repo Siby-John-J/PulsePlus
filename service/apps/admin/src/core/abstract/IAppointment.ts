@@ -12,4 +12,6 @@ export abstract class IAppointment {
     abstract getOneAppointment(_id: string): Promise<AppoinetmentEnitity>
 
     abstract changeStatus(status: string, payload: object): Promise<AppoinetmentEnitity>
+
+    abstract getByRecords(id: string, type: string): Promise<object[]>
 }

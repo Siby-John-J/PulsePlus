@@ -12,4 +12,8 @@ export class NotificationService {
   async getNotification(id: string) {
     return await this.notification.getNotification(id)
   }
+
+  async getByRecords(senderId: string) {
+    return await this.notification.getBySenderId(senderId)
+  }
 }

@@ -37,6 +37,7 @@ export class AuthorizationController {
       })
 
       token = { accessToken }
+      
       return token
     } else {
       throw new HttpException('user not found', HttpStatus.NOT_FOUND)

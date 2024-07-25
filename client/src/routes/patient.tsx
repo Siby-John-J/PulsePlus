@@ -11,7 +11,7 @@ const PatientChats = lazy(() => import("../components/Patient/chats/PatientChats
 
 export const patientRoute: RouteType[] = [
     {
-        path: 'profile',
+        path: 'dashboard',
         component: Profile
     },
     {

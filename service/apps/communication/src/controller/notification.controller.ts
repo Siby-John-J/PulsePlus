@@ -24,6 +24,16 @@ export class NotificationController {
     }
   }
 
+  @MessagePattern('notification:records')
+  async getFromRecords(@Payload() data: any) {
+    try {
+      
+      return await this.notification.getNotification(data)
+    } catch (error) {
+      
+    }
+  }
+
   @Post('create')
   create(@Body() body: NotificationEntity) {
     try {
