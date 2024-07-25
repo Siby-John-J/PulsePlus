@@ -34,11 +34,15 @@ export class PatientAuthController {
        
        return res
     }
-
-    @EventPattern('logout')
-    async LogoutPatient(@Payload() data: any, @Ctx() context: RmqContext) {
+    
+    @EventPattern('logout:patient')
+    async LogoutPatient(@Payload() data: any) {
+        console.log(data)
+        
        const res = await this.patientAuthsUsecase.logoutPatient(data)
     //    this.rmqService.ack(context)
+        console.log(res);
+        
        return res
     }
 

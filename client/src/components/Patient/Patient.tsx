@@ -21,12 +21,14 @@ function Patient() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // if(authState.auth === false) navigate('/')
+        if(authState.auth === false) navigate('/')
     }, []);
 
     const handleLogout = async() => {
         dispatch(logout());
         const res = await useLogout(authState)
+        console.log(res);
+        
 
         useStoreDelete()
 

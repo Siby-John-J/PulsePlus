@@ -32,9 +32,10 @@ export const useGettoken = async (payload: signInType, role: string): Promise<re
     return await response.json();
 }
 
-export const useLogout = async (payload: signInType): Promise<responseType> => {
+export const useLogout = async (payload: signInType): Promise<responseType | any> => {
     const token = useStoreGet()
     
+    // need to change the role
     const response = await fetch("http://localhost:2000/auth-service/authH/logout?q=patient", {
         method: "post",
         headers: {

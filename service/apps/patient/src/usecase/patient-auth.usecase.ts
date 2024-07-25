@@ -20,6 +20,9 @@ export class PatientAuthsUsecase {
     }
 
     async logoutPatient(payload: string) {
-        return this.patientToken.clearTokens(JSON.parse(payload))
+        const { name, password } = JSON.parse(payload)
+        const data = { email: name, password }
+
+        return this.patientToken.clearTokens(data)
     }
 }

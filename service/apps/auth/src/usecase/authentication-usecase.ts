@@ -28,7 +28,7 @@ export class AuthenticationUsecase {
     async logoutFromAccount(payload: SignIn) {
         const { name, password } = payload
         
-        return await this.patientPublisher.publish('logout', JSON.stringify({
+        return await this.patientPublisher.publish('logout:patient', JSON.stringify({
             name, password
         }))
     }
