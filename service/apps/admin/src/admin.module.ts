@@ -8,7 +8,6 @@ import * as joi from 'joi';
 import { MongoServiceModule } from './services/mongo-service.module';
 import { AdminUseCaseModule } from './usecase/usecase.module';
 import { AuthenticationController } from './controllers/authentications.controller';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PublisherServiceModule } from './services/publisher-service.module';
 
 @Module({
@@ -26,12 +25,12 @@ import { PublisherServiceModule } from './services/publisher-service.module';
     MongooseModule.forRoot(process.env.MONGO_URI),
     MongoServiceModule,
     PublisherServiceModule,
-    AdminUseCaseModule
+    AdminUseCaseModule,
   ],
   controllers: [
-    AppointmentController, 
+    AppointmentController,
     AuthenticationController,
-    ValidationController
+    ValidationController,
   ],
   // providers: [],
 })

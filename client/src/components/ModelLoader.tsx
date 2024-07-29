@@ -9,6 +9,7 @@ import AcceptAppointment from "./Admin/PopUp/AcceptAppointment";
 import SendAppointment from "./Patient/PopUp/SendAppointment";
 import Notification from "./Patient/PopUp/Notification";
 import AccountExists from "./Patient/PopUp/AccountExists";
+import AppointmentPayment from "./Patient/PopUp/AppointmentPayment";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -35,6 +36,21 @@ function PatientModelLoader() {
             )}
         </>
     );
+}
+
+function DoctorModelLoader() {
+    const popupState = useSelector((state: any) => state);
+
+    return (
+        <>
+            {
+                (<PopUp layout={true} component={<AppointmentPayment />} />)
+                // popupState.appointmentAdminReducer.isOn && (
+                //     <PopUp component={<SendAppointment />} />
+                // )
+            }
+        </>
+    )
 }
 
 function AdminModelLoader() {
@@ -68,5 +84,6 @@ function GlobalModelLoader() {
 export {
     PatientModelLoader,
     AdminModelLoader,
+    DoctorModelLoader,
     GlobalModelLoader
 }

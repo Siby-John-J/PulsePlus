@@ -37,4 +37,8 @@ export class AppoinetmentUsecase {
   async getRecords(id: string, type: string) {
     return await this.app.getByRecords(id, type)
   }
+
+  async removeRecords(id: string) {
+    return await this.app.removeRecord(id)
+  }
 }

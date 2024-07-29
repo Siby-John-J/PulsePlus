@@ -26,4 +26,8 @@ export class NotificationRepository extends INotification {
         
         return response
     }
+
+    async getBySenderId(senderId: string): Promise<any> | Promise<any[]> {
+        return await Promise.resolve('hi')
+    }
 }

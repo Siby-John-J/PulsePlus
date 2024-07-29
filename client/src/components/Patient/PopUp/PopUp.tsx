@@ -4,8 +4,9 @@ import './PopUp.css'
 function PopUp(props: any) {
   const popupState = useSelector((state: any) => state);
   let style = ''
+  
 
-  if(popupState.layoutReducer.isLayout) {
+  if(props.layout) {
     style = 'bg-slate-500 opacity-70'
   } else {
     style = ''

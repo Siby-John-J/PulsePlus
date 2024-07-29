@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { PublisherModule } from "../framework/publisher/publisher.module";
+import { Module } from '@nestjs/common';
+import { PublisherModule } from '../framework/publisher/publisher.module';
 
 @Module({
-    imports: [PublisherModule],
-    exports: [PublisherModule]
+  imports: [PublisherModule],
+  exports: [PublisherModule],
 })
 export class PublisherServiceModule {}

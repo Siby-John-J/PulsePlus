@@ -52,3 +52,20 @@ export const useFetchGetTemplate = async(url: string) => {
         return await error
     }
 }
+
+export const useFetchDeleteTemplate = async(url: string) => {
+    const token = useStoreGet()
+
+    try {
+        const response = await fetch(url, {
+            method: 'delete',
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+        })
+        
+        return await response.json()
+    } catch (error) {
+        return await error
+    }
+}

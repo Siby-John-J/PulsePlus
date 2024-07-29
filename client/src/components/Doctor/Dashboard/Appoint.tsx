@@ -1,13 +1,17 @@
+import { useSelector } from "react-redux";
+import { useFetchDeleteTemplate } from "../../../hooks/usePatient";
+
+const setData = (e: React.DragEvent<HTMLDivElement>, data: object) => {    
+    e.dataTransfer.setData('data', JSON.stringify(data))
+}
 
 function AppoinementModel(props: any) {
     const { title, content } = props.data
-    // const { age, name } = content
-
-    console.log(title, content );
-    
 
     return (
-        <div className="app-model bg-white shadow-lg h-[8em] w-[70%] mt-6 rounded-md cursor-grab">
+        <div draggable 
+            onDragStart={e => setData(e, props.data)}
+            className="app-model bg-white shadow-lg h-[8em] w-[70%] mt-6 rounded-md cursor-grab">
             <div className="flex flex-row text-[12px] justify-between px-4 py-2 items-center">
                 <div>
                     <h1 className="font-medium">{content.name}</h1>
@@ -22,6 +26,8 @@ function AppoinementModel(props: any) {
     );
 }
 
+
+
 function EmptyAppoints() {
     return (
         <div className="app-holder overflow-scroll flex items-center justify-center w-[100%] h-[100%]">
@@ -32,7 +38,12 @@ function EmptyAppoints() {
     )
 }
 
-export function Appoinements(props: any) {
+export function Appoinements(props: {
+    data: any,
+    refresher: Function
+}) {
+    const data = useSelector((state: any) => state).authReducer
+
     return (
         <div className="w-[100%] h-[60%] mb-4 mt-8 flex flex-row items-center  rounded-md">
             {
@@ -48,9 +59,39 @@ export function Appoinements(props: any) {
             }
 
             <div className=" h-[70%] w-[30%] flex flex-col justify-evenly">
-                <div className="border-red-500 bg-red-500 bg-opacity-25 border-[2px] w-[100%] rounded-md h-[45%]"></div>
-                <div className="border-green-400 bg-green-500 bg-opacity-25 w-[100%] border-[2px] rounded-md h-[45%]"></div>
+                <div 
+                    onDragOver={dropOver}
+                    onDrop={e => {
+                        dropCapture(e, {status: 'reject', data})
+                        props.refresher()
+                    }}
+                    className="border-red-500 bg-red-500 bg-opacity-25 border-[2px] w-[100%] rounded-md h-[45%]">
+
+                    </div>
+                <div 
+                    onDragOver={dropOver}
+                    onDrop={e => {
+                        
+                        // dropCapture(e, {status: 'approve', data})
+                    }}
+                    className="border-green-400 bg-green-500 bg-opacity-25 w-[100%] border-[2px] rounded-md h-[45%]"></div>
             </div>
         </div>
     );
+}
+
+const dropOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+}
+
+const dropCapture = async (e: React.DragEvent<HTMLDivElement>, receved: {
+    status: string,
+    data: object
+}) => {
+    const data = e.dataTransfer.getData('data')
+    const parsed = JSON.parse(data)
+    
+    if(receved.status === 'reject') {
+        await useFetchDeleteTemplate(`http://localhost:2000/admin-service/appointment/remove_record?id=${'Phil'}`)
+    }
 }

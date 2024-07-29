@@ -26,7 +26,6 @@ export class PatientAuthController {
     async LoginPatient(@Payload() data: any) {
         const { auth, ...rest } = JSON.parse(data)
         
-        
        const res = await this.patientUsecase.getPatient({
         email: rest.username,
         password: rest.password

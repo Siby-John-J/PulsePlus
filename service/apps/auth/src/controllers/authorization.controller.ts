@@ -21,11 +21,6 @@ export class AuthorizationController {
     
     const response = await this.authH.loginToAccount(data)
     
-    if(response.error) {
-      return response
-    }
-    
-    
     if(response !== null) {
       const { accessToken, refreshToken } = this.auth.create(response)
       const { name, password } = response
@@ -40,7 +35,7 @@ export class AuthorizationController {
       
       return token
     } else {
-      throw new HttpException('user not found', HttpStatus.NOT_FOUND)
+      return { error: 'user not found', code: 404 }
     }
   }
 

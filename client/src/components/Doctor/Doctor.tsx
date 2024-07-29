@@ -1,4 +1,5 @@
 import { Link, useLocation, Outlet } from "react-router-dom"
+import { DoctorModelLoader } from "../ModelLoader"
 
 function Doctor() {
   const { pathname } = useLocation()
@@ -6,6 +7,8 @@ function Doctor() {
   const match = pathname.match(regex)
 
   return (
+    <>
+    <DoctorModelLoader />
     <div className=" w-[100vw] h-[100vh] flex flex-row">
         <div className="bg-yellow-300 flex flex-row justify-center font-semibold w-[20%]">
             <div className="flex flex-col justify-evenly">
@@ -43,6 +46,7 @@ function Doctor() {
         </div>
         <Outlet />
     </div>
+    </>
   )
 }
 

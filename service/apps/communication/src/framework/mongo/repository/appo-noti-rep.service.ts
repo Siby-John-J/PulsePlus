@@ -19,7 +19,7 @@ export class AppointmentNotificationRepository extends INotification {
     }
 
     async getNotification(id: string): Promise<AppointmentNotificationEntity[]> {
-        const parsed = JSON.parse(id)[0]._id
+        const parsed = JSON.parse(id)
         
         return await this.notification.find({ appointmentId: parsed})
     }

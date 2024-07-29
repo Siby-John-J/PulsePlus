@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common';
 import { AppoinetmentUsecase } from '../usecase';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AppoinetmentEnitity, ICommunicationPublisher, RecordsEntity } from '../core';
@@ -69,6 +69,17 @@ export class AppointmentController {
 
     if(response._id === data.id) {
       this.appointment.accept(data.id, body)
+    }
+  }
+
+  @Delete('remove_record')
+  async removeFromAppointment(@Query() data: { id: string }) {
+    const res = await this.appointment.removeRecords(data.id)
+
+    if(res) {
+      return res
+    } else {
+      return { error: 'true' }
     }
   }
 

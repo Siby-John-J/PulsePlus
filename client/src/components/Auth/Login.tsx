@@ -56,8 +56,10 @@ function LoginField() {
 
     const authValidate = async (event: any) => {
         const res = await useGettoken(signIndata, role.toLowerCase())
-
-        if(res.error) {
+        
+        if(res.error === 'user not found') {
+            alert(res.error)
+        } else if(res.error){
             return naivate('/processing')
         }
         

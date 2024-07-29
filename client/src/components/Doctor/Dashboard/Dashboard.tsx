@@ -33,22 +33,22 @@ function Dashboard() {
             const response = await useFetchRefreshToken(auth)
             
         } else if(auth.auth === false) {
-            navigate('/')
+            // navigate('/')
         } else {
             // dispatch(get(response))
         }
     }
     
     useEffect(() => {
-        if(!auth) return navigate('/')
-            getAndSetData()
+        // if(!auth) return navigate('/')
+        //     getAndSetData()
     }, [])
     
     async function getAndSetData() {
         const detailsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/auth/get?email=${name}&password=${password}`)
         const appoinementsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/appointments/get?id=${detailsResponse._id}`)
         const requestResponse = await useFetchGetTemplate(`http://localhost:2000/admin-service/appointment/get_by_records?id=${detailsResponse.name}&type=anything`)
-
+        
         setDetails({
             appointmentCount: 2,
             degree: detailsResponse.degree,
@@ -70,7 +70,7 @@ function Dashboard() {
                 <Message />
             </div>
             <div className="flex flex-col items-center w-[40%] mr-8">
-                <Appoinements data={requests} />
+                <Appoinements refresher={getAndSetData} data={requests} />
                 <Results>
                     <ResultsModel />
                     <ResultsModel />
