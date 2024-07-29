@@ -83,6 +83,14 @@ export class AppointmentController {
     }
   }
 
+  @Post('add_payment')
+  async addPayment(@Body() body: any, @Query() data: { id: string }) {
+    console.log(data, body)
+
+    this.commPublisher.publish('notification:create', body)
+    
+  }
+
   // @MessagePattern('appoinetment:create')
   // createAppoinetment(@Payload() data: AppoinetmentEnitity) {
   //   return this.appoinetment.create(data)

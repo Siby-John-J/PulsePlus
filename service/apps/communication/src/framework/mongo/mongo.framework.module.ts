@@ -1,10 +1,12 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { NotificationRepository } from "./repository/notification-rep.service";
-import { INotification } from "../../core";
+import { IAppointDoctorNotification, INotification } from "../../core";
 import { Notification, NotificationSchema } from "./models/notification.schema";
 import { AppointmentNotificationRepository } from "./repository/appo-noti-rep.service";
 import { AppointmentNotification, AppointmentNotificationSchema } from "./models/appo-notification.schema";
+import { AppointDoctorNotification, AppointDoctorNotificationSchema } from "./models/app-doctor-noti.schema";
+import { AppointDoctorNotificationRepository } from "./repository/app-doctor.noti.service";
 
 @Module({
     imports: [
@@ -16,6 +18,10 @@ import { AppointmentNotification, AppointmentNotificationSchema } from "./models
             {
                 name: AppointmentNotification.name,
                 schema: AppointmentNotificationSchema
+            },
+            {
+                name: AppointDoctorNotification.name,
+                schema: AppointDoctorNotificationSchema
             }
         ])
     ],
@@ -27,8 +33,12 @@ import { AppointmentNotification, AppointmentNotificationSchema } from "./models
         {
             provide: INotification,
             useClass: AppointmentNotificationRepository
+        },
+        {
+            provide: IAppointDoctorNotification,
+            useClass: AppointDoctorNotificationRepository
         }
     ],
-    exports: [INotification, INotification]
+    exports: [INotification, INotification, IAppointDoctorNotification]
 })
 export class MongoFrameWorkModule {}

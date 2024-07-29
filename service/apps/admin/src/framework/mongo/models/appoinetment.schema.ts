@@ -29,6 +29,12 @@ export class Appoinetment {
 
     @Prop()
     records: RecordsEntity
+
+    @Prop()
+    duration: string[]
+
+    @Prop()
+    date: string
 }
 
 export const AppoinetmentSchema = SchemaFactory.createForClass(Appoinetment)

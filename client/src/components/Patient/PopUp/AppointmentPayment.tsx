@@ -30,21 +30,24 @@ function AppointmentPayment() {
   }
 
   const handleFetch = async(e: any) => {
-    if(date === '' || span === '' || diagnosys === '' ||
-    startTime === '' || endTime === ''
-  ) {
-    return setStatus(false)
-  } else {
-    setStatus(true)
-  }
+      if(date === '' || span === '' || diagnosys === '' ||
+        startTime === '' || endTime === ''
+      ) {
+        return setStatus(false)
+      } else {
+        setStatus(true)
+      }
 
-  // const response = await useFetchPostTemplate('', {
-  //   date,
-  //   span,
-  //   diagnosys,
-  //   startTime,
-  //   endTime
-  // })
+    const response = await useFetchPostTemplate(
+      `http://localhost:2000/communication-service/doctor_notification/create`,
+      {
+      date,
+      span,
+      diagnosys,
+      startTime,
+      endTime,
+      fee
+    })
   
   }
   

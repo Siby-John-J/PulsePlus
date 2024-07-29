@@ -19,15 +19,12 @@ export class NotificationRepository extends INotification {
     }
 
     async getNotification(id: string): Promise<NotificationEntity[]> {
-        console.log(id);
-        
         const response =  await this.notification.find({senderId: id})
-        console.log(response)
         
         return response
     }
 
-    async getBySenderId(senderId: string): Promise<any> | Promise<any[]> {
+    async getBySenderId(senderId: string) {
         return await Promise.resolve('hi')
     }
 }
