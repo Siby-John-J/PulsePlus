@@ -7,6 +7,7 @@ import { MongoServiceModule } from './service/mongo-service.module';
 import { GatewayFrameWorkModule } from './framework/socket/notification.module';
 import { AppointmentNotificationController } from './controller/appointment.controller';
 import { UseCaseModule } from './usecase/usecase.module';
+import { DoctorNotificationController } from './controller/doctor-notification.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,11 @@ import { UseCaseModule } from './usecase/usecase.module';
     UseCaseModule,
     GatewayFrameWorkModule
   ],
-  controllers: [NotificationController, AppointmentNotificationController],
+  controllers: [
+    NotificationController, 
+    AppointmentNotificationController,
+    DoctorNotificationController
+  ],
   providers: [],
 })
 export class CommunicationModule {}

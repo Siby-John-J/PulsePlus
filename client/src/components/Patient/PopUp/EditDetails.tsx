@@ -45,12 +45,12 @@ function EditDetails() {
         }
         const response = await usePatientUpdate(payload, auth)
         const { notifications, ...rest } = response._doc
+        console.log(response);
+        
 
         dispatch(get(rest))
         
-        dispatch(turnOffDetailsPopup())
-        // dispatch(turnOnNotFilledPopup())
-        
+        dispatch(turnOffDetailsPopup())        
     }
 
     return (

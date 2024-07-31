@@ -15,4 +15,5 @@ export interface signInType {
     name: string
     password: string
     auth?: boolean
+    id?: string
 }

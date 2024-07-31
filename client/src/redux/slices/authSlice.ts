@@ -5,7 +5,8 @@ import { signInType } from "../../types/authTypes"
 const initialState: signInType = {
     name: '',
     password: '',
-    auth: false
+    auth: false,
+    id: ''
 }
 
 const auth = createSlice({
@@ -16,7 +17,8 @@ const auth = createSlice({
             return {
                 name: action.payload.name,
                 password: action.payload.password,
-                auth: action.payload.auth
+                auth: action.payload.auth,
+                id: action.payload.id
             }
         },
         logout() {

@@ -25,7 +25,7 @@ export class Appoinetment {
     span: string
 
     @Prop()
-    accept: Boolean
+    accept: string
 
     @Prop()
     records: RecordsEntity

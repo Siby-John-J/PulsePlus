@@ -9,12 +9,10 @@ export class PatientActionsController {
   constructor(private patientUsecase: PatientUsecase) {}
 
   @Post('update')
-  @UsePipes(UpdateValidationPipe)
-  updatePatient(@Body() data: UpdateEntity) {
+  // @UsePipes(UpdateValidationPipe)
+  async updatePatient(@Body() data: UpdateEntity) {
     const { auth, ...rest } = data.query
-    console.log(data);
-    
-    return this.patientUsecase.updatePatient(rest, data.payload)
+    return await this.patientUsecase.updatePatient(rest, data.payload)
   }
 
   @Put('update_password')

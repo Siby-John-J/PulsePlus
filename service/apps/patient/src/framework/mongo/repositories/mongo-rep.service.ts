@@ -29,8 +29,11 @@ export class MongoRepository extends IPatientRepository {
   }
   
   async update(filter: Query, payload: Payload): Promise<Patient> {
-    return await this.patientschema.findOneAndUpdate(filter, payload, {
+    return await this.patientschema.findOneAndUpdate({
+      email: filter.name,
+      password: filter.password
+    }, payload, {
       returnDocument: 'after',
-    });
+    })
   }
 }

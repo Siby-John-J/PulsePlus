@@ -49,5 +49,13 @@ export class AppoinetmentRepository extends IAppointment {
         return await this.appointschema.findOneAndUpdate(
             { 'records.doctorData': { $in: [id] } },
             { 'records': { $pull: { doctorData: id } }})
-        }
+    }
+
+    async addDoctor(id: string): Promise<any> {
+        return await this.appointschema.findOneAndUpdate({}, {accept: id})
+    }
+
+    removeDoctor(id: string): Promise<any> {
+        
+    }
 }

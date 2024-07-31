@@ -1,8 +1,11 @@
 
 export class DoctorNotification {
-    title: string
+    span: string
     date: string
-    duration: string
-    amount: number
+    startTime: string
+    endTime: string
+    fee: number
     senderId: string
+    diagnosys: string
+    // doctorId: string
 }

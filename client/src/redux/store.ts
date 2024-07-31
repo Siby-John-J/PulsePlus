@@ -14,6 +14,7 @@ import appointmentAdminReducer from "./slices/admin/sendAppoModelSlice"
 import registerAdminReducer from "./slices/admin/registerSlice"
 import authRoleReducer from "./slices/authRoleSlice"
 import accountExistsReducer from "./slices/accountExistsSlice"
+import appointPaymentReducer from "./slices/doctor/appointPaymentSlice"
 import notesReducer from "./slices/patient/notesSlice"
 
 export const store = configureStore({
@@ -33,6 +34,7 @@ export const store = configureStore({
         appointmentAdminReducer,
         authRoleReducer,
         accountExistsReducer,
-        registerAdminReducer
+        registerAdminReducer,
+        appointPaymentReducer
     }
 })

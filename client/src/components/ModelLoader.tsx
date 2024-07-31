@@ -39,15 +39,15 @@ function PatientModelLoader() {
 }
 
 function DoctorModelLoader() {
-    const popupState = useSelector((state: any) => state);
+    const popupState = useSelector((state: any) => state)
 
     return (
         <>
             {
-                (<PopUp layout={true} component={<AppointmentPayment />} />)
-                // popupState.appointmentAdminReducer.isOn && (
-                //     <PopUp component={<SendAppointment />} />
-                // )
+                popupState.appointPaymentReducer.turnOn && (
+                    <PopUp layout={true} component={<AppointmentPayment />} />
+                    // <PopUp component={<SendAppointment />} />
+                )
             }
         </>
     )

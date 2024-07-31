@@ -10,6 +10,8 @@ export class NotificationService {
   }
 
   async getNotification(id: string) {
+    console.log(id);
+    
     return await this.notification.getNotification(id)
   }
 

@@ -3,19 +3,26 @@ import { SchemaFactory, Prop, Schema } from "@nestjs/mongoose";
 @Schema()
 export class AppointDoctorNotification {
     @Prop()
-    title: string
-
+    span: string
+    
     @Prop()
     date: string
+    
+    @Prop()
+    startTime: string
 
     @Prop()
-    duration: string
+    endTime: string
 
     @Prop()
-    amount: number
-
+    fee: number
+    
     @Prop()
     senderId: string
+
+    @Prop()
+    diagnosys: string
+
 }
 
 export const AppointDoctorNotificationSchema = SchemaFactory.createForClass(AppointDoctorNotification)

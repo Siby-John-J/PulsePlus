@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Post, Query } from "@nestjs/common";
-import { DoctorNotification } from "../core/entity/doctor-notification.entity";
 import { AppointmentDoctorNotificationService } from "../usecase/doctor-app-noti.service";
 
 @Controller('doctor_notification')
@@ -8,13 +7,14 @@ export class DoctorNotificationController {
     
     @Get('get')
     async getAll() {
-        return await this.notification.getDoctorNotification()
+        console.log('lol');
+        
+        return {hi :'await this.notification.getDoctorNotification()'}
     }
 
     @Post('create')
     async createOne(@Body() body: any) {
-        
-        // return await this.notification.createDoctorNotification(body)
+        return await this.notification.createDoctorNotification(body)
     }
 
     @Delete('remove')

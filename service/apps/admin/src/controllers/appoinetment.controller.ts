@@ -26,10 +26,11 @@ export class AppointmentController {
   ) {
     const { id, type } = data
     
-    const response = await this.appointment.getRecords(id, type)
+    const response: any = await this.appointment.getRecords(id, type)
 
-    const result = this.commPublisher.publish('notification:records', JSON.stringify(response))
-
+    const result = await this.commPublisher.publish('notification:records', JSON.stringify(response))
+    // const records = {result: JSON.stringify(result), response} 
+    
     return result
     
   }
@@ -83,11 +84,21 @@ export class AppointmentController {
     }
   }
 
-  @Post('add_payment')
-  async addPayment(@Body() body: any, @Query() data: { id: string }) {
-    console.log(data, body)
+  @Put('add_doctor')
+  async addDoctor(@Body() body: any) {
+    console.log(body)
 
-    this.commPublisher.publish('notification:create', body)
+    return { error: 'true' }
+    // this.commPublisher.publish('notification:create', body)
+    
+  }
+
+  @Delete('remove_doctor')
+  async removeDoctor(@Query() body: any) {
+    console.log(body)
+
+    return { error: 'true' }
+    // this.commPublisher.publish('notification:create', body)
     
   }
 

@@ -8,6 +8,7 @@ import { authReducerType } from "../../types/sliceTypes";
 import { logout } from "../../redux/slices/authSlice";
 import {PatientModelLoader} from "../ModelLoader";
 import { useStoreDelete } from "../../hooks/useStore";
+import { get } from "../../redux/slices/patient/patientDataSlice";
 
 function Patient() {
     const [style, setStyle] = useState<string>(
@@ -17,17 +18,18 @@ function Patient() {
     const authState = useSelector(
         (state: authReducerType) => state.authReducer
     );
+    const state: any= useSelector((state: any) => state).patientReducer
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(authState.auth === false) navigate('/')
+        if(authState.auth === false) return navigate('/')
+        
     }, []);
 
     const handleLogout = async() => {
         dispatch(logout());
         const res = await useLogout(authState)
-        console.log(res);
         
 
         useStoreDelete()

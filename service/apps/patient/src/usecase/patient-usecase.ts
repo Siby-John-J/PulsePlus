@@ -24,9 +24,9 @@ export class PatientUsecase {
         return await this.patient.delete()
     }
 
-    async updatePatient(target: Query, payload: Payload) {
+    async updatePatient(target: Query, payload: Payload) {  
         const res = await this.patient.update(target, payload)
-        const { refreshTokens, ...rest } = res // res._doc
+        const { refreshTokens, ...rest } = res
         
         return rest
     }

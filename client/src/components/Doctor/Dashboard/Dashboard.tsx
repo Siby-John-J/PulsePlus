@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AdminProgress } from "../../../types/propTypes";
 import "./animation.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useFetchGetTemplate } from "../../../hooks/usePatient";
 import { doctorDetailsType } from "../../../types/doctor/doctorDetailsType";
@@ -9,15 +9,17 @@ import { useFetchRefreshToken } from "../../../hooks/useFetch";
 import { useGettoken } from "../../../hooks/useAuth";
 import { useStoreSet } from "../../../hooks/useStore";
 import { Appoinements } from "./Appoint";
+import { setToModel } from "../../../redux/slices/doctor/appointPaymentSlice";
 
 function Dashboard() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const data = useSelector((state: any) => state).authReducer
     const [details, setDetails] = useState<doctorDetailsType>({
         name: "",
         appointmentCount: 0,
         degree: "",
-        department: ""
+        department: "",
     })
     const [appoinements, setAppointments] = useState([])
     const [requests, setRequests] = useState([])
@@ -25,12 +27,13 @@ function Dashboard() {
     const { name, password, auth } = data
 
     const authentication = async() => {
-        const response = await useFetchRefreshToken(auth)        
+        const response = await useFetchRefreshToken(auth)
+        
                 
         if(response.accessToken === 'token not found' && auth.auth) {
-            const res = await useGettoken(auth, 'patient')
-            useStoreSet(res.accessToken)
-            const response = await useFetchRefreshToken(auth)
+            // const res = await useGettoken(auth, 'doctor')
+            // useStoreSet(res.accessToken)
+            // const response = await useFetchRefreshToken(auth)
             
         } else if(auth.auth === false) {
             // navigate('/')
@@ -40,15 +43,20 @@ function Dashboard() {
     }
     
     useEffect(() => {
-        // if(!auth) return navigate('/')
-        //     getAndSetData()
+        // authentication()
+        if(!auth) return navigate('/')
+        const res = getAndSetData()
+        // setRequests(prev)
+            
     }, [])
     
     async function getAndSetData() {
         const detailsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/auth/get?email=${name}&password=${password}`)
         const appoinementsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/appointments/get?id=${detailsResponse._id}`)
-        const requestResponse = await useFetchGetTemplate(`http://localhost:2000/admin-service/appointment/get_by_records?id=${detailsResponse.name}&type=anything`)
-        
+        const requestResponse: 
+            { data: Array<object>, result: Array<object> } 
+        = await useFetchGetTemplate(`http://localhost:2000/admin-service/appointment/get_by_records?id=${detailsResponse.name}&type=anything`)
+
         setDetails({
             appointmentCount: 2,
             degree: detailsResponse.degree,
@@ -57,8 +65,18 @@ function Dashboard() {
         })
 
         setAppointments(appoinementsResponse)
+        
+        const { data, result } = requestResponse
+        
+        const final: any = []
 
-        setRequests(requestResponse)
+        for(let i = 0; i < result.length; i++) {
+            if(result[i].appointmentId === data[i]._id) {
+                final.push({senderId: data[i].senderId, ...result[0]})
+            }
+        }
+        
+        setRequests(final)
     }
 
     return (

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { turnOffappoinetmentFillupPopup } from '../../../redux/slices/patient/appointmentFillup'
 import { turnOnnotSendAppoinetmentPopup } from '../../../redux/slices/patient/notSendAppoinetment'
 import { useAddAppointment } from '../../../hooks/useMessage'
+import { turnOnNotFilledPopup } from '../../../redux/slices/patient/notFilledSlice'
 
 function AppoinetmentFillup() {
   const [title, setTitle] = useState('')
@@ -12,6 +13,7 @@ function AppoinetmentFillup() {
 
   const saveAppointement = async () => {
     const payload = { title, content, status: 'pending', senderId: state._id}
+    if(!payload.senderId) dispatch(turnOnNotFilledPopup())
     
     const res = await useAddAppointment(payload)
   }

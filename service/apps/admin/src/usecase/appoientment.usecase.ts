@@ -41,4 +41,8 @@ export class AppoinetmentUsecase {
   async removeRecords(id: string) {
     return await this.app.removeRecord(id)
   }
+
+  async addDoctor(id: string) {
+    return await this.app.addDoctor(id)
+  }
 }

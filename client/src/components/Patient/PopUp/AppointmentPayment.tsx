@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
-import { useFetchPostTemplate } from '../../../hooks/usePatient'
+import { useFetchGetTemplate, useFetchPostTemplate, useFetchPutTemplate } from '../../../hooks/usePatient'
+import { useDispatch, useSelector } from 'react-redux'
+import { isOffModel } from '../../../redux/slices/doctor/appointPaymentSlice'
 
 function AppointmentPayment() {
+  const dispatch = useDispatch()
+  const state = useSelector((state: any) => state)
+
   const [diagnosys, setDig] = useState('')
   const [date, setDate] = useState('')
   const [startTime, setStartTime] = useState('')
@@ -30,6 +35,8 @@ function AppointmentPayment() {
   }
 
   const handleFetch = async(e: any) => {
+    console.log(state.appointPaymentReducer);
+    
       if(date === '' || span === '' || diagnosys === '' ||
         startTime === '' || endTime === ''
       ) {
@@ -38,17 +45,26 @@ function AppointmentPayment() {
         setStatus(true)
       }
 
-    const response = await useFetchPostTemplate(
-      `http://localhost:2000/communication-service/doctor_notification/create`,
-      {
-      date,
-      span,
-      diagnosys,
-      startTime,
-      endTime,
-      fee
-    })
-  
+      // await useFetchGetTemplate('http://localhost:2000/communication-service/doctor_notification/get')
+
+    // const response = await useFetchPostTemplate(
+    //   `http://localhost:2000/communication-service/doctor_notification/create`,
+    //   {
+    //   date,
+    //   span,
+    //   diagnosys,
+    //   startTime,
+    //   endTime,
+    //   fee,
+    //   senderId: state.appointPaymentReducer.senderId
+    // })
+
+    // if(response) {
+    //   await useFetchPutTemplate('http://localhost:2000/admin-service/appointment/add_doctor', {
+    //     doctorId: state.authReducer.id
+    //   })
+    // }
+
   }
   
   return (
@@ -124,12 +140,16 @@ function AppointmentPayment() {
             className='bg-red-500 text-white px-3 py-1 rounded-md'
             onClick={e => {
             //   dispatch(turnOffnotSendAppoinetmentPopup())
+                dispatch(isOffModel())
             }}
             >
             Cancel
           </button>
           <button className='mx-2 px-2 py-1 rounded-md bg-green-500 text-white'
-            onClick={handleFetch}
+            onClick={e=> {
+              handleFetch(e)
+              dispatch(isOffModel())
+            }}
           >
             Send
           </button>

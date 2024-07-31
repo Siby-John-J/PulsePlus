@@ -27,8 +27,9 @@ export class NotificationController {
   @MessagePattern('notification:records')
   async getFromRecords(@Payload() data: any) {
     try {
-      
-      return await this.notification.getNotification(data)
+      const result = await this.notification.getNotification(data)
+      const parsed = JSON.parse(data)
+      return { result, data: parsed }
     } catch (error) {
       
     }

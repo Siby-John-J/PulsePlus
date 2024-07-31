@@ -31,7 +31,7 @@ export class AuthorizationController {
         password
       })
 
-      token = { accessToken }
+      token = { accessToken, id: response._id }
       
       return token
     } else {

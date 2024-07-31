@@ -1,7 +1,8 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFetchDeleteTemplate } from "../../../hooks/usePatient";
+import { isModel, isOffModel } from "../../../redux/slices/doctor/appointPaymentSlice";
 
-const setData = (e: React.DragEvent<HTMLDivElement>, data: object) => {    
+const setData = (e: React.DragEvent<HTMLDivElement>, data: object) => {
     e.dataTransfer.setData('data', JSON.stringify(data))
 }
 
@@ -42,6 +43,7 @@ export function Appoinements(props: {
     data: any,
     refresher: Function
 }) {
+    const dispatch = useDispatch()
     const data = useSelector((state: any) => state).authReducer
 
     return (
@@ -62,7 +64,7 @@ export function Appoinements(props: {
                 <div 
                     onDragOver={dropOver}
                     onDrop={e => {
-                        dropCapture(e, {status: 'reject', data})
+                        const res = dropCapture(e, {status: 'reject', data})
                         props.refresher()
                     }}
                     className="border-red-500 bg-red-500 bg-opacity-25 border-[2px] w-[100%] rounded-md h-[45%]">
@@ -71,8 +73,10 @@ export function Appoinements(props: {
                 <div 
                     onDragOver={dropOver}
                     onDrop={e => {
+                        const data = e.dataTransfer.getData('data')
+                        const parsed = JSON.parse(data)
                         
-                        // dropCapture(e, {status: 'approve', data})
+                        dispatch(isModel({senderId: parsed.senderId}))  
                     }}
                     className="border-green-400 bg-green-500 bg-opacity-25 w-[100%] border-[2px] rounded-md h-[45%]"></div>
             </div>

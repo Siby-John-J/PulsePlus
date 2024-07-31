@@ -15,7 +15,7 @@ export class PatientAuthController {
 
     @EventPattern('patient')
     testP(@Payload() data: any, @Ctx() context: RmqContext) {
-        console.log(data);
+        // console.log(data);
         
         // this.rmqService.ack(context)
         

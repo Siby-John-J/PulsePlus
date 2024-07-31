@@ -72,6 +72,7 @@ function LoginField() {
             dispatch(login({
                 name: signIndata.name,
                 password: signIndata.password,
+                id: res.id,
                 auth: true
             }));
             useStoreSet(res.accessToken);
