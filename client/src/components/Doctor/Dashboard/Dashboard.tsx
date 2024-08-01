@@ -55,8 +55,8 @@ function Dashboard() {
         const appoinementsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/appointments/get?id=${detailsResponse._id}`)
         const requestResponse: 
             { data: Array<object>, result: Array<object> } 
-        = await useFetchGetTemplate(`http://localhost:2000/admin-service/appointment/get_by_records?id=${detailsResponse.name}&type=anything`)
-
+        = await useFetchGetTemplate(`http://localhost:2000/admin-service/appointment/get_by_records?id=${detailsResponse._id}&type=anything`)
+        
         setDetails({
             appointmentCount: 2,
             degree: detailsResponse.degree,

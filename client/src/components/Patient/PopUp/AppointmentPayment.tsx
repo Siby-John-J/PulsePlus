@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useFetchGetTemplate, useFetchPostTemplate, useFetchPutTemplate } from '../../../hooks/usePatient'
+import { useFetchDeleteTemplate, useFetchGetTemplate, useFetchPostTemplate, useFetchPutTemplate } from '../../../hooks/usePatient'
 import { useDispatch, useSelector } from 'react-redux'
 import { isOffModel } from '../../../redux/slices/doctor/appointPaymentSlice'
 
@@ -35,36 +35,41 @@ function AppointmentPayment() {
   }
 
   const handleFetch = async(e: any) => {
-    console.log(state.appointPaymentReducer);
-    
       if(date === '' || span === '' || diagnosys === '' ||
         startTime === '' || endTime === ''
       ) {
-        return setStatus(false)
+        setStatus(false)
+        return false
       } else {
         setStatus(true)
       }
 
-      // await useFetchGetTemplate('http://localhost:2000/communication-service/doctor_notification/get')
+      const response1 = await useFetchDeleteTemplate(
+        `http://localhost:2000/admin-service/appointment/remove_record/?id=${state.authReducer.id}`
+      )
 
-    // const response = await useFetchPostTemplate(
-    //   `http://localhost:2000/communication-service/doctor_notification/create`,
-    //   {
-    //   date,
-    //   span,
-    //   diagnosys,
-    //   startTime,
-    //   endTime,
-    //   fee,
-    //   senderId: state.appointPaymentReducer.senderId
-    // })
+      const response = await useFetchPutTemplate('http://localhost:2000/admin-service/appointment/add_doctor', {
+        id: state.authReducer.id,
+        appointId: state.appointPaymentReducer.appointId
+      })
+  
+      if(response.error) {
+        alert('already accepted')
+        return false
+      }  
 
-    // if(response) {
-    //   await useFetchPutTemplate('http://localhost:2000/admin-service/appointment/add_doctor', {
-    //     doctorId: state.authReducer.id
-    //   })
-    // }
-
+    const response2 = await useFetchPostTemplate(
+      `http://localhost:2000/communication-service/doctor_notification/create`,
+      {
+      date,
+      span,
+      diagnosys,
+      startTime,
+      endTime,
+      fee,
+      senderId: state.appointPaymentReducer.senderId
+    })
+    return true
   }
   
   return (
@@ -136,7 +141,7 @@ function AppointmentPayment() {
             </div>
         </div>
         <div className='w-fit px-5 flex flex-row justify-between items-center'>
-          <button 
+          <button
             className='bg-red-500 text-white px-3 py-1 rounded-md'
             onClick={e => {
             //   dispatch(turnOffnotSendAppoinetmentPopup())
@@ -147,7 +152,9 @@ function AppointmentPayment() {
           </button>
           <button className='mx-2 px-2 py-1 rounded-md bg-green-500 text-white'
             onClick={e=> {
-              handleFetch(e)
+              handleFetch(e).then(res => {
+                if(res) alert('sucessfully updated')
+              })
               dispatch(isOffModel())
             }}
           >

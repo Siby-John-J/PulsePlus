@@ -26,7 +26,7 @@ function Details(props: { props: detailsTypes }) {
                             <div>
                                 <h1 className="font-extralight">Date of Birth</h1>
                                 <p className="font-medium">
-                                    {validate('props.props.dob')}
+                                    {validate(props.props.dob)}
                                 </p>
                             </div>
                             <div>

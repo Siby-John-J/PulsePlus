@@ -42,7 +42,8 @@ export class AppoinetmentUsecase {
     return await this.app.removeRecord(id)
   }
 
-  async addDoctor(id: string) {
-    return await this.app.addDoctor(id)
+  async addDoctor(data: { id: string, appointId: string }) {
+    const { id,  appointId } = data
+    return await this.app.addDoctor(id, appointId)
   }
 }

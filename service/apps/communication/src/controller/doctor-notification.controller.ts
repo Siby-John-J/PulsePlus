@@ -6,10 +6,8 @@ export class DoctorNotificationController {
     constructor(private readonly notification: AppointmentDoctorNotificationService) {}
     
     @Get('get')
-    async getAll() {
-        console.log('lol');
-        
-        return {hi :'await this.notification.getDoctorNotification()'}
+    async getAll(@Query() data: { id: string }) {
+        return await this.notification.getDoctorNotification(data.id)
     }
 
     @Post('create')

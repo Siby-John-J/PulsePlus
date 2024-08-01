@@ -46,12 +46,7 @@ export class NotificationController {
 
   @Get('get')
   async getHello(@Query() data: {id: string}) {
-    const { id } = data
-
-    try {
-      return await this.notification.getNotification(id);
-    } catch (error) {
-      
-    }
+    const res = await this.notification.getNotification(data.id);
+    return res
   }
 }

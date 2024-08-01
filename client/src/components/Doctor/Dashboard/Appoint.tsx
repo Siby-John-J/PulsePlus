@@ -64,7 +64,7 @@ export function Appoinements(props: {
                 <div 
                     onDragOver={dropOver}
                     onDrop={e => {
-                        const res = dropCapture(e, {status: 'reject', data})
+                        const res = dropCapture(e, {doctorId: data.id, status: 'reject', data})
                         props.refresher()
                     }}
                     className="border-red-500 bg-red-500 bg-opacity-25 border-[2px] w-[100%] rounded-md h-[45%]">
@@ -76,7 +76,7 @@ export function Appoinements(props: {
                         const data = e.dataTransfer.getData('data')
                         const parsed = JSON.parse(data)
                         
-                        dispatch(isModel({senderId: parsed.senderId}))  
+                        dispatch(isModel({senderId: parsed.senderId, appointId: parsed.appointmentId}))  
                     }}
                     className="border-green-400 bg-green-500 bg-opacity-25 w-[100%] border-[2px] rounded-md h-[45%]"></div>
             </div>
@@ -90,12 +90,13 @@ const dropOver = (e: React.DragEvent<HTMLDivElement>) => {
 
 const dropCapture = async (e: React.DragEvent<HTMLDivElement>, receved: {
     status: string,
-    data: object
+    data: object,
+    doctorId: string
 }) => {
     const data = e.dataTransfer.getData('data')
     const parsed = JSON.parse(data)
     
     if(receved.status === 'reject') {
-        await useFetchDeleteTemplate(`http://localhost:2000/admin-service/appointment/remove_record?id=${'Phil'}`)
+        await useFetchDeleteTemplate(`http://localhost:2000/admin-service/appointment/remove_record?id=${receved.doctorId}`)
     }
 }

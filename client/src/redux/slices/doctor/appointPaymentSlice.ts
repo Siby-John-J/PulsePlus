@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 const initialState = {
     turnOn: false,
     senderId: '',
-    doctorId: ''
+    appointId: ''
 }
 
 const appointPayment = createSlice({
@@ -11,26 +11,24 @@ const appointPayment = createSlice({
     initialState,
     reducers: {
         isModel(state: any, dispatch: any): any {
-            console.log(initialState);
-            
             return {
                 turnOn: true,
                 senderId: dispatch.payload.senderId,
-                doctorId: initialState.doctorId
+                appointId: dispatch.payload.appointId
             }
         },
         isOffModel(): any {
             return {
                 turnOn: false,
                 senderId: '',
-                doctorId: initialState.doctorId
+                appointId: initialState.appointId
             }
         },
         setToModel(state: any, dispatch: any): any {
             return {
                 turnOn: false,
                 senderId: '',
-                doctorId: dispatch.payload.doctorId
+                appointId: dispatch.payload.appointId
             }
         }
     }

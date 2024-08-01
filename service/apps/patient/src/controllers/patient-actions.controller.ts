@@ -20,10 +20,11 @@ export class PatientActionsController {
   
 
   @Get('get')
-  getPatient(@Query() payload: object) {
-      const res = this.patientUsecase.getPatient(payload)
+  async getPatient(@Query() payload: object) {
+      const res = await this.patientUsecase.getPatient(payload)
       // this.patientUsecase.createAppoinetment('s')
-
+      console.log(res);
+      
       return res
   }
 

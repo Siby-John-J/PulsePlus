@@ -9,8 +9,8 @@ export class AppointmentDoctorNotificationService {
         return await this.notification.create(data)
     }
 
-    async getDoctorNotification() {
-        return await this.notification.get()
+    async getDoctorNotification(id: string) {
+        return await this.notification.get(id)
         // return await this.notification.getNotification(id)
     }
 

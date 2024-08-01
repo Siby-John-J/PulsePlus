@@ -18,6 +18,10 @@ function SendAppointment() {
   const [groupData, setGrouprData] = useState([])
   const [departmentData, setDepartmentData] = useState([])
 
+  const [doctorId, setDoctorId] = useState([])
+  const [groupId, setGrouprDat] = useState([])
+  const [departmentId, setDepartmentId] = useState([])
+
   const updateSelection = (name: string) => {
     setSeletion(name)
   }
@@ -36,6 +40,10 @@ function SendAppointment() {
     if(type === 'Departments') setDepartmentData(data)
   }
 
+  const getIds = (data: any, type: string) => {
+    if(type === 'Doctor') setDoctorId(data)
+  }
+
   const sendData = async () => {
     const url1 = `http://localhost:2000/patient-service/actions/get?_id=${state.data.senderId}`
     const res = await useFetchGetTemplate(url1)
@@ -51,16 +59,15 @@ function SendAppointment() {
         },
       },
       records: {
-        doctorData,
-        groupData,
-        departmentData
+        doctorData: doctorId,
+        groupData: groupId,
+        departmentData: departmentId
       }
     }
     
     const url = 'http://localhost:2000/communication-service/appointment/publish'
     const url2 = `http://localhost:2000/admin-service/appointment/records?id=${state.data._id}`
     // const url3 = `http://localhost:2000/admin-service/appointment/change_status?id=${state.data._id}`
-    
 
     await useFetchPostTemplate(url, demoData.data)
     await useFetchPostTemplate(url2, demoData.records)
@@ -73,7 +80,7 @@ function SendAppointment() {
     <div className='bg-white absolute top-[20%] px-4 py-2 w-[30em] overflow-y-auto w-rounded-md'>
         <h1 className='py-1 font-bold text-[1.4em]'>Share Apppointment</h1>
         {
-          !isAdd ? <DropDown update={updateSelection} /> : <SelectOptions getData={getData} option={selection} />
+          !isAdd ? <DropDown update={updateSelection} /> : <SelectOptions getIds={getIds} getData={getData} option={selection} />
         }
         {
           !isAdd &&
@@ -266,7 +273,9 @@ function SelectOptions(props: any) {
     'Phsycology'
   ])
 
-  const [selected, setSelected] = useState<string[]>([])
+  const [selected, setSelected] = useState<any[]>([])
+  const [id, setId] = useState<string[]>([])
+
   const [barStyle, setBarStyle] = useState(`
      bg-gray-200 border-black h-[3em] py-2 mt-2 text-start px-2 rounded flex items-center justify-between
   `)
@@ -275,7 +284,6 @@ function SelectOptions(props: any) {
     const url = 'http://localhost:2000/doctor-service/auth/getAll'
     const response = await useFetchGetTemplate(url)
     setDoctors(response)
-    
   }
 
   useEffect(() => {
@@ -283,11 +291,22 @@ function SelectOptions(props: any) {
   }, [])
 
   props.getData(selected, props.option)
+  props.getIds(id, props.option)
 
   const setChange = (event: any) => {
+    const parsed = JSON.parse(event.target.value)
+
+    setId(prev => {
+      if(!prev.includes(parsed._id)) {
+        return [...prev, parsed._id]
+      } else {
+        return prev
+      }
+    })
+
     setSelected(prev => {
-      if(!prev.includes(event.target.value)) {
-        return [...prev, event.target.value]
+      if(!prev.includes(parsed.name)) {
+        return [...prev, parsed.name]
       } else {
         return prev
       }
@@ -296,6 +315,10 @@ function SelectOptions(props: any) {
 
   const clearChange = (item: string) => {
     setSelected(prev => {
+      return prev.filter(e => e !== item)
+    })
+
+    setId(prev => {
       return prev.filter(e => e !== item)
     })
   }
@@ -309,7 +332,7 @@ function SelectOptions(props: any) {
               props.option === 'Doctor' &&
               doctors.map((data: { _id: string, name: string }) =>{
                 return (
-                  <option value={data.name}>{data.name}</option>
+                  <option value={JSON.stringify(data)}>{data.name}</option>
                 )
               })
           }

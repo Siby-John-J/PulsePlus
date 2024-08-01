@@ -9,7 +9,7 @@ import { useFetchGetTemplate } from "../../../hooks/usePatient"
 
 function Notification() {
     const dispatch = useDispatch()
-    const userId = useSelector((state: any) => state).patientReducer._id
+    const state = useSelector((state: any) => state).authReducer
 
     const [isNewMessage, setIsnewMessage] = useState<boolean>(false)
     const [notification, setNotification] = useState<string[]>([])
@@ -17,13 +17,18 @@ function Notification() {
     // socket.on('notification:update', (data: any) => {
     //     setIsnewMessage(true)
     // })
-    
+
     useEffect(() => {
-        useFetchGetTemplate(`http://localhost:2000/communication-service/notification/get?id=${userId}`)
+        useFetchGetTemplate(`http://localhost:2000/communication-service/doctor_notification/get?id=${state.id}`)
             .then(e => {
-                setNotification(e)
+                // setNotification(e)
+                console.log(e);
+                
             })
+
     }, [])
+
+    
     
     return (
         <div className="bg-white absolute top-[9%] right-[16%] px-4 py-2 w-[18em] h-fit rounded-md border-[1px] border-black">

@@ -60,7 +60,7 @@ function AdminModelLoader() {
         <>
             {
                 popupState.appointmentAdminReducer.isOn && (
-                    <PopUp component={<SendAppointment />} />
+                    <PopUp layout={true} component={<SendAppointment />} />
                 )
             }
         </>

@@ -86,9 +86,14 @@ export class AppointmentController {
 
   @Put('add_doctor')
   async addDoctor(@Body() body: any) {
-    console.log(body)
-
-    return { error: 'true' }
+    const check = await this.appointment.getOne(body.appointId)
+    const { accept, ...rest } = check
+    
+    if(accept) {
+      return { error: 'already accepted' }
+    }
+    
+    return await this.appointment.addDoctor(body)
     // this.commPublisher.publish('notification:create', body)
     
   }

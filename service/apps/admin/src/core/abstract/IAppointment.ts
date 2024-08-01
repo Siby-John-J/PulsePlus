@@ -17,7 +17,7 @@ export abstract class IAppointment {
 
     abstract removeRecord(id: string): Promise<any>
 
-    abstract addDoctor(id: string): Promise<any>
+    abstract addDoctor(id: string, appointId: string): Promise<any>
 
     abstract removeDoctor(id: string): Promise<any>
 }
