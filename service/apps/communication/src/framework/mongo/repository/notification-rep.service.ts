@@ -1,8 +1,7 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { Notification } from "../models/notification.schema";
 import { Model } from "mongoose";
-import { AppointmentNotificationEntity, INotification, NotificationEntity } from "../../../core"
-import { response } from "express";
+import { INotification, NotificationEntity } from "../../../core"
 
 export class NotificationRepository extends INotification {
     constructor(
@@ -15,12 +14,12 @@ export class NotificationRepository extends INotification {
         return await this.notification.create(data)
     }
 
-    deleteNotification() {
-        
+    async deleteNotification(id: string): Promise<any> {
+        return await this.notification.deleteOne({ _id: id })
     }
 
     async getNotification(id: string): Promise<NotificationEntity[]> {
-        const response = await this.notification.find({senderId: id})
+        const response = await this.notification.find({ senderId: id })
         return response
     }
     async getBySenderId(senderId: string) {

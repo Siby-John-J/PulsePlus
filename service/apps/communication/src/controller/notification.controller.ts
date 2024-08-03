@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { NotificationService } from '../usecase';
 import { ISocket, NotificationEntity } from '../core';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -13,8 +13,8 @@ export class NotificationController {
   @MessagePattern('notification:create')
   async createAppoinetment(@Payload() data: NotificationEntity) {
     try {
-      // await this.notification.createNotification(data)
-      // const response = await this.notification.getNotification(data.senderId)
+      await this.notification.createNotification(data)
+      const response = await this.notification.getNotification(data.senderId)
       
       this.socket.emitMessage(data.senderId, 'notification:update')
       // socket io 
@@ -28,7 +28,9 @@ export class NotificationController {
   async getFromRecords(@Payload() data: any) {
     try {
       const result = await this.notification.getNotification(data)
+      
       const parsed = JSON.parse(data)
+      
       return { result, data: parsed }
     } catch (error) {
       
@@ -48,5 +50,10 @@ export class NotificationController {
   async getHello(@Query() data: {id: string}) {
     const res = await this.notification.getNotification(data.id);
     return res
+  }
+
+  @Delete('remove')
+  async deleteNotification(@Query() data: {id: string}) {
+    return await this.notification.removeNotification(data.id)
   }
 }

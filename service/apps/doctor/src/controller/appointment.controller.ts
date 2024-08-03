@@ -8,7 +8,12 @@ export class Appoinetment {
 
     @Get('get')
     async getAppointment(@Query() data: { id: string }) {
-        return this.appointmentUsecase.get(data.id)
+        console.log(data);
+        
+        const res = await this.appointmentUsecase.get(data.id)
+        console.log(res);
+        return res
+        
     }
     
     @Post('create')

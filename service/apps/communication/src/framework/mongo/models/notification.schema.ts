@@ -7,6 +7,9 @@ export class Notification {
 
     @Prop()
     senderId: string
+
+    @Prop()
+    type: string
 }
 
 export const NotificationSchema = SchemaFactory.createForClass(Notification)

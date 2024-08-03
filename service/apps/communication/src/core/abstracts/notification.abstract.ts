@@ -4,7 +4,7 @@ export abstract class INotification {
     abstract createNotification(data: NotificationEntity | AppointmentNotificationEntity): 
         Promise<NotificationEntity | AppointmentNotificationEntity>
 
-    abstract deleteNotification()
+    abstract deleteNotification(id: string): Promise<any>
 
     abstract getNotification(id: string): 
         Promise<NotificationEntity[]>

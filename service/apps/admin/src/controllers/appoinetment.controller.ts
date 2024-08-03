@@ -28,8 +28,7 @@ export class AppointmentController {
     
     const response: any = await this.appointment.getRecords(id, type)
 
-    const result = await this.commPublisher.publish('notification:records', JSON.stringify(response))
-    // const records = {result: JSON.stringify(result), response} 
+    const result = await this.commPublisher.publish('appointment:get', JSON.stringify(response))
     
     return result
     
@@ -45,7 +44,8 @@ export class AppointmentController {
     if(data.status === 'rejected') {
       this.commPublisher.publish('notification:create', {
         senderId: body.senderId,
-        content: 'your appointmentment is rejected by admin'
+        content: 'your appointmentment is rejected by admin',
+        type: 'appointment'
       })
     }
 

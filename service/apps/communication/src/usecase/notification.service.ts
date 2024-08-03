@@ -13,6 +13,10 @@ export class NotificationService {
     return await this.notification.getNotification(id)
   }
 
+  async removeNotification(id: string) {
+    return await this.notification.deleteNotification(id)
+  }
+
   async getByRecords(senderId: string) {
     return await this.notification.getBySenderId(senderId)
   }

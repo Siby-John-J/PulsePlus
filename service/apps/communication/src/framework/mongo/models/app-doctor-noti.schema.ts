@@ -19,9 +19,12 @@ export class AppointDoctorNotification {
     
     @Prop()
     senderId: string
-
+    
     @Prop()
     diagnosys: string
+
+    @Prop()
+    type: string
 
 }
 

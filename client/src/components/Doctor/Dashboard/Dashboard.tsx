@@ -52,9 +52,9 @@ function Dashboard() {
     
     async function getAndSetData() {
         const detailsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/auth/get?email=${name}&password=${password}`)
-        const appoinementsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/appointments/get?id=${detailsResponse._id}`)
+        // const appoinementsResponse = await useFetchGetTemplate(`http://localhost:2000/doctor-service/appointment/get?id=${detailsResponse._id}`)
         const requestResponse: 
-            { data: Array<object>, result: Array<object> } 
+            { data: Array<object>, result: Array<object> }
         = await useFetchGetTemplate(`http://localhost:2000/admin-service/appointment/get_by_records?id=${detailsResponse._id}&type=anything`)
         
         setDetails({
@@ -64,17 +64,19 @@ function Dashboard() {
             name: detailsResponse.name
         })
 
-        setAppointments(appoinementsResponse)
+        // setAppointments(appoinementsResponse)
+        // console.log(requestResponse);
         
         const { data, result } = requestResponse
         
         const final: any = []
-
+        
         for(let i = 0; i < result.length; i++) {
             if(result[i].appointmentId === data[i]._id) {
                 final.push({senderId: data[i].senderId, ...result[0]})
             }
         }
+        // console.log(requestResponse);
         
         setRequests(final)
     }

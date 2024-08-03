@@ -1,0 +1,56 @@
+
+.notification {
+    /* background: #000; */
+    background: white;
+    width: 90%;
+    transform: scale(1.3) translateX(-4em);
+    transition: ease-in 0.4s;
+    border-radius: 5%;
+    /* background: white; */
+    z-index: 10;
+    /* width: 100%; */
+    height: 4em;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+.notification-2 {
+    /* background: #000; */
+    background: white;
+    width: 90%;
+    transform: scale(1.3) translateX(-4em);
+    transition: ease-in 0.4s;
+    border-radius: 5%;
+    /* background: white; */
+    z-index: 10;
+    /* width: 100%; */
+    height: 4em;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+}
+
+.noti-notification {
+    background: white;
+    z-index: 10;
+    width: 100%;
+    height: 4em;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+}
+
+.second-noti {
+    background: white;
+    z-index: 10;
+    width: 100%;
+    height: 4em;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+.scroller::-webkit-scrollbar {
+    display: none;
+}

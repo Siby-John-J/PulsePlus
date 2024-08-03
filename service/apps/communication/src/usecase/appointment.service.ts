@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { AppointmentNotificationEntity, INotification } from '../core';
+import { AppointmentNotificationEntity, IAppoNotification } from '../core';
 
 @Injectable()
 export class AppointmentNotificationService {
-  constructor(private notification: INotification) {}
+  constructor(private notification: IAppoNotification) {}
     
     async save(data: AppointmentNotificationEntity) {
         return await this.notification.createNotification(data)
@@ -15,5 +15,9 @@ export class AppointmentNotificationService {
 
     async publishToDepartment(id: string) {
         // return await this.notification.getNotification(id)
+    }
+
+    async getForDoctor(id: string) {
+        return await this.notification.getNotification(id)
     }
 }

@@ -23,4 +23,12 @@ export class AppointmentNotificationController {
 
         // this.socket.emitMessage(data, 'string')
     }
+
+    @MessagePattern('appointment:get')
+    async getAppointmentForDoctor(@Payload() data: any) {
+        const result = await this.appointNotification.getForDoctor(data)
+        const parsed = JSON.parse(data)
+      
+        return { result, data: parsed }
+    }
 }

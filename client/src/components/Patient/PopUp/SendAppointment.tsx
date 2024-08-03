@@ -67,8 +67,8 @@ function SendAppointment() {
     
     const url = 'http://localhost:2000/communication-service/appointment/publish'
     const url2 = `http://localhost:2000/admin-service/appointment/records?id=${state.data._id}`
-    // const url3 = `http://localhost:2000/admin-service/appointment/change_status?id=${state.data._id}`
-
+    const url3 = `http://localhost:2000/admin-service/appointment/change_status?id=${state.data._id}`
+    
     await useFetchPostTemplate(url, demoData.data)
     await useFetchPostTemplate(url2, demoData.records)
     const response = await useFetchUpdateStatus({_id: state.data._id, type: 'appointment'}, 'approved')

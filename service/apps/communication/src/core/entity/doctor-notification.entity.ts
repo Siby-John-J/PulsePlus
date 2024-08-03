@@ -7,5 +7,6 @@ export class DoctorNotification {
     fee: number
     senderId: string
     diagnosys: string
+    type: string
     // doctorId: string
 }

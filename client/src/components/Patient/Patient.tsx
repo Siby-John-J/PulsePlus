@@ -23,7 +23,7 @@ function Patient() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(authState.auth === false) return navigate('/')
+        // if(authState.auth === false) return navigate('/')
         
     }, []);
 

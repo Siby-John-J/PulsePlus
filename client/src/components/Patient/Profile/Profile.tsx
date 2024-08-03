@@ -29,11 +29,11 @@ function Profile() {
         (state: patientDetailsReducerType) => state.patientReducer
     );
 
-    const socket = io('http://localhost:3003/' +  patientDetailsState._id)    
+    // const socket = io('http://localhost:3003/' +  patientDetailsState._id)    
     
-    socket.on('notification:update', (data: any) => {
-        setIsnewMessage(isNewMessage + 1)
-    })
+    // socket.on('notification:update', (data: any) => {
+    //     setIsnewMessage(isNewMessage + 1)
+    // })
 
     const authentication = async() => {
         const response = await useFetchRefreshToken(auth)      

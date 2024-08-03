@@ -1,9 +1,9 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { AppointmentNotification } from "../models/appo-notification.schema";
 import { Model } from "mongoose";
-import { INotification, AppointmentNotificationEntity } from "../../../core"
+import { INotification, AppointmentNotificationEntity, IAppoNotification } from "../../../core"
 
-export class AppointmentNotificationRepository extends INotification {
+export class AppointmentNotificationRepository extends IAppoNotification {
     constructor(
         @InjectModel(AppointmentNotification.name) readonly notification: Model<AppointmentNotificationEntity>,
       ) {

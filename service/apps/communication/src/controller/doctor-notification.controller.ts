@@ -12,6 +12,8 @@ export class DoctorNotificationController {
 
     @Post('create')
     async createOne(@Body() body: any) {
+        console.log(body);
+        
         return await this.notification.createDoctorNotification(body)
     }
 
