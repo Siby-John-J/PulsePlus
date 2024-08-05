@@ -28,6 +28,12 @@ export class PatientActionsController {
       return res
   }
 
+  @Get('getById')
+  async getPatientById(@Query() payload: { id: string }) {
+    const res = await this.patientUsecase.getPatientById(payload.id)
+    return res
+}
+
   @Get('getall')
   getAllPatients() {
       return this.patientUsecase.getAllPatients()

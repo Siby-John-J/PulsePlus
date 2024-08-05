@@ -16,6 +16,8 @@ import RegisterForm from "./components/Auth/Register";
 import { doctorRoutes } from "./routes/doctor";
 import AdminLogin from "./components/Auth/AdminLogin";
 import Processing from "./components/Auth/Processing";
+import PaymentSuccess from "./components/Patient/Payment/PaymentSuccess";
+import PaymentFailed from "./components/Patient/Payment/PaymentFailed";
 
 export const routeSwitch = {};
 
@@ -47,6 +49,14 @@ export const appRoutes: RouteType[] = [
     {
         path: '/admin',
         component: AdminLogin
+    },
+    {
+        path: 'patient/payment/success',
+        component: PaymentSuccess
+    },
+    {
+        path: 'patient/payment/failed',
+        component: PaymentFailed
     },
     {
         path: "*",

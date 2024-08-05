@@ -6,7 +6,7 @@ import { RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import * as joi from 'joi'; 
 import { AUTH_SERVICE } from '../constants/services';
-import { PatientAuthController } from './controllers';
+import { PatientAuthController, PatientPaymentController } from './controllers';
 import { PatientActionsController } from './controllers';
 import { PatientNotesController } from './controllers';
 import { ClientsModule, Transport } from '@nestjs/microservices';
@@ -30,6 +30,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     MongoServiceModule,
   ],
   controllers: [
+    PatientPaymentController,
     PatientAuthController, 
     PatientActionsController,
     PatientNotesController

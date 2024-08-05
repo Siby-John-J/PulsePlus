@@ -6,6 +6,9 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { Validation, ValidationSchema } from "./models/validation.schema";
 import { ValidationtRepository } from "./repositories/validation.service";
 import { IValidation } from "../../core/abstract/IValidation";
+import { AppointPayments, AppointPaymentsSchema } from "./models/app-payments.schema";
+import { IAppointmentPayment } from "../../core/abstract/IAppointmentPayment";
+import { AppointmentPaymentRepository } from "./repositories/appoint-payment.service";
 
 @Module({
     imports: [
@@ -17,6 +20,10 @@ import { IValidation } from "../../core/abstract/IValidation";
             {
                 name: Validation.name,
                 schema: ValidationSchema
+            },
+            {
+                name: AppointPayments.name,
+                schema: AppointPaymentsSchema
             }
         ])
     ],
@@ -28,8 +35,12 @@ import { IValidation } from "../../core/abstract/IValidation";
         {
             provide: IValidation,
             useClass: ValidationtRepository
+        },
+        {
+            provide: IAppointmentPayment,
+            useClass: AppointmentPaymentRepository
         }
     ],
-    exports: [IAppointment, IValidation]
+    exports: [IAppointment, IValidation, IAppointmentPayment]
 })
 export class MongoFrameWorkModule {}

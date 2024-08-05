@@ -1,5 +1,7 @@
 import { lazy } from "react";
 import { RouteType } from "../types/routerTypes";
+import PaymentSuccess from "../components/Patient/Payment/PaymentSuccess";
+import PaymentFailed from "../components/Patient/Payment/PaymentFailed";
 
 const Billing = lazy(() => import("../components/Patient/Billing/Billing"))
 const Profile = lazy(() => import("../components/Patient/Profile/Profile"))
@@ -25,5 +27,5 @@ export const patientRoute: RouteType[] = [
     {
         path: 'billing',
         component: Billing
-    }
+    },
 ]

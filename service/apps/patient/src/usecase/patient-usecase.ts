@@ -16,6 +16,10 @@ export class PatientUsecase {
         return await this.patient.get(payload)
     }
 
+    async getPatientById(id: string) {
+        return await this.patient.getById(id)
+    }
+
     async createPatient(data: object) {
         return this.patient.create(data)
     }

@@ -5,7 +5,7 @@ import { useFetchRefreshToken } from "../../../hooks/useFetch";
 import { useGettoken } from "../../../hooks/useAuth";
 import { useStoreSet } from "../../../hooks/useStore";
 import { authReducerType } from "../../../types/sliceTypes";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client"
 import { patientDetailsReducerType } from "../../../types/patient/patientTypes";
@@ -17,6 +17,8 @@ import Id from "./Id";
 import Notes from "./Notes";
 import Family from "./Family";
 import { on } from "../../../redux/slices/patient/layoutSlice";
+import { useFetchGetTemplate } from "../../../hooks/usePatient";
+import { login } from "../../../redux/slices/authSlice";
 
 let id: string | undefined = ''
 
@@ -29,15 +31,20 @@ function Profile() {
         (state: patientDetailsReducerType) => state.patientReducer
     );
 
+    const par = new URLSearchParams(window.location.search)
+
+    const q: any = {}
+    for(const [key, val] of par) {
+        q[key] = val
+    }
+
     // const socket = io('http://localhost:3003/' +  patientDetailsState._id)    
     
     // socket.on('notification:update', (data: any) => {
     //     setIsnewMessage(isNewMessage + 1)
     // })
 
-    const authentication = async() => {
-        const response = await useFetchRefreshToken(auth)      
-                
+    const controlAuth = async(response: any) => {
         if(response.accessToken === 'token not found' && auth.auth) {
             const res = await useGettoken(auth, 'patient')
             useStoreSet(res.accessToken)
@@ -49,6 +56,27 @@ function Profile() {
         } else {
             dispatch(get(response))
         }
+    }
+    
+    const authentication = async() => {
+        if(!auth.auth) {
+            const url = 'http://localhost:2000/patient-service/actions/getById?id='+q.id
+            const response = await useFetchGetTemplate(url)
+            console.log(response);
+            
+            dispatch(login({
+                name: response.email,
+                password: response.password,
+                id: response._id,
+                auth: true
+            }));
+            
+            return controlAuth(response)
+            
+        }
+        const response = await useFetchRefreshToken(auth)
+        controlAuth(response)
+
     }
 
     useEffect(() => {

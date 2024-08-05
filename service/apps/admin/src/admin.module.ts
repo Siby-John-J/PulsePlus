@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppointmentController, ValidationController } from './controllers';
+import { AppointmentController, ValidationController, AppointPaymentsController, AuthenticationController } from './controllers';
 import { MongooseModule } from '@nestjs/mongoose';
 // import { RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
@@ -7,7 +7,6 @@ import { AUTH_SERVICE } from '../constants/services';
 import * as joi from 'joi';
 import { MongoServiceModule } from './services/mongo-service.module';
 import { AdminUseCaseModule } from './usecase/usecase.module';
-import { AuthenticationController } from './controllers/authentications.controller';
 import { PublisherServiceModule } from './services/publisher-service.module';
 
 @Module({
@@ -31,6 +30,7 @@ import { PublisherServiceModule } from './services/publisher-service.module';
     AppointmentController,
     AuthenticationController,
     ValidationController,
+    AppointPaymentsController
   ],
   // providers: [],
 })

@@ -12,6 +12,10 @@ export class MongoRepository extends IPatientRepository {
     super();
   }
 
+  async getById(id: string): Promise<Patient> {
+    return await this.patientschema.findOne({_id: id})
+  }
+
   async create(data: object): Promise<Patient> {
     return await this.patientschema.create(data);
   }
