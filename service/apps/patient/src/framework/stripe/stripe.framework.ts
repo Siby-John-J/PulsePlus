@@ -1,7 +1,7 @@
 // import { IAdminPublisher } from "../../core";
 import { Inject, Injectable } from "@nestjs/common";
 import { IPayment, Payment } from "../../core";
-const stripe = require('stripe')('sk_test_51Pjub0CkpgmLmk0pgLHL5MBsjQPZ1BSf6sEAft4z3qg8A1ABAsYSDd5ArnhP7mgpwpz81pqdYcEOyYUxoz3mCizc00xXekK8Vp')
+const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 @Injectable()
 export class StripeFramework implements IPayment {

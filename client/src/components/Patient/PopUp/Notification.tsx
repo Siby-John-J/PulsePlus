@@ -3,7 +3,7 @@ import "./Notification.css"
 import { turnOffnotificationPopup } from "../../../redux/slices/patient/notificationSlice"
 import { off } from "../../../redux/slices/patient/layoutSlice"
 import { io } from "socket.io-client"
-import { useEffect, useId, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useFetchDeleteTemplate, useFetchGetTemplate, useFetchPostTemplate } from "../../../hooks/usePatient"
 import { UserTemplate } from "../../Admin/Dashboard/DoctorMiniList"
 import { appointResponseType } from "../../../types/patient/app_resType"
@@ -23,6 +23,22 @@ async function deleteNotification(event: any, id: string, type: string) {
 }
 
 async function createPayment(data: any, id: string) {
+    {
+        patientId: ''
+
+        source: 'credit-card'
+    
+        payment_id: 'string'
+    
+        amount: 'number'
+    
+        date: 'string'
+    
+        diagnosys: 'string'
+    
+        type: 'appointment'
+    }
+
     const url = 'http://localhost:2000/patient-service/payment/create?id=' + id
     const response = await useFetchPostTemplate(url, data)
     
@@ -40,9 +56,6 @@ function Notification() {
     // socket.on('notification:update', (data: any) => {
     //     setIsnewMessage(true)
     // })
-
-    console.log(state);
-    
 
     const getAndStoreData = async() => {
         const regular = await useFetchGetTemplate(`http://localhost:2000/communication-service/notification/get?id=${state.id}`)
@@ -76,13 +89,13 @@ function Notification() {
                     }
                     if(item.type === 'appo-payment') {
                         return (
-                            <PaymentNotificationList refresh={getAndStoreData} data={item} />
+                            <PaymentNotificationList refresh={getAndStoreData} data={item} id={state.id}/>
                         )
                     }
                 })
             }
             <div className="flex flex-row w-[100%] justify-between px-3 py-3">
-                <button onClick={e => createPayment(items, state.id)}>Clear</button>
+                <button>Clear</button>
                 <button
                     className="cursor-pointer"
                     onClick={e => {
@@ -136,13 +149,12 @@ function NotificationList(props: { data: {
     )
 }
 
-function PaymentNotificationList(props: { data: appointResponseType, refresh: Function } ) {
+function PaymentNotificationList(props: { data: appointResponseType, refresh: Function, id: string }) {
     const [hover, isHover] = useState<boolean>(false)
     const res =  hover ? ' notification ' : 'second-noti'
     const { date, diagnosys, endTime, startTime, fee, senderId, span } = props.data
     const items = [
-        { id: 1, quantity: 3 },
-        { id: 2, quantity: 1 },
+        { date, diagnosys, amount: fee, quantity: 1 }
       ]
 
     return (
@@ -150,6 +162,7 @@ function PaymentNotificationList(props: { data: appointResponseType, refresh: Fu
             onMouseLeave={e => isHover(prev => false)}
             onMouseOver={e => isHover(prev => true)}
             // onClick={e => createPayment({ items })}
+            onClick={e => createPayment(items, props.id)}
             >
             <div
                 onClick={e => {

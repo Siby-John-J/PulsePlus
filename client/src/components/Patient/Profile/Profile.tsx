@@ -62,7 +62,6 @@ function Profile() {
         if(!auth.auth) {
             const url = 'http://localhost:2000/patient-service/actions/getById?id='+q.id
             const response = await useFetchGetTemplate(url)
-            console.log(response);
             
             dispatch(login({
                 name: response.email,

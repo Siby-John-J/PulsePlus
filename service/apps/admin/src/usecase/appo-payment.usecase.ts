@@ -1,22 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { ValidationEntity } from '../core';
-import { IValidation } from '../core/abstract/IValidation';
+import { AppointmentPaymentEntity } from '../core';
+import { IAppointmentPayment } from '../core/abstract/IAppointmentPayment';
 
 @Injectable()
-export class AppointmenPaymentnUsecase {
-  constructor(private app: IValidation) {}
+export class AppointmenPaymentUsecase {
+  constructor(private app: IAppointmentPayment) {}
 
-  async create(payload: ValidationEntity): Promise<object> {
-    const data = {...payload, created: Date(), status: 'pending'}
-    
-    return await this.app.createValidation(data)
+  async createOne(payload: AppointmentPaymentEntity) {
+    return await this.app.create(payload)
   }
 
-  async get(): Promise<ValidationEntity[]> {
-    return await this.app.getValidation()
+  async getAll() {
+    return await this.app.getAll()
   }
 
-  async changeValidation(status: string, payload: object): Promise<any> {
-    return await this.app.changeValidation(status, payload)
+  async getForPatient(id: string) {
+    return await this.app.getForPatient(id)
   }
 }
