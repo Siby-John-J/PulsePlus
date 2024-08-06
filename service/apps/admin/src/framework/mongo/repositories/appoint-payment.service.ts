@@ -22,4 +22,13 @@ export class AppointmentPaymentRepository extends IAppointmentPayment {
     async getForPatient(id: string): Promise<AppointmentPaymentEntity[]> {
         return await this.paymentsSchema.find({patientId: id})
     }
+
+    async updatePayment(data: any, id: string): Promise<AppointmentPaymentEntity> {
+        return await this.paymentsSchema.findOneAndUpdate({patientId: id}, data)
+    }
+
+    async deletePayment(id: string): Promise<any> {
+        return await this.paymentsSchema.findOneAndDelete({patientId: id})
+        
+    }
 }

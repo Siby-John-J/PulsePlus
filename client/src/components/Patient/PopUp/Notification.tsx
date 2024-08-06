@@ -23,26 +23,28 @@ async function deleteNotification(event: any, id: string, type: string) {
 }
 
 async function createPayment(data: any, id: string) {
-    {
-        patientId: ''
+    // {
+    //     patientId: ''
 
-        source: 'credit-card'
+    //     source: 'credit-card'
     
-        payment_id: 'string'
+    //     payment_id: 'string'
     
-        amount: 'number'
+    //     amount: 'number'
     
-        date: 'string'
+    //     date: 'string'
     
-        diagnosys: 'string'
+    //     diagnosys: 'string'
     
-        type: 'appointment'
-    }
+    //     type: 'appointment'
+    // }
 
     const url = 'http://localhost:2000/patient-service/payment/create?id=' + id
     const response = await useFetchPostTemplate(url, data)
     
-    window.location.href = response.res
+    const { stripe_url, payment_id } = response.res
+    // &payment_id=${payment_id}
+    window.location.href = stripe_url
 }
 
 function Notification() {
@@ -67,10 +69,6 @@ function Notification() {
     useEffect(() => {
         getAndStoreData()
     }, [])
-    const items = [
-        { id: 1, quantity: 3 },
-        { id: 2, quantity: 1 },
-      ]
 
     return (
         <>
@@ -153,16 +151,13 @@ function PaymentNotificationList(props: { data: appointResponseType, refresh: Fu
     const [hover, isHover] = useState<boolean>(false)
     const res =  hover ? ' notification ' : 'second-noti'
     const { date, diagnosys, endTime, startTime, fee, senderId, span } = props.data
-    const items = [
-        { date, diagnosys, amount: fee, quantity: 1 }
-      ]
+    const items = { date, diagnosys, amount: fee, quantity: 1 }
 
     return (
         <div className="flex flex-row-reverse my-1 py-1" 
             onMouseLeave={e => isHover(prev => false)}
             onMouseOver={e => isHover(prev => true)}
             // onClick={e => createPayment({ items })}
-            onClick={e => createPayment(items, props.id)}
             >
             <div
                 onClick={e => {
@@ -171,7 +166,10 @@ function PaymentNotificationList(props: { data: appointResponseType, refresh: Fu
                 className="bg-gray-300 pl-3 w-[3em] fixed h-[4em] left-[80.8%] text-black flex items-center justify-center">
                 D
             </div>
-            <div className={res}>
+            <div
+            onClick={e => createPayment(items, props.id)}
+
+                className={res}>
                 <div className="text-[8px] px-3">
                     <h1 className="font-bold text-[14px]">Upcoming Appointment</h1>
                     <p className="text-gray-400">

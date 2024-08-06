@@ -11,6 +11,4 @@ export class AppointmentPaymentEntity {
     date: string
 
     diagnosys: string
-
-    type: string
 }

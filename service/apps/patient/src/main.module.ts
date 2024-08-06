@@ -10,6 +10,7 @@ import { PatientAuthController, PatientPaymentController } from './controllers';
 import { PatientActionsController } from './controllers';
 import { PatientNotesController } from './controllers';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { PublisherServiceModule } from './services/publisher-service.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     MongooseModule.forRoot(process.env.MONGO_URI),
     PatientUseCaseModule,
     MongoServiceModule,
+    PublisherServiceModule
   ],
   controllers: [
     PatientPaymentController,

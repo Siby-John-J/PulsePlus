@@ -17,4 +17,12 @@ export class AppointmenPaymentUsecase {
   async getForPatient(id: string) {
     return await this.app.getForPatient(id)
   }
+
+  async updatePayment(id: string, data: any) {
+    return await this.app.updatePayment(data, id)
+  }
+
+  async deletePayment(id: string) {
+    return await this.app.deletePayment(id)
+  }
 }

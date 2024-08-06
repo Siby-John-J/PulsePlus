@@ -6,4 +6,8 @@ export abstract class IAppointmentPayment {
     abstract getForPatient(id: string): Promise<AppointmentPaymentEntity[]>
 
     abstract getAll(): Promise<AppointmentPaymentEntity[]>
+
+    abstract updatePayment(data: any, id: string): Promise<AppointmentPaymentEntity>
+
+    abstract deletePayment(id: string): Promise<any>
 }

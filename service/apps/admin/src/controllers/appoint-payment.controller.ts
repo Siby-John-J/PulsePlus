@@ -1,14 +1,32 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Query } from "@nestjs/common";
 import { AppointmentPaymentEntity } from "../core";
 import { AppointmenPaymentUsecase } from "../usecase/appo-payment.usecase";
+import { MessagePattern, Payload } from "@nestjs/microservices";
 
 @Controller('appoint_payment')
 export class AppointPaymentsController {
     constructor(private appointPaymentUsecase: AppointmenPaymentUsecase) {}
 
+    @MessagePattern('admin:appoint_create')
+    async create(@Payload() data: string) {
+        return await this.appointPaymentUsecase.createOne(JSON.parse(data))
+    }
+
     @Post('create')
-    async createPayment(@Body() data: AppointmentPaymentEntity) {
-        return await this.appointPaymentUsecase.createOne(data)
+    async createPayment(@Body() data: any) {
+        const response = await this.appointPaymentUsecase.getForPatient(data.patientId)
+        console.log(response);
+        
+        if(response) {
+            return await this.appointPaymentUsecase.updatePayment(data.patientId, data)
+        }
+
+        return { error: 'invalid request' }
+    }
+
+    @Delete('delete')
+    async deletePayment(@Query() data: { id: string }) {
+        return await this.appointPaymentUsecase.deletePayment(data.id)
     }
 
     @Get('getForPatient')

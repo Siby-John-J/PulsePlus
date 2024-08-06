@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useParams } from 'react-router-dom'
+import { useFetchDeleteTemplate } from '../../../hooks/usePatient'
 
 function PaymentFailed() {
     const navigate = useNavigate()
@@ -11,7 +12,9 @@ function PaymentFailed() {
         q[key] = val
     }
     
-    console.log(q);
+    useEffect(() => {
+        useFetchDeleteTemplate('http://localhost:2000/admin-service/appoint_payment/delete/id=' + q.id)
+      }, [])
     
     
     return (

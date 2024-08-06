@@ -1,24 +1,25 @@
 // import { IAdminPublisher } from "../../core";
 import { Inject, Injectable } from "@nestjs/common";
 import { IPayment, Payment } from "../../core";
-const stripe = require('stripe')(process.env.STRIPE_SECRET)
+import { object } from "joi";
 
 @Injectable()
 export class StripeFramework implements IPayment {
-
-    async createPayment(item: object[], id: string) {
-      console.log(id)
+  
+  async createPayment(data: object, id: string) {
+      let payment_id = ''
+      const stripe = require('stripe')(process.env.STRIPE_SECRET)
       
         const storeItems = new Map([
             [1, { priceInCents: 10000, name: "Learn React Today" }],
             [2, { priceInCents: 20000, name: "Learn CSS Today" }],
           ])
 
-        const patientId = 'lwal'
+        const url = 
+          `http://localhost:5173/patient/payment/success/?patientId=${id}&date=${data.date}&amount=${String(data.amount)}&diagnosys=${data.diagnosys}&source=stripe&type=appointment`
           
         const items = [
-          { id: 1, quantity: 3 },
-          { id: 2, quantity: 1 },
+          data
         ]
     
         const session = await stripe.checkout.sessions.create({
@@ -28,23 +29,25 @@ export class StripeFramework implements IPayment {
             setup_future_usage: 'on_session',
           },
           line_items: items.map(item => {
-            const storeItem = storeItems.get(item.id)
             return {
               price_data: {
                 currency: "inr",
                 product_data: {
-                  name: storeItem.name,
+                  name: 'appointment payment',
                 },
-                unit_amount: storeItem.priceInCents,
+                unit_amount: data.amount * 100,
               },
-              quantity: item.quantity,
+              quantity: 1,
             }
           }),
-          success_url: `http://localhost:5173/patient/payment/success?id=${id}`,
+          success_url: url,
           cancel_url:  `http://localhost:5173/patient/payment/failed?id=${id}`,
         });
         
-        return session.url
+        // http://localhost:2000/patient-service/payment/success?id=${id}
+        // http://localhost:5173/patient/payment/failed?id=${id}
+        payment_id = session.id
+        return { stripe_url : session.url, payment_id: session.id }
     }
 
     getPayment(): Promise<Payment> {
