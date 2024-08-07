@@ -8,5 +8,6 @@ export class DoctorNotification {
     senderId: string
     diagnosys: string
     type: string
+    appointId: string
     // doctorId: string
 }

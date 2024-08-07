@@ -14,6 +14,10 @@ export class AppointmentDoctorNotificationService {
         // return await this.notification.getNotification(id)
     }
 
+    async getOneDoctorNotification(id: string, param: string) {
+        return await this.notification.getOne(id, param)
+    }
+
     async removeDoctorNotification(id: string) {
         return await this.notification.delete(id)
         // return await this.notification.getNotification(id)

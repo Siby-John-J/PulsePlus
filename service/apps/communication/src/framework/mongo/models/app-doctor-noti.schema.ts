@@ -26,6 +26,9 @@ export class AppointDoctorNotification {
     @Prop()
     type: string
 
+    @Prop()
+    appointId: string
+
 }
 
 export const AppointDoctorNotificationSchema = SchemaFactory.createForClass(AppointDoctorNotification)

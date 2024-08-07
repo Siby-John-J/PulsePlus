@@ -10,10 +10,15 @@ export class DoctorNotificationController {
         return await this.notification.getDoctorNotification(data.id)
     }
 
+    @Get('getOne')
+    async getByOne(@Query() data: { id: string, param: string }) {
+        const { id, param } = data
+        
+        return await this.notification.getOneDoctorNotification(id, param)
+    }
+
     @Post('create')
     async createOne(@Body() body: any) {
-        console.log(body);
-        
         return await this.notification.createDoctorNotification(body)
     }
 

@@ -9,4 +9,5 @@ export interface appointResponseType {
     span: string,
     startTime: string,
     type: string
+    appointId: string
 }

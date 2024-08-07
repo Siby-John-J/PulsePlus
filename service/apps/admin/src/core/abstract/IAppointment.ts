@@ -20,4 +20,8 @@ export abstract class IAppointment {
     abstract addDoctor(id: string, appointId: string): Promise<any>
 
     abstract removeDoctor(id: string): Promise<any>
+
+    abstract addItems(payload: object): Promise<AppoinetmentEnitity>
+
+    abstract findForPatients(id: string): Promise<AppoinetmentEnitity[]>
 }

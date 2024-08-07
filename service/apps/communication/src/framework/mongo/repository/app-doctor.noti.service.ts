@@ -15,10 +15,14 @@ export class AppointDoctorNotificationRepository extends IAppointDoctorNotificat
     }
 
     async delete(id: string): Promise<DoctorNotification> {
-        return await this.notification.findOneAndDelete({_id: id})
+        return await this.notification.findOneAndDelete({appointId: id})
     }
 
     async get(id: string): Promise<DoctorNotification[]> {
         return await this.notification.find({senderId: id})
+    }
+
+    async getOne(id: string, param: string): Promise<DoctorNotification> {
+        return await this.notification.findOne({[param]: id})
     }
 }

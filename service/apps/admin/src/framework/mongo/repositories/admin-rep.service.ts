@@ -58,4 +58,14 @@ export class AppoinetmentRepository extends IAppointment {
     async removeDoctor(id: string): Promise<any> {
         
     }
+
+    async addItems(payload: object): Promise<AppoinetmentEnitity> {
+        const { id, ...rest } = payload
+        
+        return await this.appointschema.findOneAndUpdate({_id: id}, rest)
+    }
+
+    async findForPatients(id: string): Promise<AppoinetmentEnitity[]> {
+        return await this.appointschema.find({senderId: id, valid: true})
+    }
 }

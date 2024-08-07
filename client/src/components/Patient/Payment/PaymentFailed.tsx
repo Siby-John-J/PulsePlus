@@ -6,7 +6,7 @@ import { useFetchDeleteTemplate } from '../../../hooks/usePatient'
 function PaymentFailed() {
     const navigate = useNavigate()
     const par = new URLSearchParams(window.location.search)
-
+    
     const q: any = {}
     for(const [key, val] of par) {
         q[key] = val

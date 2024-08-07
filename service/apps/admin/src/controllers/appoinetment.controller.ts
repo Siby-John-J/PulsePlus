@@ -20,6 +20,11 @@ export class AppointmentController {
     return this.appointment.get()
   }
 
+  @Get('accepted')
+  async getAccepted(@Query() data: { id: string }) {
+    return await this.appointment.findForPatients(data.id)
+  }
+
   @Get('get_by_records')
   async getByRecords(
     @Query() data: { id: string, type: string }
@@ -66,12 +71,18 @@ export class AppointmentController {
     @Query() data: { id: string },
     @Body() body: any
   ) {
-    const response: any = this.appointment.getOne(data.id)
+    const response: any = await this.appointment.getOne(data.id)
 
     if(response._id === data.id) {
       this.appointment.accept(data.id, body)
     }
   }
+
+  @Put('addItem')
+  async addItem(@Body() body: any) {
+    return await this.appointment.addItems(body)
+  }
+
 
   @Delete('remove_record')
   async removeFromAppointment(@Query() data: { id: string }) {

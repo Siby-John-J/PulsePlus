@@ -3,6 +3,7 @@ export interface authType {
     name: string,
     password: string
     auth?: boolean
+    id: string
 }
 
 export interface authReducerType {

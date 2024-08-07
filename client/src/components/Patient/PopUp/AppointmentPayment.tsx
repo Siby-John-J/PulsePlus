@@ -68,7 +68,8 @@ function AppointmentPayment() {
       endTime,
       fee,
       type: 'appo-payment',
-      senderId: state.appointPaymentReducer.senderId
+      senderId: state.appointPaymentReducer.senderId,
+      appointId: state.appointPaymentReducer.appointId
     })
     return true
   }

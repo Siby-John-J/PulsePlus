@@ -7,16 +7,10 @@ import { object } from "joi";
 export class StripeFramework implements IPayment {
   
   async createPayment(data: object, id: string) {
-      let payment_id = ''
       const stripe = require('stripe')(process.env.STRIPE_SECRET)
-      
-        const storeItems = new Map([
-            [1, { priceInCents: 10000, name: "Learn React Today" }],
-            [2, { priceInCents: 20000, name: "Learn CSS Today" }],
-          ])
 
         const url = 
-          `http://localhost:5173/patient/payment/success/?patientId=${id}&date=${data.date}&amount=${String(data.amount)}&diagnosys=${data.diagnosys}&source=stripe&type=appointment`
+          `http://localhost:5173/patient/payment/success/?patientId=${id}&appointId=${data.appointId}&date=${data.date}&amount=${String(data.amount)}&diagnosys=${data.diagnosys}&source=stripe&type=appointment`
           
         const items = [
           data
@@ -46,7 +40,6 @@ export class StripeFramework implements IPayment {
         
         // http://localhost:2000/patient-service/payment/success?id=${id}
         // http://localhost:5173/patient/payment/failed?id=${id}
-        payment_id = session.id
         return { stripe_url : session.url, payment_id: session.id }
     }
 

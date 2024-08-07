@@ -50,4 +50,8 @@ export class DoctorServiceUsecase {
   async changeDoctorStatus(_id: string, status: string) {
     return await this.doctor.changeDoctorStatus(_id, status)
   }
+
+  async getByParam(id: string, param: string) {
+    return await this.doctor.getByParam(id, param)
+  }
 }

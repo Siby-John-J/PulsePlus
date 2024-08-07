@@ -35,4 +35,8 @@ export class DoctorRepository extends IDoctor {
 
     })
   }
+
+  async getByParam(id: string, param: string): Promise<DoctorEntity> {
+    return await this.doctorSchema.findOne({[param]: id})
+  }
 }

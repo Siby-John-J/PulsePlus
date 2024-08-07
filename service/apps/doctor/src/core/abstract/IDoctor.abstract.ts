@@ -10,4 +10,6 @@ export abstract class IDoctor {
     abstract getAllDoctor(): Promise<DoctorEntity[]>
 
     abstract changeDoctorStatus(_id: string, status: string): any
+
+    abstract getByParam(id: string, param: string): Promise<DoctorEntity>
 }

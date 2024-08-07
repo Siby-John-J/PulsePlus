@@ -5,9 +5,11 @@ export class AppoinetmentEnitity {
     status: 'pending' | 'rejected' | 'processing'
     created: Date
     senderId: string
-    accept: Boolean
-    span?: "new" | "rejected" | "accepted"
-    time?: Date
+    accept: string
+    valid?: Boolean
+    span?: "new" | "upcoming" | "accepted"
+    date?: string
+    time?: string
     records?: RecordsEntity
 }
 

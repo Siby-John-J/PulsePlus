@@ -23,21 +23,6 @@ async function deleteNotification(event: any, id: string, type: string) {
 }
 
 async function createPayment(data: any, id: string) {
-    // {
-    //     patientId: ''
-
-    //     source: 'credit-card'
-    
-    //     payment_id: 'string'
-    
-    //     amount: 'number'
-    
-    //     date: 'string'
-    
-    //     diagnosys: 'string'
-    
-    //     type: 'appointment'
-    // }
 
     const url = 'http://localhost:2000/patient-service/payment/create?id=' + id
     const response = await useFetchPostTemplate(url, data)
@@ -150,8 +135,8 @@ function NotificationList(props: { data: {
 function PaymentNotificationList(props: { data: appointResponseType, refresh: Function, id: string }) {
     const [hover, isHover] = useState<boolean>(false)
     const res =  hover ? ' notification ' : 'second-noti'
-    const { date, diagnosys, endTime, startTime, fee, senderId, span } = props.data
-    const items = { date, diagnosys, amount: fee, quantity: 1 }
+    const { date, diagnosys, endTime, startTime, fee, senderId, span, appointId } = props.data
+    const items = { date, diagnosys, amount: fee, appointId, quantity: 1 }
 
     return (
         <div className="flex flex-row-reverse my-1 py-1" 
@@ -168,7 +153,6 @@ function PaymentNotificationList(props: { data: appointResponseType, refresh: Fu
             </div>
             <div
             onClick={e => createPayment(items, props.id)}
-
                 className={res}>
                 <div className="text-[8px] px-3">
                     <h1 className="font-bold text-[14px]">Upcoming Appointment</h1>

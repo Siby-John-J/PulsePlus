@@ -19,9 +19,6 @@ export class Appoinetment {
     senderId: string
 
     @Prop()
-    time: Date
-
-    @Prop()
     span: string
 
     @Prop()
@@ -31,10 +28,13 @@ export class Appoinetment {
     records: RecordsEntity
 
     @Prop()
-    duration: string[]
-
+    time: string
+    
     @Prop()
     date: string
+
+    @Prop()
+    valid: Boolean
 }
 
 export const AppoinetmentSchema = SchemaFactory.createForClass(Appoinetment)

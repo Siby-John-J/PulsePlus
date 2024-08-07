@@ -15,7 +15,6 @@ export class AppointPaymentsController {
     @Post('create')
     async createPayment(@Body() data: any) {
         const response = await this.appointPaymentUsecase.getForPatient(data.patientId)
-        console.log(response);
         
         if(response) {
             return await this.appointPaymentUsecase.updatePayment(data.patientId, data)

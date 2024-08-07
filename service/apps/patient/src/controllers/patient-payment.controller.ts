@@ -21,7 +21,6 @@ export class PatientPaymentController {
         @Body() body: any,
         @Query() data: { id: string }
     ) {
-        
         const res = await this.payment.createPayment(body, data.id)
         const response = 
             await this.adminPublish.publish('admin:appoint_create', JSON.stringify({payment_id: res.payment_id, patientId: data.id}))

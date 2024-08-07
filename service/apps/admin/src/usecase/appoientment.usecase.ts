@@ -14,6 +14,10 @@ export class AppoinetmentUsecase {
     })
   }
 
+  async addItems(payload: object) {
+    return await this.app.addItems(payload)
+  }
+
   async get(): Promise<AppoinetmentEnitity[]> {
     return await this.app.getAppoinetment()
   }
@@ -45,5 +49,9 @@ export class AppoinetmentUsecase {
   async addDoctor(data: { id: string, appointId: string }) {
     const { id,  appointId } = data
     return await this.app.addDoctor(id, appointId)
+  }
+
+  async findForPatients(id: string) {
+    return await this.app.findForPatients(id)
   }
 }

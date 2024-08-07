@@ -13,6 +13,12 @@ export class DoctorAuthController {
     return await this.doctorService.getDoctor(data)
   }
 
+  @Get('getByParams')
+  async getByParams(@Query() data: { param: string, id: string }) {
+    const { id, param } = data
+    return await this.doctorService.getByParam(id, param)
+  }
+
   @Get('getAll')
   async getAllDoctors() {
     return await this.doctorService.getAllDoctors()
