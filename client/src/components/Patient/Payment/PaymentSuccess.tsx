@@ -9,7 +9,7 @@ async function updateData(params: object) {
 
   const startTime = response.startTime + response.span
   const endTime = response.endTime + response.span
-
+  
   const { date, appointId } = response
   
   // delete appoint-not from db

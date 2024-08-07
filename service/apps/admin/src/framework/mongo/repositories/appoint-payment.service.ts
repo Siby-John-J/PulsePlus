@@ -28,6 +28,6 @@ export class AppointmentPaymentRepository extends IAppointmentPayment {
     }
 
     async deletePayment(id: string): Promise<any> {
-        return await this.paymentsSchema.findOneAndDelete({patientId: id})
+        return await this.paymentsSchema.deleteOne({_id: id})
     }
 }
