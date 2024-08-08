@@ -21,10 +21,23 @@ export class PatientPaymentController {
         @Body() body: any,
         @Query() data: { id: string }
     ) {
-        const res = await this.payment.createPayment(body, data.id)
         const response = 
-            await this.adminPublish.publish('admin:appoint_create', JSON.stringify({payment_id: res.payment_id, patientId: data.id}))
-        return {res}
+            await this.adminPublish.publish('admin:appoint_create',
+                JSON.stringify({patientId: data.id})
+            )
+
+        const dat = body
+        dat._id = response._id
+        
+        // admin:appoint_update
+        // payment_id: res.payment_id
+        const res = await this.payment.createPayment(dat, data.id)
+
+        await this.adminPublish.publish('admin:appoint_update',
+            JSON.stringify({payment_id: res.payment_id, id: response._id})
+        )
+        
+        return {_id: response._id, res}
     }
 
     @Get('success')

@@ -28,7 +28,7 @@ export class AppointmentNotificationController {
     async getAppointmentForDoctor(@Payload() data: any) {
         const result = await this.appointNotification.getForDoctor(data)
         const parsed = JSON.parse(data)
-      
-        return { result, data: parsed }
+        
+        return { result: result, data: parsed }
     }
 }

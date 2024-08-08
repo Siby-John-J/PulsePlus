@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Post, Query } from "@nestjs/common";
-import { AppointmentPaymentEntity } from "../core";
 import { AppointmenPaymentUsecase } from "../usecase/appo-payment.usecase";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 
@@ -12,12 +11,18 @@ export class AppointPaymentsController {
         return await this.appointPaymentUsecase.createOne(JSON.parse(data))
     }
 
+    @MessagePattern('admin:appoint_update')
+    async update(@Payload() data: { payment_id: string, id: string }) {
+        return await this.appointPaymentUsecase.updatePayment(data.id, { payment_id: data.payment_id })
+    }
+
     @Post('create')
     async createPayment(@Body() data: any) {
-        const response = await this.appointPaymentUsecase.getForPatient(data.patientId)
+        const { mainId, ...rest } = data
+        const response = await this.appointPaymentUsecase.getOne(mainId)
         
         if(response) {
-            return await this.appointPaymentUsecase.updatePayment(data.patientId, data)
+            return await this.appointPaymentUsecase.updatePayment(mainId, rest)
         }
 
         return { error: 'invalid request' }

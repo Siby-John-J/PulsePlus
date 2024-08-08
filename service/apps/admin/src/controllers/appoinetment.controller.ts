@@ -118,6 +118,11 @@ export class AppointmentController {
     
   }
 
+  @Get('for_doctor')
+  async listForDoctor(@Query() data: { id: string }) {
+    return await this.appointment.findForDoctor(data.id)
+  }
+
   // @MessagePattern('appoinetment:create')
   // createAppoinetment(@Payload() data: AppoinetmentEnitity) {
   //   return this.appoinetment.create(data)

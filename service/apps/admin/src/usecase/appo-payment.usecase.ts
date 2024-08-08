@@ -10,6 +10,10 @@ export class AppointmenPaymentUsecase {
     return await this.app.create(payload)
   }
 
+  async getOne(id: string): Promise<AppointmentPaymentEntity> {
+    return await this.app.getOne(id)
+  }
+
   async getAll() {
     return await this.app.getAll()
   }

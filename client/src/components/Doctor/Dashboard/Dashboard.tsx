@@ -63,9 +63,6 @@ function Dashboard() {
             department: detailsResponse.department,
             name: detailsResponse.name
         })
-
-        // setAppointments(appoinementsResponse)
-        // console.log(requestResponse);
         
         const { data, result } = requestResponse
         
@@ -73,10 +70,9 @@ function Dashboard() {
         
         for(let i = 0; i < result.length; i++) {
             if(result[i].appointmentId === data[i]._id) {
-                final.push({senderId: data[i].senderId, ...result[0]})
+                final.push({senderId: data[i].senderId, ...result[i]})
             }
         }
-        // console.log(requestResponse);
         
         setRequests(final)
     }

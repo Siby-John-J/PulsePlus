@@ -10,6 +10,10 @@ export class AppoinetmentRepository extends IAppointment {
         super();
     }
 
+    async getAppointsForDoctor(id: string): Promise<AppoinetmentEnitity[]> {
+        return await this.appointschema.find({accept: id, valid: true})
+    }
+
     async createAppoinetment(payload: AppoinetmentEnitity): Promise<object> {
         const res =  await this.appointschema.create(payload)
         if(res) {
@@ -42,7 +46,10 @@ export class AppoinetmentRepository extends IAppointment {
     }
 
     async getByRecords(id: string, type: string): Promise<object[]> {
-        return await this.appointschema.find({ 'records.doctorData': { $in: [id] } }, { senderId: 1 })
+        const res = await this.appointschema.find({ 'records.doctorData': { $in: [id] } }, { senderId: 1 })
+        console.log(res);
+        
+        return res
     }
 
     async removeRecord(id: string): Promise<any> {
@@ -59,7 +66,7 @@ export class AppoinetmentRepository extends IAppointment {
         
     }
 
-    async addItems(payload: object): Promise<AppoinetmentEnitity> {
+    async addItems(payload: any): Promise<AppoinetmentEnitity> {
         const { id, ...rest } = payload
         
         return await this.appointschema.findOneAndUpdate({_id: id}, rest)

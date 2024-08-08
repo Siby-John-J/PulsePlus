@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { useFetchDeleteTemplate, useFetchGetTemplate, useFetchPostTemplate, useFetchPutTemplate } from '../../../hooks/usePatient'
 
 async function updateData(params: object) {
-  await useFetchPostTemplate('http://localhost:2000/admin-service/appoint_payment/create', params)
+  const res = await useFetchPostTemplate('http://localhost:2000/admin-service/appoint_payment/create', params)
   const response = await useFetchGetTemplate(
       `http://localhost:2000/communication-service/doctor_notification/getOne/?id=${params.appointId}&param=appointId`
-    )
+  )
 
   const startTime = response.startTime + response.span
   const endTime = response.endTime + response.span
@@ -32,13 +32,15 @@ function PaymentSuccess() {
       params[key] = val
   }
 
+  console.log(params);
+  
   // startTime: string
   // endTime: string
   // date: string
   // valid: true
 
   useEffect(() => {
-    updateData(params)    
+    updateData(params)
   }, [])
 
   return (

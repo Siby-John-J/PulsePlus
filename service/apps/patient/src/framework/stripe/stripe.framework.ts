@@ -8,9 +8,9 @@ export class StripeFramework implements IPayment {
   
   async createPayment(data: object, id: string) {
       const stripe = require('stripe')(process.env.STRIPE_SECRET)
-
+      
         const url = 
-          `http://localhost:5173/patient/payment/success/?patientId=${id}&appointId=${data.appointId}&date=${data.date}&amount=${String(data.amount)}&diagnosys=${data.diagnosys}&source=stripe&type=appointment`
+        `http://localhost:5173/patient/payment/success/?mainId=${data._id}&patientId=${id}&appointId=${data.appointId}&date=${data.date}&amount=${String(data.amount)}&diagnosys=${data.diagnosys}&source=stripe&type=appointment`
           
         const items = [
           data

@@ -21,7 +21,9 @@ export class AppointmentNotificationRepository extends IAppoNotification {
     async getNotification(id: string): Promise<AppointmentNotificationEntity[]> {
         const parsed = JSON.parse(id)
         
-        return await this.notification.find({ appointmentId: parsed})
+        const res = await this.notification.find({ appointmentId: parsed})
+        return res
+        
     }
 
     async getBySenderId<T>(senderId: string): Promise<T | T[]> {

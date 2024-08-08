@@ -23,7 +23,6 @@ async function deleteNotification(event: any, id: string, type: string) {
 }
 
 async function createPayment(data: any, id: string) {
-
     const url = 'http://localhost:2000/patient-service/payment/create?id=' + id
     const response = await useFetchPostTemplate(url, data)
     

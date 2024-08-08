@@ -9,6 +9,10 @@ export class AppointmentPaymentRepository extends IAppointmentPayment {
         @InjectModel(AppointPayments.name) readonly paymentsSchema: Model<AppointmentPaymentEntity>,
       ) {
         super();
+    }  
+    
+    async getOne(id: string): Promise<AppointmentPaymentEntity> {
+        return await this.paymentsSchema.findOne({_id:id })
     }
 
     async create(payload: AppointmentPaymentEntity): Promise<AppointmentPaymentEntity> {
@@ -24,7 +28,7 @@ export class AppointmentPaymentRepository extends IAppointmentPayment {
     }
 
     async updatePayment(data: any, id: string): Promise<AppointmentPaymentEntity> {
-        return await this.paymentsSchema.findOneAndUpdate({patientId: id}, data)
+        return await this.paymentsSchema.findOneAndUpdate({_id: id}, data)
     }
 
     async deletePayment(id: string): Promise<any> {

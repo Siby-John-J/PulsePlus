@@ -10,4 +10,6 @@ export abstract class IAppointmentPayment {
     abstract updatePayment(data: any, id: string): Promise<AppointmentPaymentEntity>
 
     abstract deletePayment(id: string): Promise<any>
+
+    abstract getOne(id: string): Promise<AppointmentPaymentEntity>
 }

@@ -24,4 +24,6 @@ export abstract class IAppointment {
     abstract addItems(payload: object): Promise<AppoinetmentEnitity>
 
     abstract findForPatients(id: string): Promise<AppoinetmentEnitity[]>
+
+    abstract getAppointsForDoctor(id: string): Promise<AppoinetmentEnitity[]>
 }
