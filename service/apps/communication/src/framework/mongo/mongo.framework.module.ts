@@ -7,6 +7,9 @@ import { AppointmentNotificationRepository } from "./repository/appo-noti-rep.se
 import { AppointmentNotification, AppointmentNotificationSchema } from "./models/appo-notification.schema";
 import { AppointDoctorNotification, AppointDoctorNotificationSchema } from "./models/app-doctor-noti.schema";
 import { AppointDoctorNotificationRepository } from "./repository/app-doctor.noti.service";
+import { TextChat, TextChatSchema } from "./models/test-chat.schema";
+import { ITextChat } from "../../core/abstracts/text-chat.abstract";
+import { TextChatRepository } from "./repository/text-chat.rep.service";
 
 @Module({
     imports: [
@@ -22,6 +25,10 @@ import { AppointDoctorNotificationRepository } from "./repository/app-doctor.not
             {
                 name: AppointDoctorNotification.name,
                 schema: AppointDoctorNotificationSchema
+            },
+            {
+                name: TextChat.name,
+                schema: TextChatSchema
             }
         ])
     ],
@@ -37,8 +44,12 @@ import { AppointDoctorNotificationRepository } from "./repository/app-doctor.not
         {
             provide: IAppointDoctorNotification,
             useClass: AppointDoctorNotificationRepository
+        },
+        {
+            provide: ITextChat,
+            useClass: TextChatRepository
         }
     ],
-    exports: [INotification, IAppoNotification, IAppointDoctorNotification]
+    exports: [INotification, IAppoNotification, IAppointDoctorNotification, ITextChat]
 })
 export class MongoFrameWorkModule {}

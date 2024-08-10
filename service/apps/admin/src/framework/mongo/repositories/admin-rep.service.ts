@@ -10,6 +10,10 @@ export class AppoinetmentRepository extends IAppointment {
         super();
     }
 
+    async getDoctorId(id: string): Promise<object> {
+        return await this.appointschema.findOne({senderId: id}, { accept: 1 })
+    }
+
     async getAppointsForDoctor(id: string): Promise<AppoinetmentEnitity[]> {
         return await this.appointschema.find({accept: id, valid: true})
     }

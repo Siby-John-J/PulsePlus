@@ -1,6 +1,8 @@
 import { AppoinetmentEnitity, RecordsEntity } from "../entity";
 
 export abstract class IAppointment {
+    abstract getDoctorId(id: string): Promise<object>
+
     abstract createAppoinetment(payload: AppoinetmentEnitity): Promise<object>
 
     abstract acceptAppointment(id: string, payload: object): Promise<object>

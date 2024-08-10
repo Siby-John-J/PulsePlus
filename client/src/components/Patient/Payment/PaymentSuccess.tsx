@@ -14,6 +14,7 @@ async function updateData(params: object) {
   
   // delete appoint-not from db
   await useFetchDeleteTemplate('http://localhost:2000/communication-service/doctor_notification/remove/?id=' + params.appointId)
+
   // create upcoming appointment-list
   await useFetchPutTemplate('http://localhost:2000/admin-service/appointment/addItem', {
     id: params.appointId,
@@ -21,6 +22,17 @@ async function updateData(params: object) {
     time: (startTime + ' - ' + endTime),
     span: 'new',
     valid: true
+  })
+
+  const docId = await useFetchGetTemplate('http://localhost:2000/admin-service/appointment/get_docId/?id=' + params.patientId)
+  
+  // create chat
+  await useFetchPostTemplate('http://localhost:2000/communication-service/text_chat/add', {
+    senderId: docId.accept,
+    receverId: params.patientId,
+    data: {},
+    unreaded: 0,
+    isVisible: false
   })
 }
 
@@ -31,13 +43,6 @@ function PaymentSuccess() {
   for(const [key, val] of par) {
       params[key] = val
   }
-
-  console.log(params);
-  
-  // startTime: string
-  // endTime: string
-  // date: string
-  // valid: true
 
   useEffect(() => {
     updateData(params)

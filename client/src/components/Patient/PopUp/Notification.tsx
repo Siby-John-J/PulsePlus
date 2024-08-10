@@ -8,7 +8,7 @@ import { useFetchDeleteTemplate, useFetchGetTemplate, useFetchPostTemplate } fro
 import { UserTemplate } from "../../Admin/Dashboard/DoctorMiniList"
 import { appointResponseType } from "../../../types/patient/app_resType"
 
-// const socket = io('http://localhost:3003')
+const socket = io('http://localhost:3003')
 
 async function deleteNotification(event: any, id: string, type: string) {
     let url = ''

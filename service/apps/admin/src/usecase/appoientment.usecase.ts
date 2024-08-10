@@ -58,4 +58,8 @@ export class AppoinetmentUsecase {
   async findForDoctor(id: string) {
     return await this.app.getAppointsForDoctor(id)
   }
+
+  async getDoctorId(id: string) {
+    return await this.app.getDoctorId(id)
+  }
 }
