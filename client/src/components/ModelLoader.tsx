@@ -10,6 +10,7 @@ import SendAppointment from "./Patient/PopUp/SendAppointment";
 import Notification from "./Patient/PopUp/Notification";
 import AccountExists from "./Patient/PopUp/AccountExists";
 import AppointmentPayment from "./Patient/PopUp/AppointmentPayment";
+import Call from "./Patient/PopUp/Call";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -75,6 +76,11 @@ function GlobalModelLoader() {
             {
                 popupState.accountExistsReducer.exists && (
                     <PopUp component={<AccountExists />} />
+                )
+            }
+            {
+                popupState.callReducer.isCallOn && (
+                    <PopUp layout={true} component={<Call />} />
                 )
             }
         </>

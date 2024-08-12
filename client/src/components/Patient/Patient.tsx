@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "./animation.css";
@@ -9,29 +9,37 @@ import { logout } from "../../redux/slices/authSlice";
 import {PatientModelLoader} from "../ModelLoader";
 import { useStoreDelete } from "../../hooks/useStore";
 import { get } from "../../redux/slices/patient/patientDataSlice";
+import { io } from "socket.io-client";
+import { Peer } from "../../webRTC/peer";
+import { callOn } from "../../redux/slices/callSlice";
+const socket = io('http://localhost:3003/signaling')
 
 function Patient() {
     const [style, setStyle] = useState<string>(
         "options bg-orange-500 w-[80%] py-[1.3em] text-xl rounded-lg cursor-pointer"
     );
     const navigate = useNavigate();
-    const authState = useSelector(
-        (state: authReducerType) => state.authReducer
-    );
+    const authState = useSelector((state: authReducerType) => state);
     const state: any= useSelector((state: any) => state).patientReducer
+    const countRef = useRef(0)
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        socket.on('offer_to_patient', (data: any) => {
+            if(data.id === authState.authReducer.id) {
+                if(countRef.current === 0) dispatch(callOn({sender: data.senderId, ans: data.offer, isEnvoker: false}))
+                countRef.current++
+            }
+        })
         // if(authState.auth === false) return navigate('/')
         
     }, []);
 
     const handleLogout = async() => {
         dispatch(logout());
-        const res = await useLogout(authState)
+        const res = await useLogout(authState.authReducer)
         
-
         useStoreDelete()
 
         navigate("/");

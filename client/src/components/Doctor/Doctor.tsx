@@ -1,5 +1,8 @@
 import { Link, useLocation, Outlet } from "react-router-dom"
 import { DoctorModelLoader } from "../ModelLoader"
+import { useEffect } from "react"
+import { io } from "socket.io-client"
+const socket = io('http://localhost:3003/signaling')
 
 function Doctor() {
   const { pathname } = useLocation()
