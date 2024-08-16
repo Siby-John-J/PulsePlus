@@ -21,7 +21,7 @@ function ChatDataBody(props: { data: any }) {
     )
 }
 
-function DoctorChatTextHolder(props: { text: string }) {
+export function DoctorChatTextHolder(props: { text: string }) {
     return (
         <div className="bg-white w-[100%] h-fit items-center flex justify-end my-3">
             <div className=" bg-red-500 text-white break-words max-w-[50%]  ml-12 items-center px-5 py-2 rounded-md">
@@ -31,7 +31,7 @@ function DoctorChatTextHolder(props: { text: string }) {
     )
 }
 
-function PatientChatTextHolder(props: { text: string }) {
+export function PatientChatTextHolder(props: { text: string }) {
     return (
         <div className="bg-white w-[100%] h-fit items-center flex my-3">
             <div className="bg-gray-200 break-words max-w-[50%] items-center py-2 px-5 rounded-md">

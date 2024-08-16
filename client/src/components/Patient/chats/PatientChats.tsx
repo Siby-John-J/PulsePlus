@@ -6,8 +6,6 @@ import ChatWindowHeader from "./ChatWindowHeader"
 import { useDispatch, useSelector } from "react-redux"
 import { useFetchGetTemplate } from "../../../hooks/usePatient"
 import { changeChatView } from "../../../redux/slices/doctor/textChatSlice"
-import { io } from "socket.io-client"
-const socket = io('http://localhost:3003/text_chat')
 
 function PatientChats() {
   const dispatch = useDispatch()
@@ -15,7 +13,7 @@ function PatientChats() {
   const state = useSelector((state: any) => state).authReducer
   const data = useSelector((state: any) => state).textChatReducer
   const { chatData, receverId } = data
-
+  
   async function getAndsetData(id: string) {
     const url = 'http://localhost:2000/communication-service/text_chat/listData/?role=patient&id=' + id
     const response = await useFetchGetTemplate(url)
@@ -24,16 +22,7 @@ function PatientChats() {
   }
 
   useEffect(() => {
-    getAndsetData(state.id)
-
-    socket.on('sendToPatient', (data) => {
-      console.log(data, state.id);
-      if(data.id === state.id) {
-        
-        getAndsetData(state.id)
-      }
-    })
-    
+    // getAndsetData(state.id)
   },[])
 
   return (

@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { RouteType } from "../types/routerTypes";
 import PaymentSuccess from "../components/Patient/Payment/PaymentSuccess";
 import PaymentFailed from "../components/Patient/Payment/PaymentFailed";
+import VideoChat from "../components/Patient/VideoChat/VideoChat";
 
 const Billing = lazy(() => import("../components/Patient/Billing/Billing"))
 const Profile = lazy(() => import("../components/Patient/Profile/Profile"))
@@ -28,4 +29,8 @@ export const patientRoute: RouteType[] = [
         path: 'billing',
         component: Billing
     },
+    {
+        path: 'video_chat',
+        component: VideoChat
+    }
 ]

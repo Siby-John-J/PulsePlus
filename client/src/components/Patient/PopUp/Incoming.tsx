@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { inComingcallOff } from '../../../redux/slices/incomingSlice'
-import { Peer } from '../../../webRTC/peer'
-import { peer } from '../../../webRTC/peer2'
 import { io } from "socket.io-client"
-import { recvOffer, setRemote } from '../../../webRTC/peer2'
-const socket = io('http://localhost:3003/signaling')
+import { recvOffer } from '../../../webRTC/peer2'
+// const socket = io('http://localhost:3003/signaling')
 
 function Incoming() {
     const state: any= useSelector((state: any) => state)
@@ -16,24 +14,17 @@ function Incoming() {
     const dispatch = useDispatch()
 
     const sender = data.receverId ? data.receverId : popupState.sender
-
-    // const p1 = new Peer(state.authRoleReducer.role, sender, state.authReducer.id)
     
     async function create() {
         peerRef.current = await recvOffer(incoming.offer, state.authReducer.id, state.authRoleReducer.role, sender)
-        
-        
-        // setRemote(data.offer)
-        // if(data.id === state.authReducer.id) p2.setAnswer(data.offer)
     }
     
     useEffect(() => {
-        socket.on('answer_to_doctor', async (data: any) => {
-            console.log(data)
+        // socket.on('answer_to_doctor', async (data: any) => {
+        //     console.log(data)
             
-            await peerRef.current.setRemoteDescription(JSON.parse(data.offer))
-        })
-        // peerRef.ws.ontrack = e => console.log('dfjjjjjjjjjjfffff');
+        //     await peerRef.current.setRemoteDescription(JSON.parse(data.offer))
+        // })
     },[])
 
     return (

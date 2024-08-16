@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "./animation.css";
@@ -13,7 +13,7 @@ import { io } from "socket.io-client";
 import { Peer } from "../../webRTC/peer";
 import { callOn } from "../../redux/slices/callSlice";
 import { inComingcallOn } from "../../redux/slices/incomingSlice";
-const socket = io('http://localhost:3003/signaling')
+// const socket = io('http://localhost:3003/signaling')
 
 function Patient() {
     const [style, setStyle] = useState<string>(
@@ -27,16 +27,12 @@ function Patient() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        socket.on('offer_to_patient', (data: any) => {
-            console.log(data.senderId, authState.authReducer.id)
-            
-            if(data.senderId === authState.authReducer.id) {
-                if(countRef.current === 0) dispatch(inComingcallOn({offer: data.offer}))
-                countRef.current++
-            }
-        })
-        // if(authState.auth === false) return navigate('/')
-        
+        // socket.on('offer_to_patient', (data: any) => {
+        //     if(data.senderId === authState.authReducer.id) {
+        //         if(countRef.current === 0) dispatch(inComingcallOn({offer: data.offer}))
+        //         countRef.current++
+        //     }
+        // })
     }, []);
 
     const handleLogout = async() => {

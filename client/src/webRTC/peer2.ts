@@ -1,5 +1,5 @@
 import { io } from "socket.io-client"
-const socket = io('http://localhost:3003/signaling')
+// const socket = io('http://localhost:3003/signaling')
 
 export let peer : any = undefined
 export let peer2 : any = undefined
@@ -25,7 +25,7 @@ function getOffer(role: string, sender: string, id: string) {
     }
     
     if(offer !== null && offer.type === 'offer') {
-        socket.emit('get_offer', data)
+        // socket.emit('get_offer', data)
     }
 }
 
@@ -34,12 +34,12 @@ function sendAns(offer: any, id: string, role: string, sender: string) {
     console.log(role);
     
     if(offer !== null && offer.type === 'answer') {
-        socket.emit('get_answer', {
-            offer: JSON.stringify(offer),
-            role: role,
-            id: id,
-            senderId: sender
-        })
+        // socket.emit('get_answer', {
+        //     offer: JSON.stringify(offer),
+        //     role: role,
+        //     id: id,
+        //     senderId: sender
+        // })
     }
 }
 

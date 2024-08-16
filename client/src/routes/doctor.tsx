@@ -1,3 +1,4 @@
+import VideoChat from "../components/Doctor/VideoChat/VideoChat";
 import { RouteType } from "../types/routerTypes";
 import { lazy } from "react";
 
@@ -47,6 +48,10 @@ export const doctorRoutes: RouteType[] = [
     {
         path: "billing",
         component: Billing,
+    },
+    {
+        path: "video_chat",
+        component: VideoChat
     },
     {
         path: "patients/:id",
