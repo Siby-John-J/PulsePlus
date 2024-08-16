@@ -11,6 +11,7 @@ import Notification from "./Patient/PopUp/Notification";
 import AccountExists from "./Patient/PopUp/AccountExists";
 import AppointmentPayment from "./Patient/PopUp/AppointmentPayment";
 import Call from "./Patient/PopUp/Call";
+import Incoming from "./Patient/PopUp/Incoming";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -81,6 +82,11 @@ function GlobalModelLoader() {
             {
                 popupState.callReducer.isCallOn && (
                     <PopUp layout={true} component={<Call />} />
+                )
+            }
+            {
+                popupState.incomingReducer.isState && (
+                    <PopUp layout={true} component={<Incoming />} />
                 )
             }
         </>

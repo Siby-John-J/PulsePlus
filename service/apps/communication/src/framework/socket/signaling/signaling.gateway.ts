@@ -27,6 +27,7 @@ export class SignalingGateWay implements ISocket, OnModuleInit {
   @SubscribeMessage('get_offer')
   onneOffer(@MessageBody() body: any): any {
     const { role, ...rest} = body
+    console.log(role)
     
     if(role === 'Doctor') this.emitMessage(rest, 'offer_to_patient')
     if(role === 'Patient') this.emitMessage(rest, 'offer_to_doctor')
@@ -35,7 +36,7 @@ export class SignalingGateWay implements ISocket, OnModuleInit {
   @SubscribeMessage('get_answer')
   onnewAnswer(@MessageBody() body: any): any {
     const { role, ...rest} = body
-
+    
     if(role === 'Patient') this.emitMessage(rest, 'answer_to_doctor')
     if(role === 'Doctor') this.emitMessage(rest, 'answer_to_patient')
     

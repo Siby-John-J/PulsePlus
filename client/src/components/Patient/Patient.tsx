@@ -12,6 +12,7 @@ import { get } from "../../redux/slices/patient/patientDataSlice";
 import { io } from "socket.io-client";
 import { Peer } from "../../webRTC/peer";
 import { callOn } from "../../redux/slices/callSlice";
+import { inComingcallOn } from "../../redux/slices/incomingSlice";
 const socket = io('http://localhost:3003/signaling')
 
 function Patient() {
@@ -27,8 +28,10 @@ function Patient() {
 
     useEffect(() => {
         socket.on('offer_to_patient', (data: any) => {
-            if(data.id === authState.authReducer.id) {
-                if(countRef.current === 0) dispatch(callOn({sender: data.senderId, ans: data.offer, isEnvoker: false}))
+            console.log(data.senderId, authState.authReducer.id)
+            
+            if(data.senderId === authState.authReducer.id) {
+                if(countRef.current === 0) dispatch(inComingcallOn({offer: data.offer}))
                 countRef.current++
             }
         })

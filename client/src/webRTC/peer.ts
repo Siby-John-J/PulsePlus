@@ -8,12 +8,17 @@ export class Peer {
     role: string
     id: string
     senderId: string
+    configuration = {
+        offerToReceiveAudio: true,
+        offerToReceiveVideo: true
+    }
 
     constructor(role: string, id: string, senderId: string) {
         this.role = role
         this.id = id
         this.senderId = senderId
-        this.ws = new RTCPeerConnection()
+        this.ws = new RTCPeerConnection(this.configuration)
+        this.ws.ontrack = e => console.log('lwaltrack');
         this.ch = this.ws.createDataChannel('channel-1')
         this.ch.onopen = e => console.log('opened')
 
@@ -33,7 +38,13 @@ export class Peer {
                 senderId: this.senderId
             })
          }
-        
+
+         this.ws.ondatachannel = e => {
+            this.ws.channel = e.channel
+            this.ws.channel.onmessage = e => console.log('msage....')
+            this.ws.channel.onopen = (e) => {
+            }
+        }         
         
     }
 
@@ -49,9 +60,10 @@ export class Peer {
     }
 
     async setAnswer(answer: any) {
-        const session = new RTCSessionDescription(JSON.parse(answer))
+        // const session = new RTCSessionDescription(JSON.parse(answer))
+        console.log(answer);
         
-        await this.ws.setRemoteDescription(JSON.parse(answer))
+        await this.ws.setRemoteDescription(answer)
     }
 
     async createAns() {
