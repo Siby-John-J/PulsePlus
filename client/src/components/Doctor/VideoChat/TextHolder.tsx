@@ -9,7 +9,7 @@ function TextHolder() {
                 <h1>Text Chat</h1>
             </div>
             <div className="w-full h-[80%] bg-white overflow-scroll">
-                <DoctorChatTextHolder text="lal" />
+                <DoctorChatTextHolder color="bg-red-500" text="lal" />
                 <PatientChatTextHolder text="nigasss" />
             </div>
             <div className="w-full h-[10%] flex justify-center items-center">

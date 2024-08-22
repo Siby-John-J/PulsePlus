@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { cleanStream, localVideoEl, remoteVideoEl } from '../../../webRTC/peer2'
 
 function VideoStream(props: { changer: Function, state: boolean }) {
-   console.log(props.state)
-        
     return (
         <div className='bg-white w-[60%] h-[80%] rounded-l-md'>
             <TitleHolder />
@@ -29,8 +28,9 @@ function TitleHolder() {
     )
 }
 
-function StreamHolder(props: { state: boolean }) {
-    const videoRef = useRef(null)
+export function StreamHolder(props: { state: boolean }) {
+    const localRef = useRef(null)
+    const remoteRef = useRef(null)
 
     const Sfull = 'bg-black w-[7%] h-[8em] z-10 rounded-md absolute top-[25em] left-[59.5em]'
     const Shalf = 'bg-black w-[7%] h-[8em] z-10 rounded-md absolute top-[25em] left-[71em]'
@@ -39,17 +39,23 @@ function StreamHolder(props: { state: boolean }) {
     const Half = 'bg-black absolute top-[11em] left-[35.9em] w-[45%] h-[52%] rounded-md'
     
     useEffect(() => {
-        // navigator.mediaDevices.getUserMedia({video: true}).then(stream => {
-        //     let video = videoRef.current
-        //     video.srcObject = stream
-        //     video.play()
-        // })
+        if(remoteVideoEl.current) {
+            let video = remoteRef.current
+            video.srcObject = remoteVideoEl.current.srcObject
+            // video.play()
+        }
+        if(localVideoEl.current) {
+            let video = localRef.current
+            video.srcObject = localVideoEl.current.srcObject
+            // video.play()
+        }
+        
     }, [])
     
     return (
         <div className='w-full h-[70%] justify-center'>
-            <video autoPlay ref={videoRef} className={ props.state ? Full : Half } />
-            <video autoPlay className={ props.state ? Sfull : Shalf}></video>
+            <video autoPlay ref={localRef} className={ props.state ? Full : Half } />
+            <video autoPlay ref={remoteRef} className={ props.state ? Sfull : Shalf}></video>
         </div>
     )
 }
@@ -66,7 +72,11 @@ function ControlsHolder(props: { changer: Function }) {
                         props.changer(e => !e)
                     }} 
                     className='bg-gray-300 cursor-pointer h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>T</div>
-                <div className='bg-red-600 rounded-2xl w-[5em]'></div>
+                <div 
+                    onClick={e => {
+                        cleanStream()
+                    }}
+                    className='bg-red-600 rounded-2xl w-[5em]'></div>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import { io } from "socket.io-client"
 import { off } from "../redux/slices/patient/layoutSlice"
-// const socket = io('http://localhost:3003/signaling')
+const socket = io('http://localhost:3003/signaling')
 
 export class Peer {
     ws
@@ -25,18 +25,18 @@ export class Peer {
         this.ws.onicecandidate = e => {
             console.log('uesu', this.ws.localDescription)
             
-            // if(this.ws.localDescription?.type === 'offer') socket.emit('get_offer', {
-            //     offer: JSON.stringify(this.ws.localDescription),
-            //     role: this.role,
-            //     id: this.id,
-            //     senderId: this.senderId
-            // })
-            // if(this.ws.localDescription?.type === 'answer') socket.emit('get_answer', {
-            //     offer: JSON.stringify(this.ws.localDescription),
-            //     role: this.role,
-            //     id: this.id,
-            //     senderId: this.senderId
-            // })
+            if(this.ws.localDescription?.type === 'offer') socket.emit('get_offer', {
+                offer: JSON.stringify(this.ws.localDescription),
+                role: this.role,
+                id: this.id,
+                senderId: this.senderId
+            })
+            if(this.ws.localDescription?.type === 'answer') socket.emit('get_answer', {
+                offer: JSON.stringify(this.ws.localDescription),
+                role: this.role,
+                id: this.id,
+                senderId: this.senderId
+            })
          }
 
          this.ws.ondatachannel = e => {

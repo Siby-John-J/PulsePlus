@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useFetchPutTemplate } from '../../../hooks/usePatient'
 import { changeChatView } from '../../../redux/slices/doctor/textChatSlice'
 import { io } from "socket.io-client"
-// const socket = io('http://localhost:3003/text_chat')
+const socket = io('http://localhost:3003/text_chat')
 
 function ChatWindowFooter() {
   const [text, setText] = useState<string>('')
@@ -20,11 +20,11 @@ function ChatWindowFooter() {
   // console.log(data);
   
   const callback = useCallback((sender: string, recever: string) => {
-    // socket.emit('getChat', {
-    //   id: recever,
-    //   sender: sender,
-    //   role: 'patient'
-    // })
+    socket.emit('getChat', {
+      id: recever,
+      sender: sender,
+      role: 'patient'
+    })
   }, [])
 
   return (

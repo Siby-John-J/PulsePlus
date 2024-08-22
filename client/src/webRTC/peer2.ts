@@ -1,5 +1,5 @@
 import { io } from "socket.io-client"
-// const socket = io('http://localhost:3003/signaling')
+const socket = io('http://localhost:3003/signaling')
 
 export let peer : any = undefined
 export let peer2 : any = undefined
@@ -9,6 +9,7 @@ let id: string
 let role: string
 let sender: string | undefined = undefined
 let c = 0
+let n = 0
 
 let localVideoEl: any = {}
 let remoteVideoEl: any = {}
@@ -25,7 +26,7 @@ function getOffer(role: string, sender: string, id: string) {
     }
     
     if(offer !== null && offer.type === 'offer') {
-        // socket.emit('get_offer', data)
+        socket.emit('get_offer', data)
     }
 }
 
@@ -34,12 +35,12 @@ function sendAns(offer: any, id: string, role: string, sender: string) {
     console.log(role);
     
     if(offer !== null && offer.type === 'answer') {
-        // socket.emit('get_answer', {
-        //     offer: JSON.stringify(offer),
-        //     role: role,
-        //     id: id,
-        //     senderId: sender
-        // })
+        socket.emit('get_answer', {
+            offer: JSON.stringify(offer),
+            role: role,
+            id: id,
+            senderId: sender
+        })
     }
 }
 
@@ -58,7 +59,7 @@ function createPeer(role: string, sender: string, id: string) {
     channel.onmessage = (e: any) => console.log('new message')
     peer.onicecandidate = e => getOffer(role, sender, id)
     
-
+    
     return peer
 }
 
@@ -67,23 +68,21 @@ async function createOffer(role: string, sender: string, id: string) {
     role = role
     sender = sender
     id = id
-
+    
     peer = createPeer(role, sender, id)
     
-    peer.ontrack = addTracks
     await getUserMedia('peer1')
-
+    
     const offer = await peer.createOffer()
     
     await peer.setLocalDescription(offer)
-
+    
+    peer.ontrack = addTracks
 
 }
 
 async function createAnswer() {
     const ans = await peer2.createAnswer()
-    console.log(ans);
-    
     await peer2.setLocalDescription(ans)
 
 }
@@ -92,6 +91,7 @@ async function createAnswer() {
 function createPeer2(offer: any, id: string, role: string, sender: string) {
     const peer = new RTCPeerConnection()
     
+    peer.ontrack = addTracks
     
     const channel = peer.createDataChannel('channel')
     
@@ -102,11 +102,8 @@ function createPeer2(offer: any, id: string, role: string, sender: string) {
         peer.channel.onmessage = e => console.log('msage....')
         peer.channel.onopen = (e) => {}
     }
-    
+
     peer.onicecandidate = e => sendAns(offer, id, role, sender)
-
-    peer.ontrack = addTracks
-
 
     return peer
 }
@@ -119,17 +116,19 @@ async function recvOffer(offer: any, id: string, role: string, sender: string) {
     peer2 = createPeer2(offer, id, role, sender)
 
     await getUserMedia('peer2')
+
     
     await peer2.setRemoteDescription(JSON.parse(offer))
-
+    
     createAnswer()
-
+    
     return peer2
 }
 
 async function setRemote(answer: any) {
     if(!answer) return
-
+    // console.log(answer)
+    
     if(c === 0) {
         await peer.setRemoteDescription(new RTCSessionDescription(JSON.parse(answer)))
     }
@@ -138,7 +137,6 @@ async function setRemote(answer: any) {
 function addTracks(e: any) {
     remoteVideoEl.current = {}
     remoteVideoEl.current.srcObject = e.streams[0]
-    console.log(remoteVideoEl)
     
 }
 
@@ -168,6 +166,14 @@ async function getUserMedia(ch: string) {
 
 export async function cleanStream() {
     await getUserMedia('cancel')
+}
+
+export async function muteVideo() {
+    await getUserMedia('muteVid')
+}
+
+export async function muteAudio() {
+    await getUserMedia('muteAud')
 }
 
 export {

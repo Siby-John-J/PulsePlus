@@ -22,7 +22,7 @@ function PatientChats() {
   }
 
   useEffect(() => {
-    // getAndsetData(state.id)
+    getAndsetData(state.id)
   },[])
 
   return (

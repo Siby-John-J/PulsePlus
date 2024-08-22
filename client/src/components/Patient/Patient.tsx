@@ -13,7 +13,7 @@ import { io } from "socket.io-client";
 import { Peer } from "../../webRTC/peer";
 import { callOn } from "../../redux/slices/callSlice";
 import { inComingcallOn } from "../../redux/slices/incomingSlice";
-// const socket = io('http://localhost:3003/signaling')
+const socket = io('http://localhost:3003/signaling')
 
 function Patient() {
     const [style, setStyle] = useState<string>(
@@ -27,12 +27,12 @@ function Patient() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // socket.on('offer_to_patient', (data: any) => {
-        //     if(data.senderId === authState.authReducer.id) {
-        //         if(countRef.current === 0) dispatch(inComingcallOn({offer: data.offer}))
-        //         countRef.current++
-        //     }
-        // })
+        socket.on('offer_to_patient', (data: any) => {
+            if(data.senderId === authState.authReducer.id) {
+                if(countRef.current === 0) dispatch(inComingcallOn({offer: data.offer}))
+                countRef.current++
+            }
+        })
     }, []);
 
     const handleLogout = async() => {

@@ -4,7 +4,7 @@ import { useFetchGetTemplate } from "../../../../hooks/usePatient"
 import { useDispatch, useSelector } from "react-redux"
 import { changeChatView } from "../../../../redux/slices/doctor/textChatSlice"
 import { io } from "socket.io-client"
-// const socket = io('http://localhost:3003/text_chat')
+const socket = io('http://localhost:3003/text_chat')
 
 function ChatSideBar() {
   const state = useSelector((state: any) => state).authReducer
@@ -20,15 +20,13 @@ function ChatSideBar() {
   }
   
   useEffect(() => {
-    // getAndSetData()
+    getAndSetData()
 
-    // socket.on('sendToDoctor', (data) => {
-    //   console.log(data, state.id);
-    //   if(data.sender === state.id) {
-        
-    //     getAndSetData()
-    //   }
-    // })
+    socket.on('sendToDoctor', (data) => {
+      if(data.sender === state.id) {
+        getAndSetData()
+      }
+    })
     
   }, [])
 

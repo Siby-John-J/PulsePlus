@@ -38,11 +38,11 @@ function Profile() {
         q[key] = val
     }
 
-    // const socket = io('http://localhost:3003/' +  patientDetailsState._id)    
+    const socket = io('http://localhost:3003/' +  patientDetailsState._id)    
     
-    // socket.on('notification:update', (data: any) => {
-    //     setIsnewMessage(isNewMessage + 1)
-    // })
+    socket.on('notification:update', (data: any) => {
+        setIsnewMessage(isNewMessage + 1)
+    })
 
     const controlAuth = async(response: any) => {
         if(response.accessToken === 'token not found' && auth.auth) {
