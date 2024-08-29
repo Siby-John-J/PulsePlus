@@ -3,21 +3,25 @@ import { detailsTypes } from "../../../types/patient/patientTypes"
 
 function PatientData(props: { data: detailsTypes }) {
     const navigate = useNavigate()
-    const { name, age, phone, _id, blood_group } = props.data
+    const { name, age, phone, _id } = props.data
 
     return (
       <>
-        <tr className="bg-gray-800 text-white rounded-md cursor-pointer h-[4em] hover:scale-105 hover:transition-transform"
-          onClick={e => navigate(`/admin/patient/${_id}`)}>
+        <tr
+          className="bg-white text-black cursor-pointer h-[4em] hover:scale-105 hover:transition-transform hover:bg-blue-500 hover:text-white"
+          onClick={e => navigate(`/admin/patient/${name}`)}>
           <td className="px-7">
               <PatientProfileModel name={name} /> 
           </td>
           <td className="px-7">{_id}</td>
-          <td className="px-7">{blood_group}</td>
+          <td className="px-7">
+            <div className="bg-green-400 py-1 rounded-md text-white text-center">
+              {'Active'}
+            </div>
+          </td>
           <td className="px-7">{phone}</td>
-          <td className="px-7">{age}</td>
+          <td className="px-7">{ age }</td>
         </tr>
-        <br />
       </>
     )
 }

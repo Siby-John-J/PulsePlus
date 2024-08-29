@@ -156,24 +156,31 @@ async function getUserMedia(ch: string) {
             peer2.addTrack(track, localStream)
         }
     });
+}
 
-    if(ch === 'cancel') {
-        stream.getTracks().forEach((track: any) => {
-            track.stop()
-        })
+export function cleanStream(flow: 'incoming' | 'outgoing', data: any) {
+    localVideoEl.current.srcObject.getTracks().forEach((track: any) => {
+        track.stop()
+    })
+    remoteVideoEl.current.srcObject.getTracks().forEach((track: any) => {
+        track.stop()
+    })
+    
+    if(flow === 'outgoing') {
+        socket.emit('end_call', data)
     }
 }
 
-export async function cleanStream() {
-    await getUserMedia('cancel')
+export function muteVideo() {
+    const track = localVideoEl.current.srcObject.getVideoTracks()[0].enabled
+
+    localVideoEl.current.srcObject.getVideoTracks()[0].enabled = !track
 }
 
-export async function muteVideo() {
-    await getUserMedia('muteVid')
-}
-
-export async function muteAudio() {
-    await getUserMedia('muteAud')
+export function muteAudio() {
+    const track = localVideoEl.current.srcObject.getAudioTracks()[0].enabled
+    
+    localVideoEl.current.srcObject.getAudioTracks()[0].enabled = !track
 }
 
 export {

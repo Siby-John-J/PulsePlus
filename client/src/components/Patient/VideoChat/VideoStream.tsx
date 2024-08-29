@@ -3,6 +3,7 @@ import VideoChat from './VideoChat'
 import textChat from './textChat'
 import { StreamHolder } from '../../Doctor/VideoChat/VideoStream'
 import { localVideoEl,cleanStream, localStream, remoteVideoEl } from '../../../webRTC/peer2'
+import { useNavigate } from 'react-router'
 
 function VideoStream() {
   return (
@@ -18,7 +19,6 @@ function VideoStream() {
 function VideoStreamHolder() {
   const localRef = useRef(null)
   const remoteRef = useRef(null)
-
 
   useEffect(() => {
     if(remoteVideoEl.current) {
@@ -41,13 +41,18 @@ function VideoStreamHolder() {
 }
 
 function VideoControlsHolder() {
+  const navigate = useNavigate()
+
   return (
       <div className='w-[50em] absolute top-[28em] left-[19.5em] h-[15%] justify-center flex items-center'>
           <div className='flex flex-row w-[40%] justify-between '>
               <div className='bg-gray-300 opacity-65 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>M</div>
               <div className='bg-gray-300 opacity-65 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>V</div>
               <div 
-                onClick={cleanStream}
+                onClick={e => {
+                  cleanStream()
+                  navigate('/patient/chats')
+                }}
                 className='bg-red-600 rounded-2xl w-[5em]'></div>
               <div className='bg-gray-300 opacity-65 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>P</div>
               <div 

@@ -2,12 +2,12 @@ import React from 'react'
 
 function PatientTitle() {
   return (
-    <tr className="bg-blue-400 text-white h-[3em] rounded-md">
+    <tr className="bg-white text-black h-[3em] rounded-md">
       <th className="text-left font-medium px-7 text-[12px]">NAME</th>
       <th className="text-left font-medium px-7 text-[12px]">#ID</th>
-      <th className="text-left font-medium px-7 text-[12px]">BLOOD</th>
+      <th className="text-left font-medium px-7 text-[12px]">STATUS</th>
       <th className="text-left font-medium px-7 text-[12px]">PH</th>
-      <th className="text-left font-medium px-7 text-[12px]">AGE</th>
+      <th className="text-left font-medium px-7 text-[12px]">ACTIONS</th>
     </tr>
   )
 }

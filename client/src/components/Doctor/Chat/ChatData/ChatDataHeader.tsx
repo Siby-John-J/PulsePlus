@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 function ChatDataHeader(props: { name: string }) {
     const dispatch = useDispatch();
 
-
     return (
         <div className='w-[100%] bg-white flex flex-row justify-between'>
             {

@@ -1,7 +1,7 @@
 
 function ChatDataBody(props: { data: any }) {
     return (
-        <div className="w-[100%] h-[75%] px-[3em] pt-5">
+        <div className="w-[100%] h-[75%] px-[3em] pt-5 overflow-scroll">
             {
                 props.data.map((items: any) => {
                     if(items['p1']) {

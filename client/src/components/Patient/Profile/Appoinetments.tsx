@@ -7,10 +7,8 @@ function Appointments() {
     const [appointments, setAppointments] = useState([])
     const auth = useSelector((state: authReducerType) => state.authReducer);
     const { id } = auth
-    console.log(appointments);
 
     async function getAndStoreData() {
-        
         const response = await useFetchGetTemplate('http://localhost:2000/admin-service/appointment/accepted?id=' + id)
         setAppointments(response)
     }

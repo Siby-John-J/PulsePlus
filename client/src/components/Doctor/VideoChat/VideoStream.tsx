@@ -1,7 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { cleanStream, localVideoEl, remoteVideoEl } from '../../../webRTC/peer2'
+import { io } from "socket.io-client"
+const socket = io('http://localhost:3003/signaling')
+import { cleanStream, localVideoEl, muteAudio, muteVideo, remoteVideoEl } from '../../../webRTC/peer2'
+import { useSelector } from 'react-redux'
 
 function VideoStream(props: { changer: Function, state: boolean }) {
+    useEffect(() => {
+        socket.on('end_call', data => {
+            cleanStream('incoming')
+        })
+    }, [])
+    
     return (
         <div className='bg-white w-[60%] h-[80%] rounded-l-md'>
             <TitleHolder />
@@ -42,12 +51,11 @@ export function StreamHolder(props: { state: boolean }) {
         if(remoteVideoEl.current) {
             let video = remoteRef.current
             video.srcObject = remoteVideoEl.current.srcObject
-            // video.play()
         }
         if(localVideoEl.current) {
+
             let video = localRef.current
             video.srcObject = localVideoEl.current.srcObject
-            // video.play()
         }
         
     }, [])
@@ -61,11 +69,16 @@ export function StreamHolder(props: { state: boolean }) {
 }
 
 function ControlsHolder(props: { changer: Function }) {
+    const data = useSelector((state: any) => state).textChatReducer
+    const role = useSelector((state: any) => state).authReducer
+
+    const fullData = { ...data, ...role }
+
     return (
         <div className='w-full h-[15%] justify-center flex items-center'>
             <div className='flex flex-row w-[40%] justify-between'>
-                <div className='bg-gray-300 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>M</div>
-                <div className='bg-gray-300 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>V</div>
+                <div onClick={muteAudio} className='bg-gray-300 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>M</div>
+                <div onClick={muteVideo} className='bg-gray-300 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>V</div>
                 <div className='bg-gray-300 h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>P</div>
                 <div
                     onClick={e => {
@@ -74,7 +87,7 @@ function ControlsHolder(props: { changer: Function }) {
                     className='bg-gray-300 cursor-pointer h-[2.3em] w-[2.3em] flex justify-center items-center rounded-full'>T</div>
                 <div 
                     onClick={e => {
-                        cleanStream()
+                        cleanStream('outgoing', fullData)
                     }}
                     className='bg-red-600 rounded-2xl w-[5em]'></div>
             </div>

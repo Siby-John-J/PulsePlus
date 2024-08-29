@@ -1,5 +1,5 @@
 import '../style.css'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFetchPutTemplate } from '../../../hooks/usePatient'
 import { changeChatView } from '../../../redux/slices/doctor/textChatSlice'
@@ -8,6 +8,7 @@ const socket = io('http://localhost:3003/text_chat')
 
 function ChatWindowFooter() {
   const [text, setText] = useState<string>('')
+  const inputRef = useRef(null)
   const dispatch = useDispatch()
   const data = useSelector((state: any) => state).textChatReducer
   const fullData = { ...data }
@@ -30,12 +31,16 @@ function ChatWindowFooter() {
   return (
     <div className='chat-head bg-white text-black w-[100%] h-[12%] flex items-center'>
       <input
+        ref={inputRef}
         onChange={e => setText(e.target.value)} 
         placeholder='Type something here' 
         className='bg-gray-200 border-[1px] w-[80%] h-[60%] px-7 outline-none rounded-full ml-[2em]' type="text" />
       <button
         onClick={e => {
           sendData(fullData)
+          setText(e => '')
+          inputRef.current.value = ''
+          
           callback(fullData.senderId, fullData.receverId)
         }}
         className='send-btn h-[60%] rounded-full bg-orange-400 w-[3.3em] text-white'>X</button>

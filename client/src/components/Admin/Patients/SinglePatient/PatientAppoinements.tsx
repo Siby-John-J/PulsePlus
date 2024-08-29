@@ -1,14 +1,16 @@
 import { UserTemplate } from '../../Dashboard/DoctorMiniList'
 import { UserTemplateStyle } from '../../../../types/hardcoded/styleEnum'
 
-function PatientAppoinements() {
-  return (
-    <div className=' w-[100%] h-[100%]'>
-        <AppoientmentModel />
-        <AppoientmentModel />
-        <AppoientmentModel />
-    </div>
-  )
+function PatientAppoinements(data: any) {
+    console.log(data)
+    
+    return (
+        <div className=' w-[100%] h-[100%]'>
+            <AppoientmentModel />
+            <AppoientmentModel />
+            <AppoientmentModel />
+        </div>
+    )
 }
 
 function AppoientmentModel() {

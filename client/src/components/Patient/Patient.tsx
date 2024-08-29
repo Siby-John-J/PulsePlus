@@ -28,6 +28,8 @@ function Patient() {
 
     useEffect(() => {
         socket.on('offer_to_patient', (data: any) => {
+            console.log(data.senderId, authState.authReducer.id)
+            
             if(data.senderId === authState.authReducer.id) {
                 if(countRef.current === 0) dispatch(inComingcallOn({offer: data.offer}))
                 countRef.current++

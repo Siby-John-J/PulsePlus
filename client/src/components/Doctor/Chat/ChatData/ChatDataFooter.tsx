@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import { useFetchPutTemplate } from "../../../../hooks/usePatient"
 import { useDispatch, useSelector } from "react-redux"
 import { changeChatView } from "../../../../redux/slices/doctor/textChatSlice"
@@ -15,6 +15,7 @@ function ChatDataFooter() {
   }
 
   const [text, setText] = useState<string>('')
+  const inputRef = useRef(null)
   const data = useSelector((state: any) => state).textChatReducer
   const fullData = { ...data }
   fullData.text = { p2: text }
@@ -32,6 +33,7 @@ function ChatDataFooter() {
         <div className="flex flex-row">
           <div className='bg-gray-300 rounded-full w-[2em] h-[2em]'></div>
           <input
+            ref={inputRef}
             onChange={e => {
               setText(e.target.value)
             }}
@@ -44,6 +46,8 @@ function ChatDataFooter() {
             <div 
               onClick={e => {
                 sendData(fullData)
+                setText(e => '')
+                inputRef.current.value = ''
                 callback(fullData.senderId, fullData.receverId)
               }}
               className='bg-red-500 cursor-pointer rounded-full w-[3em] h-[3em] shadow-red-400 shadow-sm'></div>

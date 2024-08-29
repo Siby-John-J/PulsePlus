@@ -7,23 +7,28 @@ import { detailsTypes } from "../../../../types/patient/patientTypes"
 
 function SinglePatient() {
   const param = useParams()
-  const [patient, setPatient] = useState<detailsTypes>()
+  const [patient, setPatient] = useState({})
+  const [appointments, setAppointments] = useState([])
+          
+  async function getAndStoreData() {
+      const response = await useFetchGetTemplate('http://localhost:2000/patient-service/actions/getById?id=' + props.id)
+      const response2 = await useFetchGetTemplate('http://localhost:2000/admin-service/appointment/accepted?id=' + props.id)
+      setPatient(response)
+      setAppointments(response2)
+  }
 
   useEffect(() => {
-    // useFetchGetTemplate('http://localhost:2000/patient-service/actions/get').then(res => {
-    //   setPatient(res)
-      
-    // })
+      //   getAndStoreData()
   }, [])
-
+  
   return (
     <div className="bg-blue-100 w-[80%] flex items-center justify-center flex-col">
         <div className="h-[100%] w-[100%] px-3 py-7">
             <div className="w-[98%] h-[25%] flex flex-row justify-between px-6">
-                <PatientDetails id={param.id} />
+                <PatientDetails patient={patient} />
             </div>
             <div className="flex flex-col w-[98%] h-[75%] pt-6">
-                <PatientAppoinements />
+                <PatientAppoinements data={appointments} />
             </div>
         </div>
             

@@ -25,6 +25,8 @@ function Incoming() {
     
     useEffect(() => {
         socket.on('answer_to_doctor', async (data: any) => {
+            console.log(data)
+            
             await peerRef.current.setRemoteDescription(JSON.parse(data.offer))
         })
     },[])

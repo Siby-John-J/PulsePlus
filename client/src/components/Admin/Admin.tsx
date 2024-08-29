@@ -46,7 +46,7 @@ function NavigationButton(props: any) {
 
   return (
     <Link to={link}>
-    <div className="py-[1em] px-[3em] font-medium text-lg">
+    <div className="py-[1em] px-[3em] font-medium text-lg hover:text-blue-500">
       {content}
     </div>
   </Link>
