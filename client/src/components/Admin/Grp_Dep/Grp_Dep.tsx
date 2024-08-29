@@ -1,13 +1,13 @@
-import MainContent from "./MainContent"
-import MainHeader from "./MainHeader"
-import PopUpModel from "./PopUpModel"
+import ContactList from "./ContactList/ContactList"
+import DataBody from "./DataBody/DataBody"
+import Info from "./Info/Info"
 
 function Grp_Dep() {
   return (
-    <div className='bg-gray-50 w-[80%]'>
-      <MainHeader />
-      <MainContent />
-      {/* <PopUpModel /> */}
+    <div className='bg-gray-50 w-[80%] flex flex-row'>
+      <ContactList />
+      <DataBody />
+      <Info />
     </div>
   )
 }
