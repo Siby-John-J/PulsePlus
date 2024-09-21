@@ -2,7 +2,7 @@
 export enum ChatTextHolderStyle {
     STYLE1 = 'h-[18%] mt-3 flex justify-start flex-col',
     STYLE2 = 'h-[18%] mt-3 flex flex-col items-end',
-    STYLE3 = 'w-fit rounded-md h-[100%] shadow-lg bg-white flex px-3 items-center',
+    STYLE3 = 'w-fit rounded-md h-[100%] shadow-lg bg-gray-50 flex px-3 items-center',
     STYLE4 = 'w-fit rounded-md h-[100%] shadow-lg text-white bg-blue-600 flex px-3 items-center'
 }
 

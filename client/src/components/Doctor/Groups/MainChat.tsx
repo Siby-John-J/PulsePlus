@@ -1,9 +1,12 @@
+import { useState } from "react"
 import { ChatTextHolderStyle } from "../../../types/hardcoded/styleEnum"
 import { UserTemplateStyle } from "../../../types/hardcoded/styleEnum"
 import { UserTemplate } from "../../Admin/Dashboard/DoctorMiniList"
 import Appointment from "../../Admin/Grp_Dep/DataBody/Appointment"
-
+import MultiMedia from "../../Admin/Grp_Dep/Info/MultiMedia"
 import './MainChat.css'
+import ChatData from "../../Admin/Grp_Dep/DataBody/ChatData"
+import GroupPoll from "../../Common/GroupPoll"
 
 function MainChat() {
   return (
@@ -31,12 +34,23 @@ function ChatHeader() {
 }
 
 function ChatBody() {
+    const [chats, setChats] = useState([
+        {
+          info: 'lwal',
+          type: 'text'
+        },
+        {
+          info: 'lwal',
+          type: 'image'
+        }
+    ])
+    
     return (
-        <div className="w-[100%] h-[75%] px-4 overflow-scroll text_holder">
-            <ChatTextHolder part={'incoming'} />
-            <ChatTextHolder part={'incoming'} />
-            <ChatTextHolder part={'incoming'} />
-            <ChatTextHolder part={'outgoing'} />
+        <div className="w-[100%] h-[75%] overflow-scroll text_holder">
+            {
+            chats.map(data => <ChatData data={data}/>)
+            }
+            <GroupPoll />
             <Appointment holder={'doctor'} />
             <div></div>
         </div>

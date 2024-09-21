@@ -18,6 +18,7 @@ import appointPaymentReducer from "./slices/doctor/appointPaymentSlice"
 import textChatReducer from "./slices/doctor/textChatSlice"
 import callReducer from "./slices/callSlice"
 import incomingReducer from "./slices/incomingSlice"
+import pollReducer from "./slices/pollSlice"
 import notesReducer from "./slices/patient/notesSlice"
 
 export const store = configureStore({
@@ -41,6 +42,7 @@ export const store = configureStore({
         appointPaymentReducer,
         textChatReducer,
         callReducer,
-        incomingReducer
+        incomingReducer,
+        pollReducer
     }
 })

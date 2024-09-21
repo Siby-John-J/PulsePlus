@@ -35,10 +35,13 @@ function DoctorMiniList() {
 
 export function UserTemplate(data: any) {
   const { name, details, style, mainStyle } = data.details
+  
+  let shape = 'rounded-full'
+  if(data.type && data.type === 'department') shape = 'rounded-md'
 
   return (
     <div className={mainStyle}>
-      <div className="bg-black h-[2.5em] w-[2.5em] rounded-full"></div>
+      <div className={'bg-black h-[2.5em] w-[2.5em] ' + shape}></div>
       <div className="flex flex-col text-[14px] justify-center">
         <h1 className="font-semibold">{name}</h1>
         <p className={style}>{details}</p>

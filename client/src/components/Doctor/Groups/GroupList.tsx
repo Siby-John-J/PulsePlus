@@ -14,10 +14,11 @@ function ListGroups() {
     return (
         <div className="bg-white rounded-md w-[100%] h-[55%] flex flex-col items-center">
             <div className="w-[90%] h-[20%] flex items-center justify-center">
-                <input type="text" className="bg-gray-300 h-[60%] w-[100%]" />
+                <input type="text" className="bg-gray-100 h-[60%] w-[100%] px-4" />
             </div>
             <div className="w-[90%] h-[60%] mt-3">
-                <SingleGroup />
+                <SingleHolder type="group" />
+                <SingleHolder type="department" />
             </div>
             <div className="w-[90%] h-[20%] flex flex-row items-center justify-evenly">
                 <button className="bg-purple-700 text-white px-7 py-[5px] rounded-sm ">create</button>
@@ -36,12 +37,13 @@ function SingleContent() {
     )
 }
 
-function SingleGroup() {
+function SingleHolder(props: { type: string }) {
+    const { type } = props
     const { ROW } = UserTemplateStyle
 
     return (
         <div className="mb-3">
-            <UserTemplate details={{name: 'B-Group', details: 'A group for cariologits', style: 'font-light', mainStyle: ROW}} />
+            <UserTemplate type={type} details={{name: 'B-Group', details: 'A group for cariologits', style: 'font-light', mainStyle: ROW}} />
         </div>
     )
 }

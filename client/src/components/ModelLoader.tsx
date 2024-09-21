@@ -12,6 +12,7 @@ import AccountExists from "./Patient/PopUp/AccountExists";
 import AppointmentPayment from "./Patient/PopUp/AppointmentPayment";
 import Call from "./Patient/PopUp/Call";
 import Incoming from "./Patient/PopUp/Incoming";
+import CreatePoll from "./Patient/PopUp/CreatePoll";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -87,6 +88,11 @@ function GlobalModelLoader() {
             {
                 popupState.incomingReducer.isState && (
                     <PopUp layout={true} component={<Incoming />} />
+                )
+            }
+            {
+                popupState.pollReducer.isPoll && (
+                    <PopUp layout={true} component={<CreatePoll />} />
                 )
             }
         </>
