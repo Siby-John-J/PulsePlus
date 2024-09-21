@@ -5,10 +5,10 @@ import ChatTitle from "./ChatTitle"
 function Groups() {
   return (
     <div className="bg-gray-300 h-[100%] w-[80%]">
-        <div className="w-[100%] h-[10%] flex items-center px-10">
-            <h1 className="text-[1.7em] font-medium">Groups</h1>
+        <div className="w-[100%] h-[5%] flex items-center px-10">
+          <h1 className="text-[1.7em] font-medium mt-7">Groups & Departments</h1>
         </div>
-        <div className="w-[100] h-[90%] flex flex-row justify-evenly items-center">
+        <div className="w-[100] h-[95%] flex flex-row justify-evenly items-center">
             <div className="rounded-md w-[18%] h-[90%]">
                 <GroupList />
             </div>

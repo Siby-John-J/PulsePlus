@@ -42,6 +42,17 @@ export class SignalingGateWay implements ISocket, OnModuleInit {
     
   }
 
+  // 
+  @SubscribeMessage('end_call')
+  onCancelCall(@MessageBody() body: any): any {
+    const { role, ...rest} = body
+    console.log(rest)
+    
+    if(role === 'Patient') this.emitMessage(rest, 'end_call')
+    if(role === 'Doctor') this.emitMessage(rest, 'end_call')
+    
+  }
+
   emitMessage(data: any, channel: string) {
     this.server.emit(channel, data)
   }

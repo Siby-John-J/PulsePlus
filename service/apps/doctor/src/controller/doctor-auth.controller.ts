@@ -20,7 +20,7 @@ export class DoctorAuthController {
   }
 
   @Get('getAll')
-  async getAllDoctors() {
+  async getAllDoctors(@Query() data: { limit: boolean }) {
     return await this.doctorService.getAllDoctors()
   }
 

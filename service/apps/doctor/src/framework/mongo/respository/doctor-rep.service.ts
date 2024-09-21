@@ -21,7 +21,7 @@ export class DoctorRepository extends IDoctor {
   }
 
   async getAllDoctor(): Promise<DoctorEntity[]> {
-    return await this.doctorSchema.find({}, {name: 1})
+    return await this.doctorSchema.find({}, {name: 1, degree: 1, department: 1})
   }
 
   async blockDoctor(id: string): Promise<DoctorEntity> {
