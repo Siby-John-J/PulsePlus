@@ -7,6 +7,8 @@ import MultiMedia from "../../Admin/Grp_Dep/Info/MultiMedia"
 import './MainChat.css'
 import ChatData from "../../Admin/Grp_Dep/DataBody/ChatData"
 import GroupPoll from "../../Common/GroupPoll"
+import { useDispatch } from "react-redux"
+import { pollOn } from "../../../redux/slices/pollSlice"
 
 function MainChat() {
   return (
@@ -72,6 +74,7 @@ export function ChatTextHolder(props: any) {
 }
 
 function ChatFooter() {
+    const dispatch = useDispatch()
     return (
         <div className="w-[100%] h-[10%] flex flex-row border-t-[1px] border-gray-400">
             <div className="flex w-fit items-center px-8">
@@ -81,7 +84,7 @@ function ChatFooter() {
                 <div></div>
                 <div className="flex justify-evenly items-center px-2 w-[10em]">
                     <div className="bg-black w-10 h-10 rounded-full"></div>
-                    <div className="bg-black w-10 h-10 rounded-full"></div>
+                    <div onClick={e => dispatch(pollOn())} className="bg-black w-10 h-10 rounded-full"></div>
                     <button className="bg-red-500 px-2 shadow-md py-3 text-white rounded-full">send</button>
                 </div>
             </div>

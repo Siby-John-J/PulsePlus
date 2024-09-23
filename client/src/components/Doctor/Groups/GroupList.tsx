@@ -1,5 +1,7 @@
 import { UserTemplate } from "../../Admin/Dashboard/DoctorMiniList"
 import { UserTemplateStyle } from "../../../types/hardcoded/styleEnum"
+import { grpOn } from "../../../redux/slices/createGrpDepSlice"
+import { useDispatch } from "react-redux"
 
 function GroupList() {
   return (
@@ -11,6 +13,8 @@ function GroupList() {
 }
 
 function ListGroups() {
+    const dispatch = useDispatch()
+
     return (
         <div className="bg-white rounded-md w-[100%] h-[55%] flex flex-col items-center">
             <div className="w-[90%] h-[20%] flex items-center justify-center">
@@ -21,7 +25,7 @@ function ListGroups() {
                 <SingleHolder type="department" />
             </div>
             <div className="w-[90%] h-[20%] flex flex-row items-center justify-evenly">
-                <button className="bg-purple-700 text-white px-7 py-[5px] rounded-sm ">create</button>
+                <button onClick={e => dispatch(grpOn())} className="bg-purple-700 text-white px-7 py-[5px] rounded-sm ">create</button>
                 <button className="bg-white text-purple-700 px-7 py-[5px] rounded-sm ">add</button>
             </div>
         </div>

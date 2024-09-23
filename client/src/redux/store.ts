@@ -19,6 +19,7 @@ import textChatReducer from "./slices/doctor/textChatSlice"
 import callReducer from "./slices/callSlice"
 import incomingReducer from "./slices/incomingSlice"
 import pollReducer from "./slices/pollSlice"
+import groupReducer from "./slices/createGrpDepSlice"
 import notesReducer from "./slices/patient/notesSlice"
 
 export const store = configureStore({
@@ -43,6 +44,7 @@ export const store = configureStore({
         textChatReducer,
         callReducer,
         incomingReducer,
-        pollReducer
+        pollReducer,
+        groupReducer
     }
 })

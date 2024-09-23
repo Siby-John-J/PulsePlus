@@ -1,7 +1,9 @@
 
 function GroupChat() {
   return (
-    <div>GroupChat</div>
+    <div>
+      <h1></h1>
+    </div>
   )
 }
 
