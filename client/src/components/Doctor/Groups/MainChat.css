@@ -2,3 +2,7 @@
 .text_holder::-webkit-scrollbar {
     display: none;
 }
+
+.fileLoader::-webkit-file-upload-button {
+    display: none;
+}

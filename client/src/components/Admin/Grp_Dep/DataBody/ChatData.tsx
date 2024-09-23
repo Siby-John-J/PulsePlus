@@ -31,8 +31,11 @@ function ChatItem() {
 
 function ChatItemImage() {
     return (
-        <div className="w-[30%] h-[4em] bg-blue-400">
-
+        <div className="w-fit h-[4em] bg-gray-200 rounded-md flex flex-row items-center px-2">
+            <div className="mx-1 bg-black w-[3em] h-[3em] rounded-sm"></div>
+            <div className="mx-1 bg-black w-[3em] h-[3em] rounded-sm"></div>
+            <div className="mx-1 bg-black w-[3em] h-[3em] rounded-sm"></div>
+            <div className="mx-1 bg-black w-[3em] h-[3em] rounded-sm"></div>
         </div>
     )
 }

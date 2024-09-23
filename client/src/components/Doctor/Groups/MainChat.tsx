@@ -9,6 +9,7 @@ import ChatData from "../../Admin/Grp_Dep/DataBody/ChatData"
 import GroupPoll from "../../Common/GroupPoll"
 import { useDispatch } from "react-redux"
 import { pollOn } from "../../../redux/slices/pollSlice"
+import { loadOn } from "../../../redux/slices/loadMediaSlice"
 
 function MainChat() {
   return (
@@ -75,6 +76,7 @@ export function ChatTextHolder(props: any) {
 
 function ChatFooter() {
     const dispatch = useDispatch()
+
     return (
         <div className="w-[100%] h-[10%] flex flex-row border-t-[1px] border-gray-400">
             <div className="flex w-fit items-center px-8">
@@ -83,7 +85,10 @@ function ChatFooter() {
             <div className="flex w-fit ">
                 <div></div>
                 <div className="flex justify-evenly items-center px-2 w-[10em]">
-                    <div className="bg-black w-10 h-10 rounded-full"></div>
+                    <input onChange={e => {
+                        dispatch(loadOn({file: e.target.files}))
+                        // console.log(e.target.files)
+                    }} multiple type="file" className="bg-black w-10 h-10 rounded-full overflow-hidden fileLoader" />
                     <div onClick={e => dispatch(pollOn())} className="bg-black w-10 h-10 rounded-full"></div>
                     <button className="bg-red-500 px-2 shadow-md py-3 text-white rounded-full">send</button>
                 </div>

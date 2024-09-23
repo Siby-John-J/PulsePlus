@@ -23,10 +23,8 @@ function CreateGrpOrDep() {
 
     const checkAuthenticate = () => {
       if(data.name === '') return setErrorMessage(prev => 'Must enter a group name')
-
+        
       if(data.membercount < 0) return setErrorMessage(prev => 'Members count cannot be negative')
-  
-      // if(options.length < 2) return setErrorMessage(prev => 'Must add more than one options')
     }
     
     return (
@@ -52,7 +50,7 @@ function CreateGrpOrDep() {
         <div>
           <h1 className="font-medium pb-3">Max group members</h1>
           <input
-            placeholder="leave it empty or 0 for unlimited" 
+            placeholder="leave it empty or 0 for unlimited"
             onClick={e => setErrorMessage(prev => '')} 
             onChange={e => setToData(e, 'membercount')} type="number" name="" id="" className={style + 'mb-3'} />
         </div>

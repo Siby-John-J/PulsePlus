@@ -14,6 +14,7 @@ import Call from "./Patient/PopUp/Call";
 import Incoming from "./Patient/PopUp/Incoming";
 import CreatePoll from "./Patient/PopUp/CreatePoll";
 import CreateGrpOrDep from "./Common/CreateGrpOrDep";
+import LoadMedia from "./Common/LoadMedia";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -99,6 +100,11 @@ function GlobalModelLoader() {
             {
                 popupState.groupReducer.isGrp && (
                     <PopUp layout={true} component={<CreateGrpOrDep />} />
+                )
+            }
+            {
+                popupState.loadReducer.isLoad && (
+                    <PopUp layout={true} component={<LoadMedia />} />
                 )
             }
         </>
