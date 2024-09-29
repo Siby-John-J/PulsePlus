@@ -1,0 +1,4 @@
+
+.chat_holder::-webkit-scrollbar {
+    display: none;
+}

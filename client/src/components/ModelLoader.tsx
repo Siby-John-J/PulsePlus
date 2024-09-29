@@ -22,19 +22,19 @@ function PatientModelLoader() {
     return (
         <>
             {popupState.patientDetailPopupReducer.isLoad && (
-                <PopUp component={<EditDetails />} />
+                <PopUp layout={true} component={<EditDetails />} />
             )}
             {popupState.notFilledSliceReducer.isLoad && (
-                <PopUp component={<NotFilledDetailsWarning />} />
+                <PopUp layout={true} component={<NotFilledDetailsWarning />} />
             )}
             {popupState.appointmentFillupReducer.isLoad && (
-                <PopUp component={<AppoinetmentFillup />} />
+                <PopUp layout={true} component={<AppoinetmentFillup />} />
             )}
             {popupState.notSendAppoinetmentReducer.isLoad && (
-                <PopUp component={<CannotSendAppointmentWarning />} />
+                <PopUp layout={true} component={<CannotSendAppointmentWarning />} />
             )}
             {popupState.notesPopupReducer.isLoad && (
-                <PopUp component={<CreateNote />} />
+                <PopUp layout={true} component={<CreateNote />} />
             )}
             {popupState.nottifcationReducer.isLoad && (
                 <PopUp component={<Notification />} />

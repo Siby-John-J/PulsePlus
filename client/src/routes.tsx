@@ -18,6 +18,7 @@ import AdminLogin from "./components/Auth/AdminLogin";
 import Processing from "./components/Auth/Processing";
 import PaymentSuccess from "./components/Patient/Payment/PaymentSuccess";
 import PaymentFailed from "./components/Patient/Payment/PaymentFailed";
+import GroupSettings from "./components/Common/Group_Settings/GroupSettings";
 
 export const routeSwitch = {};
 

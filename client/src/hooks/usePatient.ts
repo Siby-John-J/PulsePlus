@@ -88,3 +88,6 @@ export const useFetchPutTemplate = async(url: string, payload: any) => {
         return await error
     }
 }
+
+// Must be like 
+// let POST = 'http://localhost:2000/doctor-service/auth/'

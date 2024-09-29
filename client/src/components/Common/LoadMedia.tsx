@@ -27,7 +27,9 @@ function LoadMedia() {
           dispatch(loadOn({file: e.target.files}))
         }} type="file" className="bg-black w-10 h-10 rounded-full overflow-hidden fileLoader" />
       </div>
-      <ViewMedia data={currentMedia} />
+      <div className=" flex justify-center items-center">
+        <ViewMedia data={currentMedia} />
+      </div>
       <div>
         <input className="w-[100%] px-2 border-black border-[1px] py-2 my-2 rounded-md outline-none" type="text" placeholder="type caption" />
       </div>
@@ -50,10 +52,9 @@ function ViewMedia(props: { data: any }) {
   
   if(format && format === 'jpg') {
     return (
-      <img src={url} alt="" />
+      <img className="w-[20rem] px-4" src={url} alt="" />
     )
   }
-
   
   if(format && format === 'mp3') {
     return (

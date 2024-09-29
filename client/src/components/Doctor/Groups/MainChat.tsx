@@ -11,17 +11,17 @@ import { useDispatch } from "react-redux"
 import { pollOn } from "../../../redux/slices/pollSlice"
 import { loadOn } from "../../../redux/slices/loadMediaSlice"
 
-function MainChat() {
+function MainChat(props: { setExpand: Function }) {
   return (
     <div className="w-[100%] h-[100%] flex flex-col">
-        <ChatHeader />
+        <ChatHeader setExpand={props.setExpand} />
         <ChatBody />
         <ChatFooter />
     </div>
   )
 }
 
-function ChatHeader() {
+function ChatHeader(props: { setExpand: Function }) {
     const { ROW } = UserTemplateStyle
 
     return (
@@ -29,7 +29,9 @@ function ChatHeader() {
             <div className="scale-[120%] mt-7">
                 <UserTemplate details={{name: 'SOLID', details: 'Coding', style: 'text-light text-gray-500', mainStyle: ROW}} />
             </div>
-            <div className="w-[30%] h-[100%] bg-green-200">
+            <div 
+            onClick={e => props.setExpand((prev: boolean) => !prev)}
+            className="w-[30%] h-[100%] bg-green-200">
                 
             </div>
         </div>
@@ -79,8 +81,8 @@ function ChatFooter() {
 
     return (
         <div className="w-[100%] h-[10%] flex flex-row border-t-[1px] border-gray-400">
-            <div className="flex w-fit items-center px-8">
-                <input className="w-[30em] h-[2em] cursor-text outline-none px-4" type="text" placeholder="Type a message here" />
+            <div className="flex w-full items-center px-8">
+                <input className="w-[100%] h-[2em] cursor-text outline-none px-4" type="text" placeholder="Type a message here" />
             </div>
             <div className="flex w-fit ">
                 <div></div>

@@ -2,8 +2,12 @@ import { useState } from 'react'
 import ChatData from './ChatData'
 import InputField from './InputField'
 import Appointment from './Appointment'
+import "./DataBody.css"
 
-function DataBody() {
+function DataBody(props: { expand: boolean }) {
+  let style = 'w-[80%]'
+  if(props.expand) style = 'w-[60%]'
+
   const [chats, setChats] = useState([
     {
       info: 'lwal',
@@ -12,11 +16,17 @@ function DataBody() {
     {
       info: 'lwal',
       type: 'image'
-    }
+    },
+    {
+      info: 'lwal',
+      type: 'text'
+    },
+    
   ])
+
   return (
-    <div className=' w-[60%] py-5 flex flex-col justify-between'>
-      <div className=''>
+    <div className={'py-5 flex flex-col justify-between ' + style}>
+      <div className='overflow-scroll chat_holder'>
         {
           chats.map(data => <ChatData data={data}/>)
         }
