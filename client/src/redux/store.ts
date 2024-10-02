@@ -21,6 +21,7 @@ import incomingReducer from "./slices/incomingSlice"
 import pollReducer from "./slices/pollSlice"
 import groupReducer from "./slices/createGrpDepSlice"
 import loadReducer from "./slices/loadMediaSlice"
+import hiddenReducer from "./slices/hiddenMessageSlice"
 import notesReducer from "./slices/patient/notesSlice"
 
 export const store = configureStore({
@@ -47,6 +48,7 @@ export const store = configureStore({
         incomingReducer,
         pollReducer,
         groupReducer,
-        loadReducer
+        loadReducer,
+        hiddenReducer
     }
 })

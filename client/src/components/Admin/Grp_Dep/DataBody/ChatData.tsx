@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
-function ChatData(props: any) {
+function    ChatData(props: any) {
     const { info, type } = props.data
     
     return (
-        <div className="flex flex-row items-end px-3 my-3">
+        <div className="flex flex-row items-end px-3 my-3 ">
 
-            <div className=" bg-gray-200 w-fit rounded-md">
+            <div className=" bg-gray-200 w-fit rounded-md shadow-black shadow-sm    ">
                 <UserInfo />
                 {
                     type === 'text' && <ChatItem />
@@ -22,14 +22,14 @@ function ChatData(props: any) {
 
 function Time() {
     return (
-        <h1 className="text-[13px] px-3 py-1 rounded-b-md bg-black text-white flex items-center">a min ago</h1>
+        <h1 className="text-[13px] px-3 py-1 rounded-b-md text-black flex items-center">a min ago</h1>
     )
 }
 
 function UserInfo() {
     return (
-        <div className="flex flex-row bg-blue-500 text-white w-full py-2 px-3 items-center justify-between rounded-t-md">
-            <div className="w-[2em] h-[2em] bg-black rounded-full"></div>
+        <div className="flex flex-row text-white bg-black w-full py-2 px-3 items-center justify-between rounded-t-md">
+            <div className="w-[2em] h-[2em] bg-white rounded-full"></div>
             <h1 className="font-medium">nigaraj</h1>
         </div>
         

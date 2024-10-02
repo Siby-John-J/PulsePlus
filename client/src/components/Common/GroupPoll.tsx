@@ -18,8 +18,10 @@ function GroupPoll() {
     const { options, question } = poll
 
     return (
-        <div className="mx-3 bg-blue-200 rounded-md px-3 w-[20vw] flex flex-col justify-evenly h-fit">
-            <Question question={question} />
+        <div className="mx-3 bg-gray-200 shadow-sm shadow-black rounded-md px-3 w-[20vw] flex flex-col justify-evenly h-fit">
+            <div className="bg-black text-white px-2 w-full rounded-md my-2">
+                <Question question={question} />
+            </div>
             {
                 options.map((item: any) => <Option choice={item.choice} per={item.percentage} />)
             }
@@ -30,7 +32,7 @@ function GroupPoll() {
 function Question(props: { question: string }) {
     return (
         <div>
-            <h1 className="font-medium text-lg py-2">{ props.question }</h1>
+            <h1 className="font-medium text-[14px] py-2">{ props.question }</h1>
         </div>
     )
 }
@@ -45,7 +47,7 @@ function Option(props: { choice: string, per: number }) {
                 <h1 className="text-base font-medium ">{choice}</h1>
                 <h1 className="font-light">{per + '%'}</h1>
             </div>
-            <div style={{width:  `${per}%`}} className="rounded-l-md bg-emerald-300 h-full"></div>
+            <div style={{width:  `${per}%`}} className="rounded-l-md bg-green-400 h-full"></div>
             <div style={{width: `${empty}%`}} className="rounded-r-md bg-white h-full"></div>
         </div>
     )

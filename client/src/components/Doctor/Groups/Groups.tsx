@@ -19,7 +19,7 @@ function Groups() {
                 <GroupList />
             </div>
             <div className={'bg-white h-[90%] rounded-md ' + style}>
-              <MainChat setExpand={setExpand} />
+              <MainChat expand={expand} setExpand={setExpand} />
             </div>
             {
               expand && 

@@ -7,32 +7,37 @@ import MultiMedia from "../../Admin/Grp_Dep/Info/MultiMedia"
 import './MainChat.css'
 import ChatData from "../../Admin/Grp_Dep/DataBody/ChatData"
 import GroupPoll from "../../Common/GroupPoll"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { pollOn } from "../../../redux/slices/pollSlice"
 import { loadOn } from "../../../redux/slices/loadMediaSlice"
+import { hidpOn } from "../../../redux/slices/hiddenMessageSlice"
 
-function MainChat(props: { setExpand: Function }) {
+function MainChat(props: { setExpand: Function, expand: boolean }) {
   return (
     <div className="w-[100%] h-[100%] flex flex-col">
-        <ChatHeader setExpand={props.setExpand} />
+        <ChatHeader expand={props.expand} setExpand={props.setExpand} />
         <ChatBody />
         <ChatFooter />
     </div>
   )
 }
 
-function ChatHeader(props: { setExpand: Function }) {
+function ChatHeader(props: { setExpand: Function, expand: boolean }) {
     const { ROW } = UserTemplateStyle
+    let style = 'w-[20%]'
+    if(props.expand) style = 'w-[30%]'
 
     return (
         <div className="w-[100%] h-[15%] flex flex-row justify-between px-6 border-gray-400 border-b-[1px]">
             <div className="scale-[120%] mt-7">
                 <UserTemplate details={{name: 'SOLID', details: 'Coding', style: 'text-light text-gray-500', mainStyle: ROW}} />
             </div>
-            <div 
-            onClick={e => props.setExpand((prev: boolean) => !prev)}
-            className="w-[30%] h-[100%] bg-green-200">
-                
+            <div className={" h-[100%] flex flex-row items-center justify-evenly " + style}>
+                <div className="bg-black w-[3em] h-[3em] rounded-full"></div>
+                <div className="bg-black w-[3em] h-[3em] rounded-full"></div>
+                <div 
+                    onClick={e => props.setExpand((prev: boolean) => !prev)}
+                    className="bg-black w-[3em] h-[3em] rounded-full"></div>
             </div>
         </div>
     )
@@ -51,7 +56,7 @@ function ChatBody() {
     ])
     
     return (
-        <div className="w-[100%] h-[75%] overflow-scroll text_holder">
+        <div className="w-[100%] h-[75%] overflow-scroll text_holder shadow-md">
             {
             chats.map(data => <ChatData data={data}/>)
             }
@@ -78,21 +83,29 @@ export function ChatTextHolder(props: any) {
 
 function ChatFooter() {
     const dispatch = useDispatch()
+    const popupState = useSelector((state: any) => state)
+    let style = 'bg-red-500'
+    
+    if(popupState.hiddenReducer.data.length > 0) style = 'bg-blue-500'  
 
     return (
         <div className="w-[100%] h-[10%] flex flex-row border-t-[1px] border-gray-400">
             <div className="flex w-full items-center px-8">
+            <div onClick={e => dispatch(hidpOn())} className="bg-purple-500 w-10 h-10 rounded-md overflow-hidden"></div>
                 <input className="w-[100%] h-[2em] cursor-text outline-none px-4" type="text" placeholder="Type a message here" />
             </div>
-            <div className="flex w-fit ">
-                <div></div>
+            <div className="flex w-fit items-center">
                 <div className="flex justify-evenly items-center px-2 w-[10em]">
                     <input onChange={e => {
                         dispatch(loadOn({file: e.target.files}))
                         // console.log(e.target.files)
                     }} multiple type="file" className="bg-black w-10 h-10 rounded-full overflow-hidden fileLoader" />
                     <div onClick={e => dispatch(pollOn())} className="bg-black w-10 h-10 rounded-full"></div>
-                    <button className="bg-red-500 px-2 shadow-md py-3 text-white rounded-full">send</button>
+                    <button
+                        onClick={e => {
+                            console.log(popupState.hiddenReducer.data)
+                        }}
+                        className={style + " px-2 shadow-md py-3 text-white rounded-full"}>send</button>
                 </div>
             </div>
         </div>

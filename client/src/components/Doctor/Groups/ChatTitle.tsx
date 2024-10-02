@@ -3,6 +3,7 @@ import { UserTemplateStyle } from "../../../types/hardcoded/styleEnum"
 import { UserTemplate } from "../../Admin/Dashboard/DoctorMiniList"
 import AttachMents from "../../Admin/Grp_Dep/Info/AttachMents"
 import MultiMedia from "../../Admin/Grp_Dep/Info/MultiMedia"
+import { Link } from "react-router-dom"
 
 function ChatTitle() {
   return (
@@ -55,7 +56,10 @@ function ChatTitleDetails() {
             <div className=" w-full py-2 px-2 h-fit ">
                 <div className="flex flex-row justify-between items-center">
                 <h1 className="font-medium pb-2">User information</h1>
-                <a href={'/doctor/groups/settings?id=' + 'memes'}>View All</a>
+                <Link to={'/doctor/groups/settings?id=' + 'memes'} >
+                    View All
+                </Link>
+                {/* <a href=></a> */}
                 </div>
                 <div className="h-fit flex flex-col gap-2">
                     {

@@ -15,6 +15,7 @@ import Incoming from "./Patient/PopUp/Incoming";
 import CreatePoll from "./Patient/PopUp/CreatePoll";
 import CreateGrpOrDep from "./Common/CreateGrpOrDep";
 import LoadMedia from "./Common/LoadMedia";
+import AddToHIddenChat from "./Patient/PopUp/AddToHIddenChat";
 
 function PatientModelLoader() {
     const popupState = useSelector((state: any) => state);
@@ -105,6 +106,11 @@ function GlobalModelLoader() {
             {
                 popupState.loadReducer.isLoad && (
                     <PopUp layout={true} component={<LoadMedia />} />
+                )
+            }
+            {
+                popupState.hiddenReducer.ishid && (
+                    <PopUp layout={true} component={<AddToHIddenChat />} />
                 )
             }
         </>
