@@ -1,13 +1,18 @@
 import GroupList from "./GroupList"
 import MainChat from "./MainChat"
 import ChatTitle from "./ChatTitle"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 function Groups() {
   const [expand, setExpand] = useState<boolean>(false)
+  const [groupId, setGroupId] = useState('')
   let style = 'w-[78%]'
 
   if(expand) style = 'w-[58%]'
+
+  useEffect(() => {
+    console.log(groupId);
+  },[groupId])
 
   return (
     <div className="bg-gray-300 h-[100%] w-[80%]">
@@ -16,10 +21,10 @@ function Groups() {
         </div>
         <div className="w-[100] h-[95%] flex flex-row justify-evenly items-center">
             <div className="rounded-md w-[18%] h-[90%]">
-                <GroupList />
+                <GroupList setId={setGroupId} />
             </div>
             <div className={'bg-white h-[90%] rounded-md ' + style}>
-              <MainChat expand={expand} setExpand={setExpand} />
+              <MainChat groupId={groupId} expand={expand} setExpand={setExpand} />
             </div>
             {
               expand && 

@@ -2,12 +2,13 @@ import { useDispatch } from "react-redux";
 import { grpOff } from "../../redux/slices/createGrpDepSlice";
 import { useState } from "react";
 import { DisplayError } from "../Patient/PopUp/CreatePoll";
+import { useFetchPostTemplate } from "../../hooks/usePatient";
 
 function CreateGrpOrDep() {
     const [data, setData] = useState({
       name: '',
       department: 'none',
-      membercount: 0
+      memberLimit: 0
     })
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -21,10 +22,22 @@ function CreateGrpOrDep() {
       })
     }
 
-    const checkAuthenticate = () => {
+    const checkAuthenticate = async (e) => {
       if(data.name === '') return setErrorMessage(prev => 'Must enter a group name')
         
       if(data.membercount < 0) return setErrorMessage(prev => 'Members count cannot be negative')
+
+      try {
+        const resp = await useFetchPostTemplate('http://localhost:2000/doctor-service/groups', {
+          ...data,
+          description: ''
+        })
+        
+      } catch (error) {
+        alert('there was an error creating group')
+      }
+
+      dispatch(grpOff())
     }
     
     return (
@@ -56,10 +69,7 @@ function CreateGrpOrDep() {
         </div>
         <div className="flex flex-row w-[100%] justify-between">
           <button
-          onClick={e => {
-            console.log(data)
-            checkAuthenticate()
-          }}
+          onClick={checkAuthenticate}
           className="w-[48%] bg-green-500 px-0 py-1 rounded-md text-white" >Create</button>
           <button className="w-[48%] bg-red-500 px-0 py-1 rounded-md text-white" onClick={e => dispatch(grpOff())}>Cancel</button>
         </div>
