@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { ChatTextHolderStyle } from "../../../types/hardcoded/styleEnum"
 import { UserTemplateStyle } from "../../../types/hardcoded/styleEnum"
 import { UserTemplate } from "../../Admin/Dashboard/DoctorMiniList"
@@ -14,26 +14,28 @@ import { hidpOn } from "../../../redux/slices/hiddenMessageSlice"
 import { Link } from "react-router-dom"
 import { useFetchGetTemplate, useFetchPostTemplate } from "../../../hooks/usePatient"
 
-function MainChat(props: { setExpand: Function, expand: boolean, groupId: any }) {
+function MainChat(props: { setExpand: Function, expand: boolean, refresh: Function, refreshState: boolean }) {
     const [groupData, setGroupData] = useState({})
+    const groupId = useSelector((data: any) => data).groupIdReducer.id
 
     const getAndSetData = async() => {
-        const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groups/' + props.groupId)
+        const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groups/' + groupId)
+        console.log(resp);
+        
         setGroupData(resp)
     }
     
-    
     useEffect(() => {
         getAndSetData()
-    },[props.groupId])
+        console.log('memes lwal');
+        
+    },[groupId, props.refreshState])
 
     return (
-      <div className="w-[100%] h-[100%] flex flex-col">
+      <div className="w-[100%] h-[100%] flex flex-col" >
           <ChatHeader description={groupData.description} name={groupData.name} expand={props.expand} setExpand={props.setExpand} />
-          {
-            groupData.messages !== undefined && <ChatBody messages={groupData.messages} />
-          }
-          <ChatFooter />
+          <ChatBody refreshState={props.refreshState} messages={groupData.messages} />
+          <ChatFooter refresh={props.refresh} groupId={groupId} />
       </div>
     )
 }
@@ -63,26 +65,60 @@ function ChatHeader(props: { setExpand: Function, expand: boolean, name: string,
     )
 }
 
-function ChatBody(props: { messages: Array<object> }) {
-    const [chats, setChats] = useState([
-        {
-          info: 'lwal',
-          type: 'text'
-        },
-        {
-          info: 'lwal',
-          type: 'image'
-        }
-    ])
-    
+function ChatBody(props: { messages: Array<object>, refreshState: boolean }) {
+    const [chats, setChats] = useState([])
+    const scrollRef = useRef<any>(null)
+    const pollState = useSelector((data: any) => data).pollReducer.isPoll
+    const [scrollVal, setScrollVal] = useState(0)
+
+    const getAndSetData = async() => {
+        const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groupmessage')
+        setChats(resp)
+    }
+
+    useEffect(() => {
+        getAndSetData().then(() => {
+            // const read: boolean = scrollVal <= (scrollRef.current && ((scrollRef.current.scrollHeight - scrollRef.current.clientHeight) - 4))
+
+            setTimeout(() => {
+                scrollRef.current.scrollTop = 
+                (scrollRef.current.scrollHeight - scrollRef.current.clientHeight)
+            }, 0);
+        });
+        // console.log(scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
+        // console.log(scrollRef.current.scrollTop)
+        
+
+    }, [props.refreshState, pollState])
+
+    const scroll = (e) => {
+        // console.log(scrollRef.current.scrollTop)
+        
+        setScrollVal((prev: number) => e.target.scrollTop)
+    }
+
     return (
-        <div className="w-[100%] h-[75%] overflow-scroll text_holder shadow-md">
+        <div ref={scrollRef} onScroll={scroll} className="w-[100%] h-[75%] overflow-scroll text_holder shadow-md scroll-smooth">
             {
-            props.messages.map(data => <ChatData data={data}/>)
+             scrollVal <= (scrollRef.current && ((scrollRef.current.scrollHeight - scrollRef.current.clientHeight) - 4))
+             && <ScrollerBtn scrollVal={scrollRef} />
             }
-            <GroupPoll />
-            <Appointment holder={'doctor'} />
-            <div></div>
+            {
+                chats.map(data => <ChatData data={data}/>)
+            }
+        </div>
+    )
+}
+
+function ScrollerBtn(data: { scrollVal: any }) {
+    return (
+        <div 
+        onClick={e => {
+            data.scrollVal.current.scrollTop = 
+            (data.scrollVal.current.scrollHeight - data.scrollVal.current.clientHeight)
+        }}
+        className="fixed left-[96vw] top-[80vh] bg-black w-[1.7em] h-[1.7em] rounded-full cursor-pointer">
+
         </div>
     )
 }
@@ -101,10 +137,11 @@ export function ChatTextHolder(props: any) {
     )
 }
 
-function ChatFooter() {
+function ChatFooter(props: { groupId: string, refresh: Function }) {
     const [chatText, setChatText] = useState('')
     const dispatch = useDispatch()
     const popupState = useSelector((state: any) => state)
+    const inputRef = useRef(null)
     let style = 'bg-red-500'
     
     if(popupState.hiddenReducer.data.length > 0) style = 'bg-blue-500' 
@@ -114,26 +151,28 @@ function ChatFooter() {
     }
 
     const sendText = async () => {
+        const res = await useFetchPostTemplate('http://localhost:2000/doctor-service/groupmessage', {
+            groupId: props.groupId,
+            type: 'text',
+            data: chatText,
+            senderId: 'string',
+            time: Date.now(),
+            secret: false,
+            visibleFor: []
+        })
 
-        try {            
-            await useFetchPostTemplate('http://localhost:2000/groupmessage', {
-                type: 'text',
-                data: chatText,
-                senderId: 'string',
-                time: Date.now(),
-                secret: false,
-                visibleFor: []
-            })
-        } catch (error) {
-            alert('there was a error sending the message')
-        }
+        
+        
+        setChatText((prev: string) => '')
+        inputRef.current.value = ''
+        props.refresh(prev => !prev)
     }
 
     return (
         <div className="w-[100%] h-[10%] flex flex-row border-t-[1px] border-gray-400">
             <div className="flex w-full items-center px-8">
             <div onClick={e => dispatch(hidpOn())} className="bg-purple-500 w-10 h-10 rounded-md overflow-hidden"></div>
-                <input onChange={setText} className="w-[100%] h-[2em] cursor-text outline-none px-4" type="text" placeholder="Type a message here" />
+                <input ref={inputRef} onChange={setText} className="w-[100%] h-[2em] cursor-text outline-none px-4" type="text" placeholder="Type a message here" />
             </div>
             <div className="flex w-fit items-center">
                 <div className="flex justify-evenly items-center px-2 w-[10em]">

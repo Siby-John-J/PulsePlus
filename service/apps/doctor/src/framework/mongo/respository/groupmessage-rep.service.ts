@@ -1,14 +1,13 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { AuthEntity, DoctorCreateEntity, DoctorEntity, GroupEntity, GroupMessageEntity, IDoctor, IGroup, IGroupMessage } from "../../../core"
+import { GroupEntity, GroupMessageEntity, GroupPollEntity, IGroupMessage } from "../../../core"
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { Doctor } from '../models/doctor.schema';
-import { Group } from '../models/group.schema';
+import { GroupMessage } from '../models/groupmessage.schema';
 
 @Injectable()
 export class GroupMessageRepository extends IGroupMessage {
   constructor(
-    @InjectModel(Group.name) readonly groupSchema: Model<GroupEntity>,
+    @InjectModel(GroupMessage.name) readonly groupSchema: Model<GroupMessageEntity>,
   ) {
     super();
   }
@@ -17,12 +16,23 @@ export class GroupMessageRepository extends IGroupMessage {
       
   }
 
-  async createMessage(data: GroupMessageEntity) {
-    return await this.groupSchema.findOneAndUpdate({_id}, data)
+  async createMessage(data: GroupMessageEntity | { groupId: string } | GroupPollEntity) {
+    return await this.groupSchema.create(data)
   }
 
-  getAllMessage() {
-      
+  async getAllMessage() {
+      return await this.groupSchema.aggregate([
+        { $lookup: {
+          from: 'groups',
+          localField: 'groupId',
+          foreignField: '_id',
+          as: 'captureData'
+        }},
+        {
+          $unwind: {
+            path: '$data'
+          }
+      }])
   }
 
   getMessage(id: string) {

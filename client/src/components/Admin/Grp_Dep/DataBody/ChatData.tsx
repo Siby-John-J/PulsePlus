@@ -1,45 +1,61 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import GroupPoll from "../../../Common/GroupPoll"
 
-function    ChatData(props: any) {
-    const { info, type } = props.data
+function  ChatData(props: any) {
+    const { data, type, time, secret, senderId, question, options } = props.data
     
     return (
         <div className="flex flex-row items-end px-3 my-3 ">
 
-            <div className=" bg-gray-200 w-fit rounded-md shadow-black shadow-sm    ">
-                <UserInfo />
+            <div className=" bg-gray-100 w-fit rounded-md shadow-black shadow-sm    ">
+                <UserInfo id={senderId} />
                 {
-                    type === 'text' && <ChatItem />
+                    type === 'text' && <ChatItem data={data} />
                 }
                 {
                     type === 'image' && <ChatItemImage />
                 }
-                <Time />
+                {
+                    type === 'poll' && <GroupPoll question={question} options={options}  />
+                }
+                <Time date={time} />
             </div>
         </div>
   )
 }
 
-function Time() {
+function Time(props: { date: any }) {
+    const time = getTime(props.date)
+
+    function getTime(time: number) {
+        const date = new Date(time)
+        
+        const strDate: any = date.toString().split(' ')[4]
+        const hr = date.getHours()
+        const zone = hr < 12 ? ' AM' : ' PM'
+    
+        return (strDate.split(':')[0] - 12 + ":"  + strDate.split(':')[1] + zone)
+    }
+    
     return (
-        <h1 className="text-[13px] px-3 py-1 rounded-b-md text-black flex items-center">a min ago</h1>
+        <h1 className="text-[13px] px-3 py-1 rounded-b-md text-black flex items-center">{time}</h1>
     )
 }
 
-function UserInfo() {
+function UserInfo(props: { id: string }) {
     return (
         <div className="flex flex-row text-white bg-black w-full py-2 px-3 items-center justify-between rounded-t-md">
             <div className="w-[2em] h-[2em] bg-white rounded-full"></div>
-            <h1 className="font-medium">nigaraj</h1>
+            <h1 className="font-medium">{props.id}</h1>
         </div>
         
     )
 }
 
-function ChatItem() {
+function ChatItem(props: { data: string }) {
     return (
         <div className="w-fit  break-words px-3 py-2">
-            tex holder and  WuW
+            { props.data }
         </div>
     )
 }

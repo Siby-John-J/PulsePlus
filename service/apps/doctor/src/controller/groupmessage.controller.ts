@@ -1,24 +1,42 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
-import { AppoinetmentServiceUsecase } from "../usecase/appointment.service";
-import { AppoinetmentEnitity, GroupMessageEntity } from "../core";
+import { GroupMessageEntity, GroupPollEntity } from "../core";
 import { GroupMessageServiceUsecase } from "../usecase";
+import { GroupPollServiceUsecase } from "../usecase/group-poll.service";
+import { CombineMessageService } from "../usecase/combine-message.service";
 
 @Controller('groupmessage')
 export class GroupMessageController {
-    constructor(private messageUsecase:  GroupMessageServiceUsecase) {}
+    constructor(
+        private messageUsecase: GroupMessageServiceUsecase,
+        private groupPollUsecase: GroupPollServiceUsecase,
+        private combine: CombineMessageService 
+    ) {}
 
     @Get()
     async getAll() {
-        return await this.messageUsecase.getAll()
+        const response = await this.messageUsecase.getAll()
+        return this.combine.combineByTime(response)
     }
     
     @Post()
-    async createAppointment(@Body() data: GroupMessageEntity) {
-        return this.messageUsecase.create(data)
+    async createMessage(@Body() data: GroupMessageEntity | GroupPollEntity) {
+        if(data.type === 'poll') {
+            return await this.groupPollUsecase.create(data)
+        }
+
+        if(data.type === 'text') {
+            // return await this.groupPollUsecase.create(data)
+            return this.messageUsecase.create(data)
+        }
     }
 
     @Delete(':id')
-    async deleteAppointment(@Param() id: string ) {
+    async deleteMessage(@Param() id: string ) {
         return this.messageUsecase.remove(id)
+    }
+
+    @Put(':id/poll')
+    async updatePoll(@Param() id: { id: string }, @Body() data: any) {
+        return await this.messageUsecase.update(id.id, data)
     }
 }

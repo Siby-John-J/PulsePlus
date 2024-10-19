@@ -10,28 +10,33 @@ export class GroupEntity {
     max_group_members: number
     isBlock: boolean
     memberLimit: number
-    messages: GroupMessageEntity[] | GroupPoll[] | Appoinetment[]
+    messages: GroupMessageEntity[] | GroupPollEntity[] | Appoinetment[]
 }
 
-export class GroupPoll {
+export class GroupPollEntity {
     question: string
     options: Rate[]
-    type: string
+    voters: string[]
+    type: 'poll'
+    senderId: string
+    groupId: string
+    time: Date
 }
 
 class Appoinetment {
 
 }
 
-class Rate {
-    options: string
-    rate: number
+export class Rate {
+    choice: string
+    percentage: number
 }
 
 export class GroupMessageEntity {
-    type: string
+    type: 'multimedia' | 'text'
     data: string | string[]
     senderId: string
+    groupId: string
     time: Date
     secret: boolean
     visibleFor: string[]

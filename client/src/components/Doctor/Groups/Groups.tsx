@@ -1,18 +1,20 @@
 import GroupList from "./GroupList"
 import MainChat from "./MainChat"
 import ChatTitle from "./ChatTitle"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
 function Groups() {
   const [expand, setExpand] = useState<boolean>(false)
-  const [groupId, setGroupId] = useState('')
+  const [refresh, setRefresh] = useState(false)
   let style = 'w-[78%]'
 
   if(expand) style = 'w-[58%]'
 
   useEffect(() => {
-    console.log(groupId);
-  },[groupId])
+    console.log('changed');
+    
+  }, [refresh])
 
   return (
     <div className="bg-gray-300 h-[100%] w-[80%]">
@@ -21,10 +23,10 @@ function Groups() {
         </div>
         <div className="w-[100] h-[95%] flex flex-row justify-evenly items-center">
             <div className="rounded-md w-[18%] h-[90%]">
-                <GroupList setId={setGroupId} />
+                <GroupList />
             </div>
             <div className={'bg-white h-[90%] rounded-md ' + style}>
-              <MainChat groupId={groupId} expand={expand} setExpand={setExpand} />
+              <MainChat refresh={setRefresh} refreshState={refresh} expand={expand} setExpand={setExpand} />
             </div>
             {
               expand && 

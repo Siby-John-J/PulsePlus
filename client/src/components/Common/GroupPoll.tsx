@@ -1,29 +1,24 @@
 import { useState } from "react"
+import { useFetchPutTemplate } from "../../hooks/usePatient"
+import { useSelector } from "react-redux"
 
-function castVote() {
-    alert('voted')
+const castVote = async (choice: string, question: string, groupId: string) => {
+    await useFetchPutTemplate(`http://localhost:2000/doctor-service/groupmessage/${groupId}/poll`, {
+        choice,
+        question
+    })
 }
 
-function GroupPoll() {
-    const [poll, setPoll] = useState<{question: string, options: any}>({
-        question: 'who invented skibidi toilet?',
-        options: [
-            { choice: 'persident biden', percentage: 5 },
-            { choice: 'your mom', percentage: 15 },
-            { choice: 'susy bakka', percentage: 53 },
-            { choice: 'rizzler', percentage: 2 }
-        ]
-    })
-
-    const { options, question } = poll
+function GroupPoll(props: { options: any, question: string }) {
+    const { options, question } = props
 
     return (
-        <div className="mx-3 bg-gray-200 shadow-sm shadow-black rounded-md px-3 w-[20vw] flex flex-col justify-evenly h-fit">
+        <div className=" px-2 w-[20vw] flex flex-col justify-evenly h-fit">
             <div className="bg-black text-white px-2 w-full rounded-md my-2">
                 <Question question={question} />
             </div>
             {
-                options.map((item: any) => <Option choice={item.choice} per={item.percentage} />)
+                options.map((item: any) => <Option question={question} choice={item.choice} per={item.percentage} />)
             }
         </div>
     )
@@ -37,12 +32,13 @@ function Question(props: { question: string }) {
     )
 }
 
-function Option(props: { choice: string, per: number }) {
+function Option(props: { choice: string, per: number, question: string }) {
     const { choice, per } = props
     const empty = 100 - per
+    const groupId = useSelector((data: any) => data).groupIdReducer.id
 
     return (
-        <div onClick={castVote} className="flex items-center relative rounded-md w-[100%] h-[4em] my-1 hover:cursor-pointer hover:shadow-md border-black border-[1px]">
+        <div onClick={e => castVote(choice, props.question, groupId)} className="flex items-center relative rounded-md w-[100%] h-[4em] my-1 hover:cursor-pointer hover:shadow-md border-black border-[1px]">
             <div className="flex flex-row items-center justify-between px-4 w-[100%] absolute">
                 <h1 className="text-base font-medium ">{choice}</h1>
                 <h1 className="font-light">{per + '%'}</h1>

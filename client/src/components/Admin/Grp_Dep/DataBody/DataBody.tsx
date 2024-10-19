@@ -8,21 +8,7 @@ function DataBody(props: { expand: boolean }) {
   let style = 'w-[80%]'
   if(props.expand) style = 'w-[60%]'
 
-  const [chats, setChats] = useState([
-    {
-      info: 'lwal',
-      type: 'text'
-    },
-    {
-      info: 'lwal',
-      type: 'image'
-    },
-    {
-      info: 'lwal',
-      type: 'text'
-    },
-    
-  ])
+  const [chats, setChats] = useState([])
 
   return (
     <div className={'py-5 flex flex-col justify-between ' + style}>

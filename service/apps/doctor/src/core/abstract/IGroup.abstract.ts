@@ -1,4 +1,4 @@
-import { GroupEntity, GroupMessageEntity } from "../entity";
+import { GroupEntity, GroupMessageEntity, GroupPollEntity } from "../entity";
 
 export abstract class IGroup {
     abstract createGroup(payload: GroupEntity)
@@ -22,4 +22,18 @@ export abstract class IGroupMessage {
     abstract banMessage(id: string)
     
     abstract removeMessage(id: string)
+}
+
+export abstract class IGroupPollMessage {
+    abstract createPoll(data: GroupPollEntity)
+
+    abstract getPoll(id: string)
+    
+    abstract getAllPoll()
+    
+    // abstract banPoll(id: string)
+    
+    abstract removePoll(id: string)
+
+    abstract updatePoll(groupId: string, question:string, choice: string)
 }

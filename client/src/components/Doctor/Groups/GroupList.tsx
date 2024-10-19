@@ -4,18 +4,20 @@ import { grpOn } from "../../../redux/slices/createGrpDepSlice"
 import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import { useFetchGetTemplate } from "../../../hooks/usePatient"
+import { setGroupId } from "../../../redux/slices/doctor/groupIdSlice"
 
-function GroupList(props: { setId: Function }) {
+function GroupList() {
 
     return (
         <div className="flex flex-col w-full h-full justify-between">
-            <ListGroups setId={props.setId} />
+            <ListGroups />
             <ListContacts />
         </div>
     )
 }
 
-function ListGroups(props: { setId: Function }) {
+
+function ListGroups() {
     const dispatch = useDispatch()
     const [groupList, setGroupList] = useState([])
 
@@ -27,7 +29,7 @@ function ListGroups(props: { setId: Function }) {
 
     useEffect(() => {
         getAndSetData().then(e => {
-            props.setId(prev => e._id)
+            dispatch(setGroupId({groupId: e._id}))
         })
     }, [])
 
@@ -38,7 +40,7 @@ function ListGroups(props: { setId: Function }) {
             </div>
             <div className="w-[90%] h-[60%] mt-3 overflow-scroll">
                 {
-                    groupList.map(item => <SingleHolder data={item} setId={props.setId} type="group" />)
+                    groupList.map(item => <SingleHolder data={item} type="group" />)
                 }
                 {/* <SingleHolder data={{memes: 'wl'}} setId={Function} type="group" /> */}
                 {/* <SingleHolder type="department" />
@@ -61,14 +63,15 @@ function SingleContent() {
     )
 }
 
-function SingleHolder(props: { type: string, setId: Function, data: object }) {
+function SingleHolder(props: { type: string, data: object }) {
     const { type } = props
     const { ROW } = UserTemplateStyle
+    const dispatch = useDispatch()
     const { name, description, _id } = props.data
     
     return (
         <div className="mb-3 hover:cursor-pointer"
-            onClick={e => props.setId(prev => _id)}
+            onClick={e => dispatch(setGroupId({groupId: _id}))}
             >
             <UserTemplate type={type} details={{name: name, details: description, style: 'font-light', mainStyle: ROW}} />
         </div>

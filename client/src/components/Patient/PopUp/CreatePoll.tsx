@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { pollOff } from '../../../redux/slices/pollSlice'
+import { useFetchPostTemplate } from '../../../hooks/usePatient'
 
 function CreatePoll() {
   const [question, setQuestion] = useState('')
@@ -9,6 +10,7 @@ function CreatePoll() {
   const [errorMessage, setErrorMessage] = useState('')
 
   const dispatch = useDispatch()
+  const groupId = useSelector((data: any) => data).groupIdReducer.id
 
   const setToList = () => {
     const duplicate = options.includes(singleOption)
@@ -20,10 +22,29 @@ function CreatePoll() {
     setOptions(prev => prev.filter(e => item !== e))
   }
 
-  const checkAuthenticate = () => {
+  const checkAuthenticate = async () => {
     if(question === '') return setErrorMessage(prev => 'Must enter a question')
 
     if(options.length < 2) return setErrorMessage(prev => 'Must add more than one options')
+
+    const res = options.map(e => {
+      return { choice: e, percentage: 0}
+    })
+
+    try {
+      const resp = await useFetchPostTemplate('http://localhost:2000/doctor-service/groupmessage', {
+        options: res, 
+        type: 'poll',
+        senderId: 'stringsu',
+        time: Date.now(),
+        groupId,
+        question
+      })
+    } catch (error) {
+      alert('cannot create poll')
+    }
+
+    dispatch(pollOff())
   }
 
   return (

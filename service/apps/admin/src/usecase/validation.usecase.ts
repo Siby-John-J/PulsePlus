@@ -7,11 +7,11 @@ export class ValidationUsecase {
   constructor(private app: IValidation) {}
 
   async create(payload: ValidationEntity): Promise<object> {
-    const data = {...payload, created: Date(), status: 'pending'}
+    const data = { ...payload, created: Date(), status: 'pending' }
     
     return await this.app.createValidation(data)
   }
-
+  
   async get(): Promise<ValidationEntity[]> {
     return await this.app.getValidation()
   }
