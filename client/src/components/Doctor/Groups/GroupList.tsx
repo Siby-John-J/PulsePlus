@@ -26,7 +26,7 @@ function ListGroups() {
         setGroupList(prev => resp)
         return resp[0]
     }
-
+    
     useEffect(() => {
         getAndSetData().then(e => {
             dispatch(setGroupId({groupId: e._id}))

@@ -1,0 +1,9 @@
+
+.fileLoader::-webkit-file-upload-button {
+    display: none;
+    /* background-color: red; */
+}
+
+.listFiles::-webkit-scrollbar {
+    display: none;
+}

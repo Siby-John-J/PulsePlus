@@ -4,10 +4,12 @@ import GroupPoll from "../../../Common/GroupPoll"
 function  ChatData(props: any) {
     const { data, type, time, secret, senderId, question, options } = props.data
     
+    let user = 'justify-start'
+    
     return (
-        <div className="flex flex-row items-end px-3 my-3 ">
+        <div className={'px-3 my-3 w-[100%] flex ' + user }>
 
-            <div className=" bg-gray-100 w-fit rounded-md shadow-black shadow-sm    ">
+            <div className=" bg-gray-100 w-fit rounded-md shadow-black shadow-sm">
                 <UserInfo id={senderId} />
                 {
                     type === 'text' && <ChatItem data={data} />

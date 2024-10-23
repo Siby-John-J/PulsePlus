@@ -12,9 +12,13 @@ export class GroupMessageController {
         private combine: CombineMessageService 
     ) {}
 
-    @Get()
-    async getAll() {
-        const response = await this.messageUsecase.getAll()
+    @Get(':id')
+    async get(@Param() data: { id: string }) {
+        // console.log()
+        
+        const response = await this.messageUsecase.get(data.id)
+        console.log(response)
+        
         return this.combine.combineByTime(response)
     }
     
@@ -25,8 +29,7 @@ export class GroupMessageController {
         }
 
         if(data.type === 'text') {
-            // return await this.groupPollUsecase.create(data)
-            return this.messageUsecase.create(data)
+            return await this.messageUsecase.create(data)
         }
     }
 

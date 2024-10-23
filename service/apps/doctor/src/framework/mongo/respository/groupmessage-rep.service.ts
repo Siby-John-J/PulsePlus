@@ -19,9 +19,10 @@ export class GroupMessageRepository extends IGroupMessage {
   async createMessage(data: GroupMessageEntity | { groupId: string } | GroupPollEntity) {
     return await this.groupSchema.create(data)
   }
-
-  async getAllMessage() {
+  
+  async getAllMessage(id: string) {
       return await this.groupSchema.aggregate([
+        { $match: { groupId: id } },
         { $lookup: {
           from: 'groups',
           localField: 'groupId',

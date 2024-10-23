@@ -2,8 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { ChatTextHolderStyle } from "../../../types/hardcoded/styleEnum"
 import { UserTemplateStyle } from "../../../types/hardcoded/styleEnum"
 import { UserTemplate } from "../../Admin/Dashboard/DoctorMiniList"
-import Appointment from "../../Admin/Grp_Dep/DataBody/Appointment"
-import MultiMedia from "../../Admin/Grp_Dep/Info/MultiMedia"
 import './MainChat.css'
 import ChatData from "../../Admin/Grp_Dep/DataBody/ChatData"
 import GroupPoll from "../../Common/GroupPoll"
@@ -20,15 +18,11 @@ function MainChat(props: { setExpand: Function, expand: boolean, refresh: Functi
 
     const getAndSetData = async() => {
         const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groups/' + groupId)
-        console.log(resp);
-        
-        setGroupData(resp)
+        setGroupData(prev => resp)
     }
     
     useEffect(() => {
         getAndSetData()
-        console.log('memes lwal');
-        
     },[groupId, props.refreshState])
 
     return (
@@ -69,11 +63,18 @@ function ChatBody(props: { messages: Array<object>, refreshState: boolean }) {
     const [chats, setChats] = useState([])
     const scrollRef = useRef<any>(null)
     const pollState = useSelector((data: any) => data).pollReducer.isPoll
+    const groupId = useSelector((data: any) => data).groupIdReducer.id
     const [scrollVal, setScrollVal] = useState(0)
+    // console.log(props);
 
     const getAndSetData = async() => {
-        const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groupmessage')
-        setChats(resp)
+        if(groupId) {
+            const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groupmessage/' + groupId)
+            console.log(resp);
+            
+            setChats(prev => resp)
+        }
+        
     }
 
     useEffect(() => {
@@ -81,15 +82,13 @@ function ChatBody(props: { messages: Array<object>, refreshState: boolean }) {
             // const read: boolean = scrollVal <= (scrollRef.current && ((scrollRef.current.scrollHeight - scrollRef.current.clientHeight) - 4))
 
             setTimeout(() => {
-                scrollRef.current.scrollTop = 
-                (scrollRef.current.scrollHeight - scrollRef.current.clientHeight)
-            }, 0);
-        });
-        // console.log(scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
-        // console.log(scrollRef.current.scrollTop)
-        
-
-    }, [props.refreshState, pollState])
+                if(scrollRef.current) {
+                    scrollRef.current.scrollTop = 
+                    (scrollRef.current.scrollHeight - scrollRef.current.clientHeight)
+                }
+            }, 0)
+        })
+    }, [props.refreshState, pollState, groupId])
 
     const scroll = (e) => {
         // console.log(scrollRef.current.scrollTop)
@@ -100,8 +99,8 @@ function ChatBody(props: { messages: Array<object>, refreshState: boolean }) {
     return (
         <div ref={scrollRef} onScroll={scroll} className="w-[100%] h-[75%] overflow-scroll text_holder shadow-md scroll-smooth">
             {
-             scrollVal <= (scrollRef.current && ((scrollRef.current.scrollHeight - scrollRef.current.clientHeight) - 4))
-             && <ScrollerBtn scrollVal={scrollRef} />
+                scrollVal <= (scrollRef.current && ((scrollRef.current.scrollHeight - scrollRef.current.clientHeight) - 4))
+                && <ScrollerBtn scrollVal={scrollRef} />
             }
             {
                 chats.map(data => <ChatData data={data}/>)
@@ -161,6 +160,7 @@ function ChatFooter(props: { groupId: string, refresh: Function }) {
             visibleFor: []
         })
 
+        console.log(res);
         
         
         setChatText((prev: string) => '')

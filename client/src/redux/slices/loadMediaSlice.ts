@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, current } from "@reduxjs/toolkit"
 
-const initialState: any = {
-    isPoll: false,
+const initialState: { isLoad: boolean, file: any[] } = {
+    isLoad: true,
     file: []
 }
 
@@ -17,11 +17,27 @@ const load = createSlice({
         },
         loadOff() {
             return {
-                isLoad: false
+                isLoad: false,
+                file: []
+            }
+        },
+        addFiles(state: any, dispatch: any) {
+            return {
+                isLoad: true,
+                file: [...current(state).file, ...dispatch.payload.file],
+            }
+        },
+        removeFiles(state: any, dispatch: any) {
+            return {
+                isLoad: true,
+                file: (function () {
+                    const res: [] = current(state).file.filter(e => e.name !== dispatch.payload.file)
+                    return res
+                }())
             }
         }
     }
 })
 
-export const { loadOff, loadOn} = load.actions
+export const { loadOff, loadOn, removeFiles, addFiles} = load.actions
 export default load.reducer

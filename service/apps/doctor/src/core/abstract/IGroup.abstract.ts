@@ -17,7 +17,7 @@ export abstract class IGroupMessage {
 
     abstract getMessage(id: string)
     
-    abstract getAllMessage()
+    abstract getAllMessage(id: string)
     
     abstract banMessage(id: string)
     
@@ -29,7 +29,7 @@ export abstract class IGroupPollMessage {
 
     abstract getPoll(id: string)
     
-    abstract getAllPoll()
+    abstract getAllPoll(id: string)
     
     // abstract banPoll(id: string)
     

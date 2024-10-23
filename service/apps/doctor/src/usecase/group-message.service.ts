@@ -22,9 +22,9 @@ export class GroupMessageServiceUsecase {
     }
   }
 
-  async getAll(): Promise<any> {
-    const regular =  await this.group.getAllMessage()
-    const polls = await this.poll.getAllPoll()
+  async get(id: string): Promise<any> {
+    const regular =  await this.group.getAllMessage(id)
+    const polls = await this.poll.getAllPoll(id)
     return [regular, polls]
   }
 

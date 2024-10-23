@@ -135,7 +135,6 @@ const dropOver = (e: React.DragEvent<HTMLDivElement>) => {
 const dropCapture = async (e: React.DragEvent<HTMLDivElement>, status: string) => {
     const data = e.dataTransfer.getData('text')
     const parsed = JSON.parse(data)
-
     try {
         if(status === 'approved' && parsed.type === 'appointment') {
             return { type: 'accept', parsed }

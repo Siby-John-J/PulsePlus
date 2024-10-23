@@ -15,9 +15,12 @@ export class GroupPolleRepository extends IGroupPollMessage {
   async createPoll(data: GroupPollEntity) {
       return await this.pollSchema.create(data)
   }
-
-  async getAllPoll() {
+  
+  async getAllPoll(id: string) {
+    console.log(id)
+    
     return await this.pollSchema.aggregate([
+      { $match: { groupId: id } },
       { $lookup: {
         from: 'groups',
         localField: 'groupId',

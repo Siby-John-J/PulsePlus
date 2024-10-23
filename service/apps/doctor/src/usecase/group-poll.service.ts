@@ -19,7 +19,7 @@ export class GroupPollServiceUsecase {
 
   }
 
-  async get() {
-    return this.poll.getAllPoll()
+  async get(id: string) {
+    return this.poll.getAllPoll(id)
   }
 }
