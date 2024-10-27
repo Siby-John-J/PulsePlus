@@ -7,19 +7,18 @@ export class GroupMessageServiceUsecase {
     private group: IGroupMessage,
     private poll: IGroupPollMessage,
   ) {}
-
-  async create(data: GroupMessageEntity | GroupPollEntity) {
-    if(data.type === 'poll') {
-      return await this.poll.createPoll(data)
-    }
+  
+  async create(data: GroupMessageEntity) {
+    // if(data.type === 'poll') {
+    //   return await this.poll.createPoll(data)
+    // }
 
     if(data.type === 'multimedia') {
-      
+    }
+    if(data.type === 'text') {
     }
 
-    if(data.type === 'text') {
-      return await this.group.createMessage(data)
-    }
+    return await this.group.createMessage(data)
   }
 
   async get(id: string): Promise<any> {

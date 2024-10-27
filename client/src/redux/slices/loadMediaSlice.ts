@@ -1,7 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit"
 
 const initialState: { isLoad: boolean, file: any[] } = {
-    isLoad: true,
+    isLoad: false,
     file: []
 }
 
@@ -9,10 +9,10 @@ const load = createSlice({
     name: 'load',
     initialState,
     reducers: {
-        loadOn(state: any, dispatch: any) {
+        loadOn() {
             return {
                 isLoad: true,
-                file: dispatch.payload.file
+                file: []
             }
         },
         loadOff() {

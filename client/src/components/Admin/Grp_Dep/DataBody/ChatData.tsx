@@ -15,7 +15,7 @@ function  ChatData(props: any) {
                     type === 'text' && <ChatItem data={data} />
                 }
                 {
-                    type === 'image' && <ChatItemImage />
+                    type === 'multimedia' && <ChatItemImage data={props.data} />
                 }
                 {
                     type === 'poll' && <GroupPoll question={question} options={options}  />
@@ -62,8 +62,10 @@ function ChatItem(props: { data: string }) {
     )
 }
 
-function ChatItemImage() {
-    const [data, setData] = useState([4,3,3,3,3])
+function ChatItemImage(props: { data: any }) {
+    const { data, caption } = props.data
+    
+    const [datas, setData] = useState(data)
     const ref = useRef(null)
     const sec = useRef(null)
     let len = 12
@@ -73,19 +75,21 @@ function ChatItemImage() {
     
     useLayoutEffect(() => {
         const width = getComputedStyle(ref.current).width
-        sec.current.style.width = width
+        if(sec.current) sec.current.style.width = width
     }, [])
-
+    
     return (
-        <div className="py-3 w-fit overflow-hidden rounded-md flex flex-col items-start px-2">
+        <div className="py-3 w-fit overflow-hidden rounded-md flex flex-col items-start px-2 cursor-pointer">
             <div ref={ref} className="rounded-md flex flex-row items-center">        
             {
                 data.map((e, index) => {
-                    return <div className={`mx-1 bg-black w-[${len}em] h-[${len}em] rounded-sm`}></div>
+                    return <div className={`mx-1 w-[${len}em] h-[${len}em] rounded-sm`}>
+                        <img src={'http://localhost:2000/doctor-service/' + e} />
+                    </div>
                 })
             }
             </div>
-            <h1 ref={sec} className={`mt-2 font-medium `}>Nigas fffffffff dfjdijfijij are in meth now</h1>
+            <h1 ref={sec} className={`mt-2 font-medium `}>{caption ? caption : ''}</h1>
         </div>
     )
 }

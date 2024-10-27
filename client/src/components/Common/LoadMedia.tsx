@@ -2,12 +2,20 @@ import { useDispatch, useSelector } from "react-redux"
 import { addFiles, loadOff, loadOn, removeFiles } from "../../redux/slices/loadMediaSlice"
 import { useRef, useState } from "react"
 import "./LoadMedia.css"
+import { useFetchPostTemplate } from "../../hooks/usePatient"
+
+interface IFile {
+  name: string
+  format: string
+}
 
 function LoadMedia() {
   const dispatch = useDispatch()
   const droppableRef = useRef(null)
   const [error, setError] = useState('')
+  const [caption, setCaption] = useState('')
   const mediaFile = useSelector((state: any) => state).loadReducer.file
+  const groupId = useSelector((data: any) => data).groupIdReducer.id
   const files = Object.keys(mediaFile).map(key => mediaFile[key])
 
   const handleDropFile = (e) => {
@@ -17,8 +25,44 @@ function LoadMedia() {
     dispatch(addFiles({file: e.dataTransfer.files}))
   }
 
-  const sendFiles = () => {
-    if(mediaFile.length <= 0) setError('no files attached!')
+  const sendFiles = async() => {
+    if(mediaFile.length <= 0) {
+      setError('no files attached!')
+    } else {
+      const formData = new FormData()
+      const fileNames: string[] = []
+
+      mediaFile.forEach((file: any) => {
+        fileNames.push(file.name)  
+        formData.append('file', file)
+      })
+      
+      const response = await fetch('http://localhost:2000/doctor-service/files', {
+        method: 'POST',
+        cache: 'no-cache',
+        mode: 'cors',
+        credentials: 'same-origin',
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: formData
+      })
+      
+      if(response.status === 201) {
+        const response = await useFetchPostTemplate('http://localhost:2000/doctor-service/groupmessage', {
+          groupId,
+          type: 'multimedia',
+          data: fileNames,
+          senderId: 'string',
+          time: Date.now(),
+          secret: false,
+          caption,
+          visibleFor: []
+        })
+      }
+      
+      // const response = await fetch('http://localhost:3004/files/2581a4613ad5f51aff6cab666735a440.png', {
+      //   method: 'DELETE'})
+    }
   }
 
   const hover = (e, action: "enter" | "exit"): void => {
@@ -57,6 +101,7 @@ function LoadMedia() {
           </div>
         </div>
         </div>
+
       <div className="flex flex-col w-[100%] items-center mt-3 overflow-scroll max-h-[12em] listFiles">
         {
           error && <div className="text-red-500 font-medium">{error}</div>
@@ -64,17 +109,20 @@ function LoadMedia() {
         {
           files.map(e => {
             const format = e.name.split('.')[e.name.split('.').length - 1]
-            return <FormatThumbNail data={e} name={e.name} format={format} />
+            return <Files name={e.name} format={format} />
           })
         }
       </div>
+      
       <div>
-        <input className="w-[100%] px-2 border-black border-[1px] py-2 my-2 rounded-md outline-none" type="text" placeholder="type caption" />
+        <input 
+          onChange={e => setCaption(e.target.value)}
+          className="w-[100%] px-2 border-black border-[1px] py-2 my-2 rounded-md outline-none" type="text" placeholder="type caption" />
       </div>
       <div className="flex flex-row justify-evenly my-2">
         <button className="bg-blue-500 text-white w-[48%] px-5 py-1 rounded-md" onClick={e => {
             sendFiles()
-          //  dispatch(loadOff())
+           dispatch(loadOff())
         }}>send</button>
         <button className="bg-red-500 text-white w-[48%] px-5 py-1 rounded-md" onClick={e => dispatch(loadOff())}>cancel</button>
       </div>
@@ -82,7 +130,12 @@ function LoadMedia() {
   )
 }
 
-function FormatThumbNail(props: { format: string, name: string, data: any }) {
+function FileLoader() {
+  <>
+  </>
+}
+
+function Files(props: IFile) {
   const { format, name } = props
 
   const dispatch = useDispatch()

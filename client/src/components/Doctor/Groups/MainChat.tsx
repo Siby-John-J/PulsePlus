@@ -18,6 +18,7 @@ function MainChat(props: { setExpand: Function, expand: boolean, refresh: Functi
 
     const getAndSetData = async() => {
         const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groups/' + groupId)
+        
         setGroupData(prev => resp)
     }
     
@@ -63,24 +64,25 @@ function ChatBody(props: { messages: Array<object>, refreshState: boolean }) {
     const [chats, setChats] = useState([])
     const scrollRef = useRef<any>(null)
     const pollState = useSelector((data: any) => data).pollReducer.isPoll
-    const groupId = useSelector((data: any) => data).groupIdReducer.id
+    const groupId = useSelector((data: any) => data).groupIdReducer
+    const load = useSelector((data: any) => data).loadReducer
+    
     const [scrollVal, setScrollVal] = useState(0)
     // console.log(props);
 
     const getAndSetData = async() => {
-        if(groupId) {
-            const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groupmessage/' + groupId)
-            console.log(resp);
-            
+        if(groupId.id) {
+            const resp = await useFetchGetTemplate('http://localhost:2000/doctor-service/groupmessage/' + groupId.id)
             setChats(prev => resp)
         }
         
     }
 
     useEffect(() => {
+        console.log(load)
+        
         getAndSetData().then(() => {
             // const read: boolean = scrollVal <= (scrollRef.current && ((scrollRef.current.scrollHeight - scrollRef.current.clientHeight) - 4))
-
             setTimeout(() => {
                 if(scrollRef.current) {
                     scrollRef.current.scrollTop = 
@@ -88,11 +90,9 @@ function ChatBody(props: { messages: Array<object>, refreshState: boolean }) {
                 }
             }, 0)
         })
-    }, [props.refreshState, pollState, groupId])
+    }, [props.refreshState, pollState, groupId, load])
 
     const scroll = (e) => {
-        // console.log(scrollRef.current.scrollTop)
-        
         setScrollVal((prev: number) => e.target.scrollTop)
     }
 
@@ -103,7 +103,7 @@ function ChatBody(props: { messages: Array<object>, refreshState: boolean }) {
                 && <ScrollerBtn scrollVal={scrollRef} />
             }
             {
-                chats.map(data => <ChatData data={data}/>)
+                chats && chats.map(data => <ChatData data={data}/>)
             }
         </div>
     )
@@ -125,7 +125,7 @@ function ScrollerBtn(data: { scrollVal: any }) {
 export function ChatTextHolder(props: any) {
     const { STYLE1, STYLE2, STYLE3, STYLE4 } = ChatTextHolderStyle
     const { part } = props
-
+    
     return (
         <div className={part === 'incoming' ? STYLE1 : STYLE2}>
             <div className={part === 'incoming' ? STYLE3 : STYLE4}>
@@ -150,19 +150,18 @@ function ChatFooter(props: { groupId: string, refresh: Function }) {
     }
 
     const sendText = async () => {
-        const res = await useFetchPostTemplate('http://localhost:2000/doctor-service/groupmessage', {
-            groupId: props.groupId,
-            type: 'text',
-            data: chatText,
-            senderId: 'string',
-            time: Date.now(),
-            secret: false,
-            visibleFor: []
-        })
+        if(chatText !== '') {
+            const res = await useFetchPostTemplate('http://localhost:2000/doctor-service/groupmessage', {
+                groupId: props.groupId,
+                type: 'text',
+                data: chatText,
+                senderId: 'string',
+                time: Date.now(),
+                secret: false,
+                visibleFor: []
+            })
+        }
 
-        console.log(res);
-        
-        
         setChatText((prev: string) => '')
         inputRef.current.value = ''
         props.refresh(prev => !prev)
@@ -172,20 +171,20 @@ function ChatFooter(props: { groupId: string, refresh: Function }) {
         <div className="w-[100%] h-[10%] flex flex-row border-t-[1px] border-gray-400">
             <div className="flex w-full items-center px-8">
             <div onClick={e => dispatch(hidpOn())} className="bg-purple-500 w-10 h-10 rounded-md overflow-hidden"></div>
-                <input ref={inputRef} onChange={setText} className="w-[100%] h-[2em] cursor-text outline-none px-4" type="text" placeholder="Type a message here" />
+                <input 
+                    ref={inputRef} 
+                    onChange={setText} 
+                    onKeyDown={e => {
+                        if(e.key === 'Enter') sendText()
+                    }} 
+                    className="w-[100%] h-[2em] cursor-text outline-none px-4" type="text" placeholder="Type a message here" />
             </div>
             <div className="flex w-fit items-center">
                 <div className="flex justify-evenly items-center px-2 w-[10em]">
-                    <input onChange={e => {
-                        dispatch(loadOn({file: e.target.files}))
-                        // console.log(e.target.files)
-                    }} multiple type="file" className="bg-black w-10 h-10 rounded-full overflow-hidden fileLoader" />
+                    <div onClick={e => dispatch(loadOn())} className="bg-black w-10 h-10 rounded-full overflow-hidden fileLoader"></div>
                     <div onClick={e => dispatch(pollOn())} className="bg-black w-10 h-10 rounded-full"></div>
                     <button
-                        onClick={e => {
-                            sendText()
-                            console.log(popupState.hiddenReducer.data)
-                        }}
+                        onClick={e => sendText()}
                         className={style + " px-2 shadow-md py-3 text-white rounded-full"}>send</button>
                 </div>
             </div>

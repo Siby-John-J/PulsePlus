@@ -7,22 +7,26 @@ import { GroupServiceUsecase } from './group.service';
 import { GroupMessageServiceUsecase } from './group-message.service';
 import { GroupPollServiceUsecase } from './group-poll.service';
 import { CombineMessageService } from './combine-message.service';
+import { FileModuleService } from '../services/file-service.module';
+import { FileServiceUsecase } from './file.service';
 
 @Module({
-  imports: [MongoModuleService, PublisherServiceModule],
+  imports: [MongoModuleService, PublisherServiceModule, FileModuleService],
   providers: [
     DoctorServiceUsecase, 
     GroupServiceUsecase, 
     GroupMessageServiceUsecase,
     GroupPollServiceUsecase,
-    CombineMessageService
+    CombineMessageService,
+    FileServiceUsecase
   ],
   exports: [
     DoctorServiceUsecase, 
     GroupServiceUsecase, 
     GroupMessageServiceUsecase,
     GroupPollServiceUsecase,
-    CombineMessageService
+    CombineMessageService,
+    FileServiceUsecase
   ],
 })
 export class DoctorUseCaseModule {}

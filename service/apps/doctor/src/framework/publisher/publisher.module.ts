@@ -14,7 +14,7 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
                 urls: ['nats://localhost:4222'],
               },
             },
-          ]),      
+          ]),
     ],
     providers: [
         {

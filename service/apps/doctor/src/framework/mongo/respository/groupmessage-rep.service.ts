@@ -29,11 +29,11 @@ export class GroupMessageRepository extends IGroupMessage {
           foreignField: '_id',
           as: 'captureData'
         }},
-        {
-          $unwind: {
-            path: '$data'
-          }
-      }])
+        // {
+        //   $unwind: {
+        //     path: '$data'
+        //   }}
+        ])
   }
 
   getMessage(id: string) {

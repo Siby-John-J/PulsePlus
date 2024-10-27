@@ -9,28 +9,28 @@ export class GroupMessageController {
     constructor(
         private messageUsecase: GroupMessageServiceUsecase,
         private groupPollUsecase: GroupPollServiceUsecase,
-        private combine: CombineMessageService 
+        private combine: CombineMessageService
     ) {}
 
     @Get(':id')
     async get(@Param() data: { id: string }) {
-        // console.log()
-        
         const response = await this.messageUsecase.get(data.id)
-        console.log(response)
-        
         return this.combine.combineByTime(response)
     }
     
     @Post()
     async createMessage(@Body() data: GroupMessageEntity | GroupPollEntity) {
+        console.log(data);
+        
         if(data.type === 'poll') {
             return await this.groupPollUsecase.create(data)
         }
 
-        if(data.type === 'text') {
+        if(data.type === 'text' || data.type === 'multimedia') {
             return await this.messageUsecase.create(data)
         }
+
+        return { msg: 'returned' }
     }
 
     @Delete(':id')

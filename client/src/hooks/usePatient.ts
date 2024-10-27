@@ -17,11 +17,16 @@ export const usePatientUpdate = async (payload: any, query: object): Promise<res
     return await response.json();
 }
 
-export const useFetchPostTemplate = async(url: string, payload: any) => {
+export const useFetchPostTemplate = async(url: string, payload: any, isForm = false) => {
     const token = useStoreGet()
 
     try {
         const response = await fetch(url, {
+            cache: 'no-cache',
+            mode: 'cors',
+            credentials: 'same-origin',
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
             method: 'post',
             headers: {
                 "Authorization": "Bearer " + token,

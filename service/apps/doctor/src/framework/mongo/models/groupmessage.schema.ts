@@ -23,6 +23,9 @@ export class GroupMessage {
 
     @Prop()
     secret: boolean
+
+    @Prop()
+    caption: string
 }
 
 export const GroupMessageSchema = SchemaFactory.createForClass(GroupMessage)
