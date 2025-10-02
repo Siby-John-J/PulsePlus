@@ -7,7 +7,7 @@ The platform enables patients to register, book appointments, and communicate wi
 
 ## 🔹 Architecture Overview
 
-![System Design Diagram](./architecture-diagram.png)
+![System Design Diagram](./pulseplus-sys-design.png)
 
 ### Components
 
