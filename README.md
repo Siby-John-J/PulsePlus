@@ -79,5 +79,5 @@ The platform enables patients to register, book appointments, and communicate wi
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/your-username/healthcare-platform.git
-   cd healthcare-platform
+   git clone https://github.com/Siby-John-J/PulsePlus.git
+   cd PulsePlus
