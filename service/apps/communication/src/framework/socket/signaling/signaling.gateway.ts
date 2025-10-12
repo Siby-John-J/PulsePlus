@@ -16,6 +16,10 @@ import { ISocket } from 'apps/communication/src/core';
   namespace: 'signaling'
 })
 export class SignalingGateWay implements ISocket, OnModuleInit {
+  onnewMessage(val: any) {
+    throw new Error('Method not implemented.');
+  }
+  
   @WebSocketServer()
   server: Server;
   _name: undefined | any

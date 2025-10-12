@@ -2,7 +2,7 @@
 errorMiddleware = async (err, req, res, next) => {
     if(err.message === 'jwt expired') {
         const payload = {
-            credential: 'djifi383u8fjmxxmvkndslfnei',
+            credential: process.env.JWT_CRED,
             roles: 'User'
         }
         const response = await fetch('http://localhost:3000/authZ/refresh_token', {

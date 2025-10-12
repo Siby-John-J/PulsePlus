@@ -1,7 +1,7 @@
 import { TextChatEntity } from "../entity";
 
 export abstract class ITextChat {
-    abstract addToChat(data: TextChatEntity): Promise<TextChatEntity>
+    abstract addToChat(data: TextChatEntity): Promise<TextChatEntity | { error: string }>
 
     abstract removeFromChat(receverId: string, senderId: string): Promise<TextChatEntity>
 

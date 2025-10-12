@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppointmentController, ValidationController, AppointPaymentsController, AuthenticationController } from './controllers';
 import { MongooseModule } from '@nestjs/mongoose';
 // import { RmqModule } from '@app/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AUTH_SERVICE } from '../constants/services';
 import * as joi from 'joi';
 import { MongoServiceModule } from './services/mongo-service.module';
@@ -21,7 +21,13 @@ import { PublisherServiceModule } from './services/publisher-service.module';
       }),
       envFilePath: './apps/admin/.env',
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+    }),
     MongoServiceModule,
     PublisherServiceModule,
     AdminUseCaseModule,
@@ -34,4 +40,4 @@ import { PublisherServiceModule } from './services/publisher-service.module';
   ],
   // providers: [],
 })
-export class AdminModule {}
+export class AdminModule { }

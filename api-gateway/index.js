@@ -5,13 +5,13 @@ const errorMiddleware = require('./middlewares/err-handlingMiddleware')
 const fetchRequest = require('./fetchRequest')
 const cors = require('cors')
 const app = express()
-// const dotenv = require('dotenv')
+require('dotenv').config();
 
 app.use(express.json())
 app.use(cors({
     origin: '*'
 }))
-// app.use(jwtMiddleware)
+app.use(jwtMiddleware)``
 
 const services = [
     {
@@ -96,7 +96,7 @@ app.post('/get_token', async (req, res) => {
 })
 
 app.post('/sign_up', async(req, res) => {
-    const auth = '08ac399a9b2ff2d0027fa53f7eb783a19b52'
+    const auth = process.env.SIGN_AUTH
     
     const payload = {
         data: req.body,
