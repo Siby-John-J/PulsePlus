@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { NotificationController, TextChatController } from './controller';
 import { NotificationService } from './usecase';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongoServiceModule } from './service/mongo-service.module';
 import { GatewayFrameWorkModule } from './framework/socket/notification/notification.module';
 import { AppointmentNotificationController } from './controller/appointment.controller';
@@ -16,7 +16,13 @@ import { SocketServiceModule } from './service/socket-service.module';
       isGlobal: true,
       envFilePath: './apps/communication/.env',
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+    }),
     MongoServiceModule,
     UseCaseModule,
     GatewayFrameWorkModule,

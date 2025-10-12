@@ -36,16 +36,16 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     UsecaseModule,
     JwtServiceModule,
     PublisherServiceModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-      validationSchema: joi.object({
-        // RABBIT_MQ_URI: joi.string().required(),
-        // RABBIT_MQ_AUTH_QUEUE: joi.string().required(),
-        RABBIT_MQ_ADMIN_QUEUE: joi.string().required(),
-        RABBIT_MQ_PATIENT_QUEUE: joi.string().required()
-      }),
-      envFilePath: './apps/auth/.env'
-    }),
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    //   validationSchema: joi.object({
+    //     // RABBIT_MQ_URI: joi.string().required(),
+    //     // RABBIT_MQ_AUTH_QUEUE: joi.string().required(),
+    //     RABBIT_MQ_ADMIN_QUEUE: joi.string().required(),
+    //     RABBIT_MQ_PATIENT_QUEUE: joi.string().required()
+    //   }),
+    //   envFilePath: './apps/auth/.env'
+    // }),
   ],
   controllers: [
     AuthorizationController,

@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { Appoinetment, DoctorAuthController, FilesController, GroupController, GroupMessageController } from './controller';
 import { MongoModuleService } from './services/mongo-service.module';
 import { DoctorUseCaseModule } from './usecase/doctor-usecase.module';
-import { ConfigModule } from '@nestjs/config';
-import * as joi from 'joi'; 
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as joi from 'joi';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PublisherServiceModule } from './services/publisher-service.module';
 import { FileModuleService } from './services/file-service.module';
@@ -18,11 +18,14 @@ import { join } from 'path';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: './apps/doctor/.env',
-      validationSchema: joi.object({
-        
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
       }),
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI),
     MongoModuleService,
     DoctorUseCaseModule,
     FileModuleService
@@ -33,7 +36,7 @@ import { join } from 'path';
     GroupMessageController,
     FilesController
     // Appoinetment
-    
+
   ]
 })
-export class DoctorModule {}
+export class DoctorModule { }
