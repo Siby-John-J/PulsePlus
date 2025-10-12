@@ -1,12 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { PatientModule } from './main.module';
-import { RmqService } from '@app/common';
-import { MicroserviceOptions, RmqOptions, Transport } from '@nestjs/microservices';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(PatientModule)
-  // const rmqservice = app.get<RmqService>(RmqService)
-  // app.connectMicroservice<RmqOptions>(rmqservice.getOptions('PATIENT'))
   
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.NATS,

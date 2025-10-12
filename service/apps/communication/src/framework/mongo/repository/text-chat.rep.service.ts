@@ -19,12 +19,12 @@ export class TextChatRepository extends ITextChat {
         })
     }
 
-    async addToChat(data: TextChatEntity): Promise<TextChatEntity> {
+    async addToChat(data: TextChatEntity): Promise<TextChatEntity | { error: string }>{
         const { receverId, senderId } = data
         const res = await this.textChat.findOne({ senderId, receverId})
 
         if(!res) return await this.textChat.create(data)
-        return { er: 'already created' }
+        return { error: 'already created' }
     }
 
     async removeFromChat(receverId: string, senderId: string): Promise<TextChatEntity> {
